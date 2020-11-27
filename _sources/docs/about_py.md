@@ -125,7 +125,7 @@ Bouning-box와 Class probability를 하나의 문제로 간주하여 객체의 �
 
 
 
-## Bibliography
+
 
 ```{bibliography} ../_bibliography/references.bib
 
