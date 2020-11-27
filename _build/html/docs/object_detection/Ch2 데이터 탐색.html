@@ -1,0 +1,560 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2. 데이터 탐색 &#8212; PseudoLab Tutorial Book</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3. 데이터 전처리" href="Ch3%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A0%84%EC%B2%98%EB%A6%AC.html" />
+    <link rel="prev" title="1. 객체 탐지(Object Detection)" href="Ch1%20Object%20Detection.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/PseudoLab_logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">PseudoLab Tutorial Book</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <p class="caption collapsible-parent">
+ <span class="caption-text">
+  객체 탐지(Object Detection)
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch1%20Object%20Detection.html">
+   1. 객체 탐지(Object Detection)
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch3%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A0%84%EC%B2%98%EB%A6%AC.html">
+   3. 데이터 전처리
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch4%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%AA%A8%EB%8D%B8%EB%A7%81.html">
+   4. 데이터 모델링
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch5%20%EC%84%B1%EB%8A%A5%20%ED%96%A5%EC%83%81%EC%9D%84%20%EC%9C%84%ED%95%9C%20%EB%B0%A9%EB%B2%95.html">
+   5. 성능 향상을 위한 방법
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/docs/object_detection/Ch2 데이터 탐색.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/docs/object_detection/Ch2 데이터 탐색.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   2.1. 데이터셋 다운로드
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   2.2. 데이터셋 확인
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   2.3. 바운딩 박스 도식화
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>2. 데이터 탐색<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/drive/1vMHy2jiosuVm4xKSM6aof6iYjQEab0Mm?usp=sharing"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>이전 장에서 객체 탐지에 대해 전체적으로 간략하게 살펴보았습니다. 이번 장부터는 본격적으로 객체 탐지를 위한 업무를 수행하도록 하겠습니다. 딥러닝 모델 성능 향상에 있어서 가장 중요한 부분은 모델 자체도 중요하지만, 데이터셋입니다. 데이터과학자들은 딥러닝 모델 학습에 있어서 데이터 정제(Data Curation)에 90% 이상 시간을 소비한다고 합니다. 한쪽으로 치우치거나, 잘못된 결과 혹은 왜곡된 학습 결과를 피하기 위해서는 데이터 정제가 필수입니다. 데이터 정제를 수월하게 하기 위해서는 올바른 데이터셋 사용이 중요합니다.</p>
+<p>이번 장에서는 객체 탐지 모델 학습을 위해 데이터를 탐색해보고, 기초적인 바운딩 박스 도식화를 해보도록 하겠습니다. 2.1절에서 데이터 다운로드 방법을 안내할 예정이며 2.2절에서는 데이터셋에 저장된 정보를 확인해보겠습니다. 그리고 2.3절에서는 바운딩 박스 시각화를 진행하겠습니다. 데이터셋은 캐글(Kaggle)에서 공유된 <a class="reference external" href="https://www.kaggle.com/andrewmvd/face-mask-detection">Face Mask Detection</a> 데이터셋을 사용하도록 하겠습니다. 튜토리얼 목적에 따라, 학습 시간이 많이 소요되는 방대한 데이터셋보다는 적절한 크기의 데이터셋을 선택하였습니다.</p>
+<div class="section" id="id2">
+<h2>2.1. 데이터셋 다운로드<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>가장 먼저 학습에 사용할 데이터셋을 내려받도록 하겠습니다. 가짜연구소에서 제공하는 데이터 로더 함수를 활용해 쉽게 데이터를 다운로드 할 수 있습니다. git clone 명령어를 활용하여 Tutorial-Book-Utils 저장소를 Colab 환경에 다운로드 하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cloning into &#39;Tutorial-Book-Utils&#39;...
+remote: Enumerating objects: 12, done.
+remote: Counting objects: 100% (12/12), done.
+remote: Compressing objects: 100% (11/11), done.
+remote: Total 12 (delta 1), reused 2 (delta 0), pack-reused 0
+Unpacking objects: 100% (12/12), done.
+</pre></div>
+</div>
+</div>
+</div>
+<p>git clone 명령어 실행 후, Tutorial-Book-Utils 폴더 내에 PL_data_loader.py 파일이 위치한 것을 알 수 있습니다. 해당 파일 내에는 구글 드라이브에 저정돼있는 파일을 다운로드 하는 함수가 저장되어 있습니다. –data 파라미터에 FaceMaskDetection을 입력함으로써 마스크 착용 탐지 모델 구축에 활용할 데이터를 받을 수 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!python Tutorial-Book-Utils/PL_data_loader.py --data FaceMaskDetection
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Face Mask Detection.zip is done!
+</pre></div>
+</div>
+</div>
+</div>
+<p>위와 같이 Face Mask Detection.zip 파일이 다운로드 된 것을 확인할 수 있습니다. 다음으로 리눅스 명령어인 unzip을 활용하여 압출파일을 풀어보도록 하겠습니다. -q 옵션을 통해 불필요한 출력물이 나오지 않게 제어 가능합니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!unzip -q Face\ Mask\ Detection.zip
+</pre></div>
+</div>
+</div>
+</div>
+<p>Colab 경로를 확인하시면 그림 2.2와 같이 “annotations” 폴더와 “images” 폴더가 생성된 것을 확인할 수 있습니다. “annotations” 폴더에는 이미지별 의료용 마스크 위치 좌표가 저장되어 있고, “images” 폴더에는 이미지가 저장되어 있습니다.</p>
+<p><img alt="dataset example" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/pics/ch2img02.PNG?raw=true" /></p>
+<ul class="simple">
+<li><p>그림 2.2 실험을 위한 폴더 경로</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>2.2. 데이터셋 확인<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>Face Mask Detection 데이터셋을 살펴보면 “images”와 “annotations” 두 폴더가 있습니다. “images” 폴더에는 이미지 파일이 0부터 852까지 있으며, “annotations” 폴더에는 xml 파일이 0부터 852까지 있습니다.</p>
+<p>“annotations” 폴더 안에 있는 xml 파일들은 각각의 이미지 파일의 정보를 가지고 있습니다. 예를 들어, maksssksksss307.xml 파일을 살펴보도록 하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">annotation</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">folder</span><span class="o">&gt;</span><span class="n">images</span><span class="o">&lt;/</span><span class="n">folder</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">filename</span><span class="o">&gt;</span><span class="n">maksssksksss307</span><span class="o">.</span><span class="n">png</span><span class="o">&lt;/</span><span class="n">filename</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">size</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">width</span><span class="o">&gt;</span><span class="mi">400</span><span class="o">&lt;/</span><span class="n">width</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">height</span><span class="o">&gt;</span><span class="mi">226</span><span class="o">&lt;/</span><span class="n">height</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">depth</span><span class="o">&gt;</span><span class="mi">3</span><span class="o">&lt;/</span><span class="n">depth</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">size</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">segmented</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">segmented</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nb">object</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">mask_weared_incorrect</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">pose</span><span class="o">&gt;</span><span class="n">Unspecified</span><span class="o">&lt;/</span><span class="n">pose</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">truncated</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">truncated</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">occluded</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">occluded</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">difficult</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">difficult</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">bndbox</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">xmin</span><span class="o">&gt;</span><span class="mi">3</span><span class="o">&lt;/</span><span class="n">xmin</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">ymin</span><span class="o">&gt;</span><span class="mi">65</span><span class="o">&lt;/</span><span class="n">ymin</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">xmax</span><span class="o">&gt;</span><span class="mi">96</span><span class="o">&lt;/</span><span class="n">xmax</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">ymax</span><span class="o">&gt;</span><span class="mi">163</span><span class="o">&lt;/</span><span class="n">ymax</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">bndbox</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="nb">object</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nb">object</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">with_mask</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">pose</span><span class="o">&gt;</span><span class="n">Unspecified</span><span class="o">&lt;/</span><span class="n">pose</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">truncated</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">truncated</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">occluded</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">occluded</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">difficult</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">difficult</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">bndbox</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">xmin</span><span class="o">&gt;</span><span class="mi">146</span><span class="o">&lt;/</span><span class="n">xmin</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">ymin</span><span class="o">&gt;</span><span class="mi">28</span><span class="o">&lt;/</span><span class="n">ymin</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">xmax</span><span class="o">&gt;</span><span class="mi">249</span><span class="o">&lt;/</span><span class="n">xmax</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">ymax</span><span class="o">&gt;</span><span class="mi">140</span><span class="o">&lt;/</span><span class="n">ymax</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">bndbox</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="nb">object</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nb">object</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">without_mask</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">pose</span><span class="o">&gt;</span><span class="n">Unspecified</span><span class="o">&lt;/</span><span class="n">pose</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">truncated</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">truncated</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">occluded</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">occluded</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">difficult</span><span class="o">&gt;</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">difficult</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">bndbox</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">xmin</span><span class="o">&gt;</span><span class="mi">287</span><span class="o">&lt;/</span><span class="n">xmin</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">ymin</span><span class="o">&gt;</span><span class="mi">180</span><span class="o">&lt;/</span><span class="n">ymin</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">xmax</span><span class="o">&gt;</span><span class="mi">343</span><span class="o">&lt;/</span><span class="n">xmax</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">ymax</span><span class="o">&gt;</span><span class="mi">225</span><span class="o">&lt;/</span><span class="n">ymax</span><span class="o">&gt;</span>
+        <span class="o">&lt;/</span><span class="n">bndbox</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="nb">object</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">annotation</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>파일 내용을 살펴보면, 처음에 폴더명과 파일명이 나오며, 이미지 크기 정보가 포함되어 있는 걸 확인할 수 있습니다. 이제 <code class="docutils literal notranslate"><span class="pre">object</span></code>안 코드를 살펴보면, <code class="docutils literal notranslate"><span class="pre">mask_weared_incorrect</span></code>, <code class="docutils literal notranslate"><span class="pre">with_mask</span></code>, <code class="docutils literal notranslate"><span class="pre">without_mask</span></code> 이렇게 세가지로 나눠지는걸 확인할 수 있습니다. <code class="docutils literal notranslate"><span class="pre">mask_weared_incorrect</span></code>의 경우 마스크를 제대로 쓰지 않은 객체의 정보, <code class="docutils literal notranslate"><span class="pre">with_mask</span></code>는 마스크를 착용하고 있는 객체 위치 정보, <code class="docutils literal notranslate"><span class="pre">without_mask</span></code>은 마스크를 쓰지 않은 객체의 정보를 담고 있습니다. 만약 한 이미지 파일 안에 마스크를 착용한 객체가 2명이라면, <code class="docutils literal notranslate"><span class="pre">with_mask</span></code> 정보를 포함한 <code class="docutils literal notranslate"><span class="pre">object</span></code>가 2개 인것을 볼 수 있을 것입니다. <code class="docutils literal notranslate"><span class="pre">bndbox</span></code>안에는 <code class="docutils literal notranslate"><span class="pre">xmin</span></code>, <code class="docutils literal notranslate"><span class="pre">ymin</span></code>, <code class="docutils literal notranslate"><span class="pre">xmax</span></code>, <code class="docutils literal notranslate"><span class="pre">ymax</span></code>가 순서대로 나오는 걸 볼 수 있습니다. 이는 바운딩 박스 영역을 지정하는 정보입니다.</p>
+<p><img alt="dataset example" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/pics/ch2img01.png?raw=true" /></p>
+<ul class="simple">
+<li><p>그림 2.1 maksssksksss307.png 파일 시각화</p></li>
+</ul>
+<p>그림 2.1은 maksssksksss307.xml 파일이 설명하는 maksssksksss307.png 이미지 파일입니다. <code class="docutils literal notranslate"><span class="pre">object</span></code>가 X좌표 가장 왼쪽으로부터 순서대로 <code class="docutils literal notranslate"><span class="pre">mask_weared_incorrect</span></code>, <code class="docutils literal notranslate"><span class="pre">with_mask</span></code>, <code class="docutils literal notranslate"><span class="pre">without_mask</span></code>가 나오듯이, 해당 이미지 파일에서도 마스크를 올바르게 착용하지 않은 객체, 마스크를 착용한 객체, 그리고 마스크를 착용하지 않은 객체가 X 좌표 왼쪽에서부터 차례대로 나오는 걸 확인할 수 있습니다.</p>
+</div>
+<div class="section" id="id4">
+<h2>2.3. 바운딩 박스 도식화<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>딥러닝 모델 정확도를 높이기 위해 중요한 것은 데이터셋 검증입니다. 지도학습은 라벨링된 데이터로 모델이 학습을 하기 때문에 올바르게 라벨링 된 데이터임을 확인하는 것이 중요합니다. 이번 절에서는 주어진 이미지에 바운딩 박스를 시각화해 올바르게 라벨링이 된 데이터인지 확인해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.image</span> <span class="k">as</span> <span class="nn">mpimg</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>바운딩 박스 시각화 코드를 테스트하기 위해 위의 패키지들을 불러옵니다. matplotlib는 시각화의 대표적인 패키지이며, glob 패키지는 파일을 다루는데 널리 쓰이는 패키지입니다. BeautifulSoup은 HTML과 XML 문서 파일을 파싱(Parsing)하는 패키지이며, 웹스크래핑(Web Scraping)에 유용하게 쓰입니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">img_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;images/*&#39;</span><span class="p">))</span>
+<span class="n">annot_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;annotations/*&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>glob 패키지를 이용해 데이터셋을 불러옵니다. 폴더 경로는 데이터셋이 들어있는 곳으로 지정하셔야 합니다. 추가로 <code class="docutils literal notranslate"><span class="pre">sorted</span></code> 함수를 사용해 <code class="docutils literal notranslate"><span class="pre">img_list</span></code>에 있는 파일의 id 순서와 <code class="docutils literal notranslate"><span class="pre">annot_list</span></code>에 있는 파일의 id 순서가 같도록 해줍니다</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">img_list</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">annot_list</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>853
+853
+</pre></div>
+</div>
+</div>
+</div>
+<p>파이썬의 len() 기능을 이용하여, 각 폴더에 들어있는 파일 갯수를 파악해봅시다.
+각각의 폴더에 총 853개의 데이터를 불러왔습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">img_list</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">annot_list</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;images/maksssksksss0.png&#39;, &#39;images/maksssksksss1.png&#39;, &#39;images/maksssksksss10.png&#39;, &#39;images/maksssksksss100.png&#39;, &#39;images/maksssksksss101.png&#39;, &#39;images/maksssksksss102.png&#39;, &#39;images/maksssksksss103.png&#39;, &#39;images/maksssksksss104.png&#39;, &#39;images/maksssksksss105.png&#39;, &#39;images/maksssksksss106.png&#39;]
+[&#39;annotations/maksssksksss0.xml&#39;, &#39;annotations/maksssksksss1.xml&#39;, &#39;annotations/maksssksksss10.xml&#39;, &#39;annotations/maksssksksss100.xml&#39;, &#39;annotations/maksssksksss101.xml&#39;, &#39;annotations/maksssksksss102.xml&#39;, &#39;annotations/maksssksksss103.xml&#39;, &#39;annotations/maksssksksss104.xml&#39;, &#39;annotations/maksssksksss105.xml&#39;, &#39;annotations/maksssksksss106.xml&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>이제 각각의 폴더에 들어있는 파일이 제대로 있는지 확인해보도록 합니다. [:10]는 처음부터 총 10개의 파일명을 출력합니다. 여기서 주의할 점은 출력되는 파일이 순서대로 나오는지 확인해야합니다. 순서대로 출력되지 않을 경우, 이미지 파일과 바운딩 박스 파일의 순서가 뒤얽혀 바운딩 박스가 제대로 표기되지 않는 문제가 발생합니다. 위에서 <code class="docutils literal notranslate"><span class="pre">img_list</span></code>와 <code class="docutils literal notranslate"><span class="pre">annot_list</span></code>를 <code class="docutils literal notranslate"><span class="pre">sorted</span></code> 함수를 이용하여 불러왔기 때문에, 파일의 id 순서가 동일한 것을 알 수 있습니다.</p>
+<p>이제 바운딩 박스 시각화를 위한 함수를 정의해보도록 하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_box</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    
+    <span class="n">xmin</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;xmin&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">ymin</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;ymin&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">xmax</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;xmax&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">ymax</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;ymax&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">[</span><span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">generate_label</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;with_mask&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">obj</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;mask_weared_incorrect&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="mi">0</span>
+
+<span class="k">def</span> <span class="nf">generate_target</span><span class="p">(</span><span class="n">file</span><span class="p">):</span> 
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;html.parser&quot;</span><span class="p">)</span>
+        <span class="n">objects</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s2">&quot;object&quot;</span><span class="p">)</span>
+
+        <span class="n">num_objs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">objects</span><span class="p">)</span>
+
+        <span class="n">boxes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">objects</span><span class="p">:</span>
+            <span class="n">boxes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">generate_box</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+            <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">generate_label</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        
+        <span class="n">target</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">target</span><span class="p">[</span><span class="s2">&quot;boxes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">boxes</span>
+        <span class="n">target</span><span class="p">[</span><span class="s2">&quot;labels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels</span>
+        
+        <span class="k">return</span> <span class="n">target</span>
+
+<span class="k">def</span> <span class="nf">plot_image</span><span class="p">(</span><span class="n">img_path</span><span class="p">,</span> <span class="n">annotation</span><span class="p">):</span>
+    
+    <span class="n">img</span> <span class="o">=</span> <span class="n">mpimg</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">img_path</span><span class="p">)</span>
+    
+    <span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+
+    
+    <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">annotation</span><span class="p">[</span><span class="s2">&quot;boxes&quot;</span><span class="p">])):</span>
+        <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">annotation</span><span class="p">[</span><span class="s2">&quot;boxes&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">annotation</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">:</span>
+            <span class="n">rect</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">xmin</span><span class="p">,</span><span class="n">ymin</span><span class="p">),(</span><span class="n">xmax</span><span class="o">-</span><span class="n">xmin</span><span class="p">),(</span><span class="n">ymax</span><span class="o">-</span><span class="n">ymin</span><span class="p">),</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+        
+        <span class="k">elif</span> <span class="n">annotation</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">:</span>
+            
+            <span class="n">rect</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">xmin</span><span class="p">,</span><span class="n">ymin</span><span class="p">),(</span><span class="n">xmax</span><span class="o">-</span><span class="n">xmin</span><span class="p">),(</span><span class="n">ymax</span><span class="o">-</span><span class="n">ymin</span><span class="p">),</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+            
+        <span class="k">else</span> <span class="p">:</span>
+        
+            <span class="n">rect</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">xmin</span><span class="p">,</span><span class="n">ymin</span><span class="p">),(</span><span class="n">xmax</span><span class="o">-</span><span class="n">xmin</span><span class="p">),(</span><span class="n">ymax</span><span class="o">-</span><span class="n">ymin</span><span class="p">),</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>위의 코드는 총 4개의 함수를 정의하였습니다. 우선 <code class="docutils literal notranslate"><span class="pre">generate_box</span></code> 함수를 통해 <code class="docutils literal notranslate"><span class="pre">xmin</span></code>, <code class="docutils literal notranslate"><span class="pre">ymin</span></code>, <code class="docutils literal notranslate"><span class="pre">xmax</span></code>, <code class="docutils literal notranslate"><span class="pre">ymax</span></code> 값을 반환하도록 지정합니다. <code class="docutils literal notranslate"><span class="pre">generate_label</span></code> 함수는 마스크 착용 여부를 세단계로 나눠서 0, 1, 2 값을 반환합니다. <code class="docutils literal notranslate"><span class="pre">with_mask</span></code>의 경우 1을 <code class="docutils literal notranslate"><span class="pre">mask_weared_incorrect</span></code>의 경우 2를 나머지 경우의 수인 <code class="docutils literal notranslate"><span class="pre">without_mask</span></code>는 0을 반환합니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">generate_target</span></code> 함수는 <code class="docutils literal notranslate"><span class="pre">generate_box</span></code>와 <code class="docutils literal notranslate"><span class="pre">generate_label</span></code>를 각각 호출하여 반환된 값을 딕셔너리에 저장해 반환하는 함수입니다. <code class="docutils literal notranslate"><span class="pre">html.parser</span></code>를 이용해 annotations 파일에 있는 내용들을 불러와 타겟의 바운딩 박스와 라벨을 추출합니다. <code class="docutils literal notranslate"><span class="pre">plot_image</span></code> 함수는 이미지와 바운딩 박스를 함께 시각화 하는 함수입니다. 마스크 착용시 초록색, 마스크를 올바르게 착용 안했을 시 주황색, 마스크를 착용 안했을 시 빨간색 바운딩 박스를 그립니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">img_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;images/maksssksksss307.png&#39;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>232
+</pre></div>
+</div>
+</div>
+</div>
+<p>위의 코드는 maksssksksss307.png 파일의 인덱스 값을 찾기 위함입니다. <code class="docutils literal notranslate"><span class="pre">index</span></code> 함수를 이용하여 maksssksksss307.png 파일 위치의 인덱스 값을 확인할 수 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bbox</span> <span class="o">=</span> <span class="n">generate_target</span><span class="p">(</span><span class="n">annot_list</span><span class="p">[</span><span class="mi">232</span><span class="p">])</span>
+<span class="n">plot_image</span><span class="p">(</span><span class="n">img_list</span><span class="p">[</span><span class="mi">232</span><span class="p">],</span> <span class="n">bbox</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Ch2 데이터 탐색_31_0.png" src="../../_images/Ch2 데이터 탐색_31_0.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">plot_image</span></code> 함수를 통해 이미지 위에 바운딩 박스를 시각화 합니다. <code class="docutils literal notranslate"><span class="pre">generate_target</span></code> 함수를 활용해 maksssksksss307.png 파일에 해당하는 바운딩 박스 정보를 <code class="docutils literal notranslate"><span class="pre">bbox</span></code>에 저장합니다. 그리고 <code class="docutils literal notranslate"><span class="pre">plot_image</span></code> 함수에 바운딩 박스 정보와 더불어 해당 이미지 파일 정보도 넘겨주어 시각화를 실시합니다. <code class="docutils literal notranslate"><span class="pre">img_list[]</span></code>와 <code class="docutils literal notranslate"><span class="pre">annot_list[]</span></code>안의 숫자는 maksssksksss307.png 파일의 위치를 뜻하므로 같은 숫자가 들어가 있습니다.</p>
+<p>이번 장에서는 데이터셋 탐색을 하여 바운딩 박스를 확인하는 실습일 진행했씁니다. 다음 장에서는 데이터셋을 학습시키기 위한 데이터 전처리 과정에 대해 살펴보도록 하겠습니다.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./docs\object_detection"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Ch1%20Object%20Detection.html" title="previous page">1. 객체 탐지(Object Detection)</a>
+    <a class='right-next' id="next-link" href="Ch3%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A0%84%EC%B2%98%EB%A6%AC.html" title="next page">3. 데이터 전처리</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By PseudoLab Tutorial Team<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>

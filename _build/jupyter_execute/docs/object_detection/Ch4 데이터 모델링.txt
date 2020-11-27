@@ -1,0 +1,271 @@
+!git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
+!python Tutorial-Book-Utils/PL_data_loader.py --data FaceMaskDetection
+!unzip -q Face\ Mask\ Detection.zip
+
+import os
+import random
+import numpy as np
+import shutil
+
+print(len(os.listdir('annotations')))
+print(len(os.listdir('images')))
+
+!mkdir test_images
+!mkdir test_annotations
+
+
+random.seed(1234)
+idx = random.sample(range(853), 170)
+
+for img in np.array(sorted(os.listdir('images')))[idx]:
+    shutil.move('images/'+img, 'test_images/'+img)
+
+for annot in np.array(sorted(os.listdir('annotations')))[idx]:
+    shutil.move('annotations/'+annot, 'test_annotations/'+annot)
+
+print(len(os.listdir('annotations')))
+print(len(os.listdir('images')))
+print(len(os.listdir('test_annotations')))
+print(len(os.listdir('test_images')))
+
+import os
+import glob
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+import matplotlib.patches as patches
+from bs4 import BeautifulSoup
+from PIL import Image
+import cv2
+import numpy as np
+import time
+import torch
+import torchvision
+from torch.utils.data import Dataset
+from torchvision import transforms
+from matplotlib import pyplot as plt
+import os
+
+def generate_box(obj):
+    
+    xmin = float(obj.find('xmin').text)
+    ymin = float(obj.find('ymin').text)
+    xmax = float(obj.find('xmax').text)
+    ymax = float(obj.find('ymax').text)
+    
+    return [xmin, ymin, xmax, ymax]
+
+def generate_label(obj):
+
+    if obj.find('name').text == "with_mask":
+
+        return 1
+
+    elif obj.find('name').text == "mask_weared_incorrect":
+
+        return 2
+
+    return 0
+
+def generate_target(file): 
+    with open(file) as f:
+        data = f.read()
+        soup = BeautifulSoup(data, "html.parser")
+        objects = soup.find_all("object")
+
+        num_objs = len(objects)
+
+        boxes = []
+        labels = []
+        for i in objects:
+            boxes.append(generate_box(i))
+            labels.append(generate_label(i))
+
+        boxes = torch.as_tensor(boxes, dtype=torch.float32) 
+        labels = torch.as_tensor(labels, dtype=torch.int64) 
+        
+        target = {}
+        target["boxes"] = boxes
+        target["labels"] = labels
+        
+        return target
+
+def plot_image_from_output(img, annotation):
+    
+    img = img.cpu().permute(1,2,0)
+    
+    fig,ax = plt.subplots(1)
+    ax.imshow(img)
+    
+    for idx in range(len(annotation["boxes"])):
+        xmin, ymin, xmax, ymax = annotation["boxes"][idx]
+
+        if annotation['labels'][idx] == 0 :
+            rect = patches.Rectangle((xmin,ymin),(xmax-xmin),(ymax-ymin),linewidth=1,edgecolor='r',facecolor='none')
+        
+        elif annotation['labels'][idx] == 1 :
+            
+            rect = patches.Rectangle((xmin,ymin),(xmax-xmin),(ymax-ymin),linewidth=1,edgecolor='g',facecolor='none')
+            
+        else :
+        
+            rect = patches.Rectangle((xmin,ymin),(xmax-xmin),(ymax-ymin),linewidth=1,edgecolor='orange',facecolor='none')
+
+        ax.add_patch(rect)
+
+    plt.show()
+
+class MaskDataset(Dataset):
+    def __init__(self, path, transform=None):
+        self.path = path
+        self.imgs = list(sorted(os.listdir(self.path)))
+        self.transform = transform
+        
+    def __len__(self):
+        return len(self.imgs)
+
+    def __getitem__(self, idx):
+        file_image = self.imgs[idx]
+        file_label = self.imgs[idx][:-3] + 'xml'
+        img_path = os.path.join(self.path, file_image)
+        
+        if 'test' in self.path:
+            label_path = os.path.join("test_annotations/", file_label)
+        else:
+            label_path = os.path.join("annotations/", file_label)
+
+        img = Image.open(img_path).convert("RGB")
+        target = generate_target(label_path)
+        
+        to_tensor = torchvision.transforms.ToTensor()
+
+        if self.transform:
+            img, transform_target = self.transform(np.array(img), np.array(target['boxes']))
+            target['boxes'] = torch.as_tensor(transform_target)
+
+        # tensor로 변경
+        img = to_tensor(img)
+
+
+        return img, target
+
+
+def collate_fn(batch):
+    return tuple(zip(*batch))
+
+dataset = MaskDataset('images/')
+test_dataset = MaskDataset('test_images/')
+
+data_loader = torch.utils.data.DataLoader(dataset, batch_size=4, collate_fn=collate_fn)
+test_data_loader = torch.utils.data.DataLoader(test_dataset, batch_size=2, collate_fn=collate_fn)
+
+!pip install torch==1.7.0+cu101 torchvision==0.8.1+cu101 torchaudio==0.7.0 -f https://download.pytorch.org/whl/torch_stable.html
+
+import torchvision
+import torch
+
+torchvision.__version__
+
+retina = torchvision.models.detection.retinanet_resnet50_fpn(num_classes = 3, pretrained=False, pretrained_backbone = True)
+
+device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+
+num_epochs = 30
+retina.to(device)
+    
+# parameters
+params = [p for p in retina.parameters() if p.requires_grad] # gradient calculation이 필요한 params만 추출
+optimizer = torch.optim.SGD(params, lr=0.005,
+                                momentum=0.9, weight_decay=0.0005)
+
+len_dataloader = len(data_loader)
+
+for epoch in range(num_epochs):
+    start = time.time()
+    retina.train()
+
+    i = 0    
+    epoch_loss = 0
+    for images, targets in data_loader:
+        images = list(image.to(device) for image in images)
+        targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
+
+        loss_dict = retina(images, targets) 
+
+        losses = sum(loss for loss in loss_dict.values()) 
+
+        i += 1
+
+        optimizer.zero_grad()
+        losses.backward()
+        optimizer.step()
+        
+        epoch_loss += losses 
+    print(epoch_loss, f'time: {time.time() - start}')
+
+torch.save(retina.state_dict(),f'retina_{num_epochs}.pt')
+
+retina.load_state_dict(torch.load(f'retina_{num_epochs}.pt'))
+
+device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+retina.to(device)
+
+def make_prediction(model, img, threshold):
+    model.eval()
+    preds = model(img)
+    for id in range(len(preds)) :
+        idx_list = []
+
+        for idx, score in enumerate(preds[id]['scores']) :
+            if score > threshold : #threshold 넘는 idx 구함
+                idx_list.append(idx)
+
+        preds[id]['boxes'] = preds[id]['boxes'][idx_list]
+        preds[id]['labels'] = preds[id]['labels'][idx_list]
+        preds[id]['scores'] = preds[id]['scores'][idx_list]
+
+
+    return preds
+
+from tqdm import tqdm
+
+labels = []
+preds_adj_all = []
+annot_all = []
+
+for im, annot in tqdm(test_data_loader, position = 0, leave = True):
+    im = list(img.to(device) for img in im)
+    #annot = [{k: v.to(device) for k, v in t.items()} for t in annot]
+
+    for t in annot:
+        labels += t['labels']
+
+    with torch.no_grad():
+        preds_adj = make_prediction(retina, im, 0.5)
+        preds_adj = [{k: v.to(torch.device('cpu')) for k, v in t.items()} for t in preds_adj]
+        preds_adj_all.append(preds_adj)
+        annot_all.append(annot)
+
+
+batch_i = 0
+for im, annot in test_data_loader:
+    for sample_i in range(len(im)) :
+        print('true')
+        plot_image_from_output(im[sample_i], annot[sample_i])
+        print('pred')
+        plot_image_from_output(im[sample_i], preds_adj_all[batch_i][sample_i])
+    batch_i += 1
+    if batch_i == 4:
+        break
+
+%cd Tutorial-Book-Utils/
+import utils_ObjectDetection as utils
+
+sample_metrics = []
+for batch_i in range(len(preds_adj_all)):
+    sample_metrics += utils.get_batch_statistics(preds_adj_all[batch_i], annot_all[batch_i], iou_threshold=0.5) 
+
+true_positives, pred_scores, pred_labels = [torch.cat(x, 0) for x in list(zip(*sample_metrics))]  # 배치가 전부 합쳐짐
+precision, recall, AP, f1, ap_class = utils.ap_per_class(true_positives, pred_scores, pred_labels, torch.tensor(labels))
+mAP = torch.mean(AP)
+print(f'mAP : {mAP}')
+print(f'AP : {AP}')

@@ -1,7 +1,11 @@
 # - file: README
+
 - file: docs/index
-  sections:
-    - file: docs/about_py
-    - file: docs/getting_started
-    - file: docs/python_by_example
-    - file: docs/learn_more
+    
+- part: 객체 탐지(Object Detection)
+  chapters:
+    - file: docs/object_detection/Ch1 Object Detection
+    - file: docs/object_detection/Ch2 데이터 탐색
+    - file: docs/object_detection/Ch3 데이터 전처리
+    - file: docs/object_detection/Ch4 데이터 모델링
+    - file: docs/object_detection/Ch5 성능 향상을 위한 방법
