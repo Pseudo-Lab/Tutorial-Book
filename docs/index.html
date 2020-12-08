@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>가짜연구소 튜토리얼 책 (가제) &#8212; PseudoLab Tutorial Book</title>
+    <title>파이토치를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials using PyTorch) &#8212; PseudoLab Tutorial Book</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -44,6 +44,40 @@
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "github.com/Pseudo-Lab/Tutorial-Book");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
@@ -85,7 +119,14 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form>
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
-    <p class="caption collapsible-parent">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="reference internal" href="#">
+   파이토치를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials using PyTorch)
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
  <span class="caption-text">
   객체 탐지(Object Detection)
  </span>
@@ -188,15 +229,21 @@
         
               <div>
                 
-  <div class="section" id="id1">
-<h1>가짜연구소 튜토리얼 책 (가제)<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>본 책은 가짜연구소 AI School 튜토리얼 팀에 의해 제작 되었습니다. (제작중)</p>
+  <div class="section" id="deep-learning-tutorials-using-pytorch">
+<h1>파이토치를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials using PyTorch)<a class="headerlink" href="#deep-learning-tutorials-using-pytorch" title="Permalink to this headline">¶</a></h1>
+<p>해당 자료는 가짜연구소 AI School 튜토리얼 팀에 의해 제작 되었습니다.</p>
 <p>가짜연구소는 진짜 연구소는 아니지만 <strong>머신러닝 연구를 중심</strong>으로 모인 커뮤니티입니다. 오픈(open)의 가치를 추구하는 좋은 영향력을 끼칠 수 있는 그룹을 만들고자 합니다!</p>
 <p><strong>비영리적</strong>으로 <strong>머신러닝/딥러닝, 케글</strong> 관련한 <strong>밋업</strong>, <strong>스터디</strong>, <strong>코드 공유</strong>, <strong>유튜브</strong>, <strong>해커톤</strong> 및 <strong>각종 이벤트</strong>를 통해 공유의 가치를 형성하고자 합니다.</p>
-<p>제작</p>
-<p>객체 탐지: 튜토리얼 팀 1기 (강민지, 김호열, 박준형, 안성진)</p>
-<p>시계열 분석: 튜토리얼 팀 1기 (강민지, 김호열, 박준형, 안성진)</p>
-<p>Email: <a class="reference external" href="mailto:pseudolab&#46;operator&#37;&#52;&#48;gmail&#46;com">pseudolab<span>&#46;</span>operator<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+<p><strong>제작</strong></p>
+<ul class="simple">
+<li><p>객체 탐지: 튜토리얼 팀 1기 (<a class="reference external" href="https://github.com/mmminji">강민지</a>, <a class="reference external" href="https://twitter.com/elibooklover">김호열</a>, <a class="reference external" href="https://github.com/oopsys6">박준형</a>, <a class="reference external" href="https://www.linkedin.com/in/sungjin-ahn/">안성진</a>)</p></li>
+<li><p>시계열 분석: 튜토리얼 팀 1기 (<a class="reference external" href="https://github.com/mmminji">강민지</a>, <a class="reference external" href="https://twitter.com/elibooklover">김호열</a>, <a class="reference external" href="https://github.com/oopsys6">박준형</a>, <a class="reference external" href="https://www.linkedin.com/in/sungjin-ahn/">안성진</a>)</p></li>
+</ul>
+<p><strong>가짜연구소</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pseudo-lab.com/">홈페이지</a>, <a class="reference external" href="https://github.com/Pseudo-Lab">Github</a>, <a class="reference external" href="https://www.facebook.com/groups/pseudolab/">Facebook</a>, <a class="reference external" href="https://www.linkedin.com/company/pseudolab/?originalSubdomain=kr">Linkedin</a></p></li>
+<li><p>문의: <a class="reference external" href="mailto:pseudolab&#46;operator&#37;&#52;&#48;gmail&#46;com">pseudolab<span>&#46;</span>operator<span>&#64;</span>gmail<span>&#46;</span>com</a></p></li>
+</ul>
 <div class="toctree-wrapper compound">
 </div>
 </div>

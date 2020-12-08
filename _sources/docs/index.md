@@ -1,6 +1,6 @@
-# 가짜연구소 튜토리얼 책 (가제)
+# 파이토치를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials using PyTorch) 
 
-본 책은 가짜연구소 AI School 튜토리얼 팀에 의해 제작 되었습니다. (제작중)
+해당 자료는 가짜연구소 AI School 튜토리얼 팀에 의해 제작 되었습니다.
 
 가짜연구소는 진짜 연구소는 아니지만 **머신러닝 연구를 중심**으로 모인 커뮤니티입니다. 오픈(open)의 가치를 추구하는 좋은 영향력을 끼칠 수 있는 그룹을 만들고자 합니다!
 
@@ -8,13 +8,19 @@
 
 
 
-제작
+**제작**
 
-객체 탐지: 튜토리얼 팀 1기 (강민지, 김호열, 박준형, 안성진)
+- 객체 탐지: 튜토리얼 팀 1기 ([강민지](https://github.com/mmminji), [김호열](https://twitter.com/elibooklover), [박준형](https://github.com/oopsys6), [안성진](https://www.linkedin.com/in/sungjin-ahn/))
 
-시계열 분석: 튜토리얼 팀 1기 (강민지, 김호열, 박준형, 안성진)
+- 시계열 분석: 튜토리얼 팀 1기 ([강민지](https://github.com/mmminji), [김호열](https://twitter.com/elibooklover), [박준형](https://github.com/oopsys6), [안성진](https://www.linkedin.com/in/sungjin-ahn/))
 
-Email: [pseudolab.operator@gmail.com](mailto:pseudolab.operator@gmail.com)
+
+
+**가짜연구소**
+
+- [홈페이지](https://pseudo-lab.com/), [Github](https://github.com/Pseudo-Lab), [Facebook](https://www.facebook.com/groups/pseudolab/), [Linkedin](https://www.linkedin.com/company/pseudolab/?originalSubdomain=kr)
+
+- 문의: [pseudolab.operator@gmail.com](mailto:pseudolab.operator@gmail.com)
 
 
 
