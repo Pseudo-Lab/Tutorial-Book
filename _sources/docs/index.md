@@ -10,9 +10,9 @@
 
 **제작**
 
-- 객체 탐지: 튜토리얼 팀 1기 ([강민지](https://github.com/mmminji), [김호열](https://twitter.com/elibooklover), [박준형](https://github.com/oopsys6), [안성진](https://www.linkedin.com/in/sungjin-ahn/))
+- 객체 탐지: 튜토리얼 팀 1기 ([강민지](https://github.com/mmminji), [김호열](https://github.com/elibooklover), [박준형](https://github.com/oopsys6), [안성진](https://www.linkedin.com/in/sungjin-ahn/))
 
-- 시계열 분석: 튜토리얼 팀 1기 ([강민지](https://github.com/mmminji), [김호열](https://twitter.com/elibooklover), [박준형](https://github.com/oopsys6), [안성진](https://www.linkedin.com/in/sungjin-ahn/))
+- 시계열 분석: 튜토리얼 팀 1기 ([강민지](https://github.com/mmminji), [김호열](https://github.com/elibooklover), [박준형](https://github.com/oopsys6), [안성진](https://www.linkedin.com/in/sungjin-ahn/))
 
 
 
