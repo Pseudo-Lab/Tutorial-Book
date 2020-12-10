@@ -38,4 +38,12 @@ latex:
   latex_documents:
     targetname: book.tex
     
+html:
+  favicon: 'PseudoLab_logo.png'
+  use_issues_button: true
+  use_repository_button: true
+  comments:
+    utterances:
+      repo: "Pseudo-Lab/Tutorial-Book"
+    
 exclude_patterns: [draft/*]
