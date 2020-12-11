@@ -198,7 +198,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/docs/object_detection/Ch5 성능 향상을 위한 방법.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/chapters/object_detection/Ch5 성능 향상을 위한 방법.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -218,7 +218,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fdocs/object_detection/Ch5 성능 향상을 위한 방법.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/object_detection/Ch5 성능 향상을 위한 방법.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -239,7 +239,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/docs/object_detection/Ch5 성능 향상을 위한 방법.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/chapters/object_detection/Ch5 성능 향상을 위한 방법.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -305,6 +305,10 @@ commentsRunWhenDOMLoaded(addUtterances);
   <div class="section" id="id1">
 <h1>5. 성능 향상을 위한 방법<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/drive/1cbQQ2CntUah9N0rsJdtWELseb-N_raFk?usp=sharing"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/GI0XSvOj4XY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+</div>
 <p>4장에서는 One-Stage Detector 모델인 RetinaNet을 활용해 의료용 마스크 탐지 모델을 구축해보았습니다. 이번 장에서는 Two-Stage Detector인 Faster R-CNN으로 객체 탐지를 해보도록 하겠습니다.</p>
 <p>5.1절부터 5.3절까지는 2장과 3장에서 확인한 내용을 바탕으로 데이터를 불러오고 훈련용, 시험용 데이터로 나눈 후 데이터셋 클래스를 정의하겠습니다. 5.4절에서는 torchvision API를 활용하여 사전 훈련된 모델을 불러오겠습니다. 5.5절에서는 전이 학습을 통해 모델 학습을 진행한 후 5.6절에서 예측값 산출 및 모델 성능을 확인해보겠습니다.</p>
 <p>실험에 앞서 Google Colab에서는 랜덤 GPU를 할당하고 있기 때문에 메모리 부족현상이 일어날 수 있습니다.</p>
@@ -333,7 +337,7 @@ We will use the GPU: Tesla T4
 </div>
 <div class="section" id="id2">
 <h2>5.1 데이터 불러오기<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>모델링 실습을 위해 2.1절에 나온 코드를 활용하여 데이터를 불러오겠습니다.</p>
+<p>모델링 실습을 위해 2.1절에 나온 코드를 활용하여 데이터를 불러오겠습니다. 가짜연구소 깃허브의 Tutorial-Book-Utils에 있는 PL_data_loader.py 파일로 FascMaskDetection 데이터셋을 다운받고 압축 파일을 푸는 순서입니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
@@ -345,9 +349,60 @@ We will use the GPU: Tesla T4
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cloning into &#39;Tutorial-Book-Utils&#39;...
 remote: Enumerating objects: 18, done.
+remote: Counting objects:   5% (1/18)
+remote: Counting objects:  11% (2/18)
+remote: Counting objects:  16% (3/18)
+remote: Counting objects:  22% (4/18)
+remote: Counting objects:  27% (5/18)
+remote: Counting objects:  33% (6/18)
+remote: Counting objects:  38% (7/18)
+remote: Counting objects:  44% (8/18)
+remote: Counting objects:  50% (9/18)
+remote: Counting objects:  55% (10/18)
+remote: Counting objects:  61% (11/18)
+remote: Counting objects:  66% (12/18)
+remote: Counting objects:  72% (13/18)
+remote: Counting objects:  77% (14/18)
+remote: Counting objects:  83% (15/18)
+remote: Counting objects:  88% (16/18)
+remote: Counting objects:  94% (17/18)
+remote: Counting objects: 100% (18/18)
 remote: Counting objects: 100% (18/18), done.
+remote: Compressing objects:   6% (1/15)
+remote: Compressing objects:  13% (2/15)
+remote: Compressing objects:  20% (3/15)
+remote: Compressing objects:  26% (4/15)
+remote: Compressing objects:  33% (5/15)
+remote: Compressing objects:  40% (6/15)
+remote: Compressing objects:  46% (7/15)
+remote: Compressing objects:  53% (8/15)
+remote: Compressing objects:  60% (9/15)
+remote: Compressing objects:  66% (10/15)
+remote: Compressing objects:  73% (11/15)
+remote: Compressing objects:  80% (12/15)
+remote: Compressing objects:  86% (13/15)
+remote: Compressing objects:  93% (14/15)
+remote: Compressing objects: 100% (15/15)
 remote: Compressing objects: 100% (15/15), done.
 remote: Total 18 (delta 4), reused 8 (delta 2), pack-reused 0
+Unpacking objects:   5% (1/18)   
+Unpacking objects:  11% (2/18)   
+Unpacking objects:  16% (3/18)   
+Unpacking objects:  22% (4/18)   
+Unpacking objects:  27% (5/18)   
+Unpacking objects:  33% (6/18)   
+Unpacking objects:  38% (7/18)   
+Unpacking objects:  44% (8/18)   
+Unpacking objects:  50% (9/18)   
+Unpacking objects:  55% (10/18)   
+Unpacking objects:  61% (11/18)   
+Unpacking objects:  66% (12/18)   
+Unpacking objects:  72% (13/18)   
+Unpacking objects:  77% (14/18)   
+Unpacking objects:  83% (15/18)   
+Unpacking objects:  88% (16/18)   
+Unpacking objects:  94% (17/18)   
+Unpacking objects: 100% (18/18)   
 Unpacking objects: 100% (18/18), done.
 Face Mask Detection.zip is done!
 </pre></div>
@@ -357,7 +412,7 @@ Face Mask Detection.zip is done!
 </div>
 <div class="section" id="id3">
 <h2>5.2 데이터 분리<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>3.3절에서 확인한 데이터 분리 방법을 활용하여 데이터를 분리하겠습니다.</p>
+<p>3.3절과 같이 데이터셋을 분리해보도록 하겠습니다. 아래 코드를 통해 임의로 170장을 추출하고 test폴더에 옮기는 작업을 수행합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>import os
@@ -419,7 +474,7 @@ print(len(os.listdir(&#39;test_images&#39;)))
 </div>
 <div class="section" id="id4">
 <h2>5.3 데이터셋 클래스 정의<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<p>2.3절과 마찬가지로 바운딩 박스를 위한 함수들을 정의해줍니다.</p>
+<p>이번에는 바운딩 박스를 위한 함수들을 2.3절과 마찬가지로 정의해줍니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_box</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
@@ -553,7 +608,7 @@ print(len(os.listdir(&#39;test_images&#39;)))
 <div class="section" id="id5">
 <h2>5.4 모델 불러오기<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">torchvision.models.detection</span></code>에서는 Faster R-CNN API(<code class="docutils literal notranslate"><span class="pre">torchvision.models.detection.fasterrcnn_resnet50_fpn</span></code>)를 제공하고 있어 쉽게 구현이 가능합니다. 이는 COCO 데이터셋을 ResNet50으로 pre-trained한 모델을 제공하고 있으며, <code class="docutils literal notranslate"><span class="pre">pretrained=True/False</span></code>로 설정할 수 있습니다.</p>
-<p>모델을 불러올 때 <code class="docutils literal notranslate"><span class="pre">num_classes</span></code>에 원하는 클래스 개수를 설정하고 모델을 사용하면 됩니다. Faster R-CNN 사용 시 주의할 점은 background 클래스를 포함한 개수를 <code class="docutils literal notranslate"><span class="pre">num_classes</span></code>에 명시해주어야 합니다. 이번 데이터 셋에는 총 3개의 클래스가 있기 때문에 background 클래스까지 합해서 <code class="docutils literal notranslate"><span class="pre">num_classes</span></code>에 4를 할당하겠습니다.</p>
+<p>이후 모델을 불러올 때는 <code class="docutils literal notranslate"><span class="pre">num_classes</span></code>에 원하는 클래스 개수를 설정하고 모델을 사용하면 됩니다. Faster R-CNN 사용 시 주의할 점은 background 클래스를 포함한 개수를 <code class="docutils literal notranslate"><span class="pre">num_classes</span></code>에 명시해주어야 합니다. 즉, 실제 데이터셋의 클래스 개수에 1개를 늘려 background 클래스를 추가해주어야 합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_model_instance_segmentation</span><span class="p">(</span><span class="n">num_classes</span><span class="p">):</span>
@@ -581,6 +636,226 @@ print(len(os.listdir(&#39;test_images&#39;)))
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>FasterRCNN(
+  (transform): GeneralizedRCNNTransform(
+      Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+      Resize(min_size=(800,), max_size=1333, mode=&#39;bilinear&#39;)
+  )
+  (backbone): BackboneWithFPN(
+    (body): IntermediateLayerGetter(
+      (conv1): Conv2d(3, 64, kernel_size=(7, 7), stride=(2, 2), padding=(3, 3), bias=False)
+      (bn1): FrozenBatchNorm2d(64)
+      (relu): ReLU(inplace=True)
+      (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+      (layer1): Sequential(
+        (0): Bottleneck(
+          (conv1): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(64)
+          (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(64)
+          (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(256)
+          (relu): ReLU(inplace=True)
+          (downsample): Sequential(
+            (0): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+            (1): FrozenBatchNorm2d(256)
+          )
+        )
+        (1): Bottleneck(
+          (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(64)
+          (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(64)
+          (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(256)
+          (relu): ReLU(inplace=True)
+        )
+        (2): Bottleneck(
+          (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(64)
+          (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(64)
+          (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(256)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (layer2): Sequential(
+        (0): Bottleneck(
+          (conv1): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(128)
+          (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(128)
+          (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(512)
+          (relu): ReLU(inplace=True)
+          (downsample): Sequential(
+            (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+            (1): FrozenBatchNorm2d(512)
+          )
+        )
+        (1): Bottleneck(
+          (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(128)
+          (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(128)
+          (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(512)
+          (relu): ReLU(inplace=True)
+        )
+        (2): Bottleneck(
+          (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(128)
+          (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(128)
+          (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(512)
+          (relu): ReLU(inplace=True)
+        )
+        (3): Bottleneck(
+          (conv1): Conv2d(512, 128, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(128)
+          (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(128)
+          (conv3): Conv2d(128, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(512)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (layer3): Sequential(
+        (0): Bottleneck(
+          (conv1): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(256)
+          (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(256)
+          (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(1024)
+          (relu): ReLU(inplace=True)
+          (downsample): Sequential(
+            (0): Conv2d(512, 1024, kernel_size=(1, 1), stride=(2, 2), bias=False)
+            (1): FrozenBatchNorm2d(1024)
+          )
+        )
+        (1): Bottleneck(
+          (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(256)
+          (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(256)
+          (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(1024)
+          (relu): ReLU(inplace=True)
+        )
+        (2): Bottleneck(
+          (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(256)
+          (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(256)
+          (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(1024)
+          (relu): ReLU(inplace=True)
+        )
+        (3): Bottleneck(
+          (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(256)
+          (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(256)
+          (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(1024)
+          (relu): ReLU(inplace=True)
+        )
+        (4): Bottleneck(
+          (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(256)
+          (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(256)
+          (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(1024)
+          (relu): ReLU(inplace=True)
+        )
+        (5): Bottleneck(
+          (conv1): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(256)
+          (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(256)
+          (conv3): Conv2d(256, 1024, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(1024)
+          (relu): ReLU(inplace=True)
+        )
+      )
+      (layer4): Sequential(
+        (0): Bottleneck(
+          (conv1): Conv2d(1024, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(512)
+          (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(512)
+          (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(2048)
+          (relu): ReLU(inplace=True)
+          (downsample): Sequential(
+            (0): Conv2d(1024, 2048, kernel_size=(1, 1), stride=(2, 2), bias=False)
+            (1): FrozenBatchNorm2d(2048)
+          )
+        )
+        (1): Bottleneck(
+          (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(512)
+          (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(512)
+          (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(2048)
+          (relu): ReLU(inplace=True)
+        )
+        (2): Bottleneck(
+          (conv1): Conv2d(2048, 512, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn1): FrozenBatchNorm2d(512)
+          (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+          (bn2): FrozenBatchNorm2d(512)
+          (conv3): Conv2d(512, 2048, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (bn3): FrozenBatchNorm2d(2048)
+          (relu): ReLU(inplace=True)
+        )
+      )
+    )
+    (fpn): FeaturePyramidNetwork(
+      (inner_blocks): ModuleList(
+        (0): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (1): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1))
+        (2): Conv2d(1024, 256, kernel_size=(1, 1), stride=(1, 1))
+        (3): Conv2d(2048, 256, kernel_size=(1, 1), stride=(1, 1))
+      )
+      (layer_blocks): ModuleList(
+        (0): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (extra_blocks): LastLevelMaxPool()
+    )
+  )
+  (rpn): RegionProposalNetwork(
+    (anchor_generator): AnchorGenerator()
+    (head): RPNHead(
+      (conv): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (cls_logits): Conv2d(256, 3, kernel_size=(1, 1), stride=(1, 1))
+      (bbox_pred): Conv2d(256, 12, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+  (roi_heads): RoIHeads(
+    (box_roi_pool): MultiScaleRoIAlign()
+    (box_head): TwoMLPHead(
+      (fc6): Linear(in_features=12544, out_features=1024, bias=True)
+      (fc7): Linear(in_features=1024, out_features=1024, bias=True)
+    )
+    (box_predictor): FastRCNNPredictor(
+      (cls_score): Linear(in_features=1024, out_features=4, bias=True)
+      (bbox_pred): Linear(in_features=1024, out_features=16, bias=True)
+    )
+  )
+)
+</pre></div>
+</div>
+</div>
 </div>
 <p>위의 출력되는 결과를 통해 Fastser R-CNN이 어떤 layer들로 구성되어 있는지 알 수 있습니다. 이 때, GPU 사용 가능 여부는 <code class="docutils literal notranslate"><span class="pre">torch.cuda.is_available()</span></code>를 통해 알 수 있습니다.</p>
 <div class="cell docutils container">
@@ -595,10 +870,10 @@ print(len(os.listdir(&#39;test_images&#39;)))
 </div>
 </div>
 </div>
-<p>이제 모델이 만들어졌으니 학습을 해보겠습니다. 학습 횟수(<code class="docutils literal notranslate"><span class="pre">num_epochs</span></code>)는 5로 지정하고, SGD 방법을 통해 최적화 시켜보겠습니다. 각 하이퍼 파라미터는 자유롭게 수정하여 사용할 수 있습니다.</p>
+<p>이제 모델이 만들어졌으니 학습을 해보겠습니다. 학습 횟수(<code class="docutils literal notranslate"><span class="pre">num_epochs</span></code>)는 10으로 지정하고, SGD 방법을 통해 최적화 시켜보겠습니다. 각 하이퍼 파라미터는 자유롭게 수정하여 사용할 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">5</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">requires_grad</span><span class="p">]</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span>
                                 <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.0005</span><span class="p">)</span>
@@ -606,7 +881,7 @@ print(len(os.listdir(&#39;test_images&#39;)))
 </div>
 </div>
 </div>
-<p>이제 학습을 시켜보겠습니다. 위에서 생성한 data_loader에서 한 배치씩 순서대로 모델에 사용하며, 이후 loss 계산을 통해 최적화를 수행합니다. 지정한 에폭만큼 반복하고 각 에폭마다 loss를 출력하여 확인합니다.</p>
+<p>이제 학습을 시켜보겠습니다. 위에서 생성한 data_loader에서 한 배치씩 순서대로 모델에 사용하며, 이후 로스 계산을 통해 최적화를 수행합니다. 각 에폭마다 출력되는 로스를 통해서 학습이 진행되는것을 확인할 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------------------train start--------------------------&#39;</span><span class="p">)</span>
@@ -632,11 +907,16 @@ print(len(os.listdir(&#39;test_images&#39;)))
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>----------------------train start--------------------------
-epoch : 1, Loss : 74.34998321533203, time : 273.16055250167847
-epoch : 2, Loss : 50.06059646606445, time : 272.5033800601959
-epoch : 3, Loss : 42.119712829589844, time : 272.21661353111267
-epoch : 4, Loss : 36.70801544189453, time : 272.0769696235657
-epoch : 5, Loss : 33.883331298828125, time : 272.2374768257141
+epoch : 1, Loss : 77.14759063720703, time : 252.42370867729187
+epoch : 2, Loss : 48.91315460205078, time : 263.22984743118286
+epoch : 3, Loss : 43.18947982788086, time : 264.4591932296753
+epoch : 4, Loss : 36.07373046875, time : 265.2568733692169
+epoch : 5, Loss : 31.8864688873291, time : 265.57766008377075
+epoch : 6, Loss : 31.76308250427246, time : 265.0076003074646
+epoch : 7, Loss : 31.24744415283203, time : 265.16882514953613
+epoch : 8, Loss : 29.340274810791016, time : 265.73448038101196
+epoch : 9, Loss : 25.922008514404297, time : 267.91367626190186
+epoch : 10, Loss : 23.59230613708496, time : 266.9004054069519
 </pre></div>
 </div>
 </div>
@@ -664,58 +944,7 @@ epoch : 5, Loss : 33.883331298828125, time : 272.2374768257141
 </div>
 <div class="section" id="id7">
 <h2>5.6 예측<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<p>모델 학습이 끝났으면 잘 학습되었는지 예측 결과를 확인해보겠습니다. 우선 test_data_loader의 첫번째 배치에 대해서 결과를 출력해보았습니다. 아래와 같이 batch_size 만큼의 그림에 대해 바운딩 박스의 좌표(boxes)와 클래스(labels), 점수(scores)가 예측됩니다.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span> 
-    
-    <span class="k">for</span> <span class="n">imgs</span><span class="p">,</span> <span class="n">annotations</span> <span class="ow">in</span> <span class="n">test_data_loader</span><span class="p">:</span>
-        <span class="n">imgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">imgs</span><span class="p">)</span>
-
-        <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-        <span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">imgs</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
-        <span class="k">break</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;boxes&#39;: tensor([[213.8170,  60.3228, 257.5329,  99.4139],
-        [116.9146,   2.2618, 133.8999,  17.7742]], device=&#39;cuda:0&#39;), &#39;labels&#39;: tensor([2, 2], device=&#39;cuda:0&#39;), &#39;scores&#39;: tensor([0.9491, 0.9181], device=&#39;cuda:0&#39;)}, {&#39;boxes&#39;: tensor([[218.1418, 100.7296, 257.6489, 138.6261],
-        [130.1944, 111.2079, 180.6899, 151.8661],
-        [302.6493, 131.3666, 332.1136, 158.1566],
-        [ 40.7404, 110.1605,  67.1615, 140.2841],
-        [164.7895,  90.4779, 179.6878, 107.9786],
-        [ 28.9578,  89.8970,  45.3396, 104.7100],
-        [ 83.2690,  84.5476,  95.3321,  96.8537],
-        [  1.6865, 104.6856,  21.2249, 128.0417],
-        [ 82.4948,  86.1961,  95.4540, 111.2381],
-        [257.7352,  91.0032, 269.2602, 103.0512],
-        [220.4953, 130.3433, 262.5282, 164.9134],
-        [112.8341,  83.7270, 131.0779, 107.2787],
-        [  1.0475, 104.9788,  22.3046, 128.0129],
-        [  1.4895, 104.1338,  22.4582, 127.9700],
-        [294.6094,  85.9146, 304.8036,  97.2667],
-        [ 66.8509, 116.1967,  75.7663, 128.3520],
-        [ 82.6732,  85.0100,  94.9598,  98.5600],
-        [ 41.0549, 108.6414,  67.3928, 139.6502],
-        [182.7905,  80.3306, 192.6395,  90.3152],
-        [ 28.7466,  89.0747,  46.1735, 105.0111],
-        [303.0154, 131.1595, 331.8779, 158.8569],
-        [185.6937,  78.3917, 191.9917,  85.0067],
-        [105.2737,  90.5008, 114.7859, 106.9807],
-        [ 83.0829,  85.3499,  94.9884,  98.7033],
-        [170.4791, 103.1851, 190.0255, 127.7112],
-        [164.9277,  89.7978, 180.3420, 109.2956]], device=&#39;cuda:0&#39;), &#39;labels&#39;: tensor([2, 2, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 3, 2, 1, 3, 3, 2, 3, 3, 2, 1, 2,
-        2, 3], device=&#39;cuda:0&#39;), &#39;scores&#39;: tensor([0.9930, 0.9866, 0.9491, 0.9489, 0.9451, 0.9442, 0.9338, 0.8371, 0.5053,
-        0.4390, 0.3644, 0.3301, 0.2624, 0.2057, 0.1229, 0.1118, 0.1001, 0.0973,
-        0.0864, 0.0848, 0.0774, 0.0710, 0.0675, 0.0630, 0.0620, 0.0615],
-       device=&#39;cuda:0&#39;)}]
-</pre></div>
-</div>
-</div>
-</div>
-<p>‘scores’에는 점수, 또는 해당 클래스일 신뢰도 값이 저장됩니다. 0.5 이상인 것만 추출하기 위해 아래와 같은 함수를 정의하겠습니다.</p>
+<p>모델 학습이 끝났으면 잘 학습되었는지 예측 결과를 확인해보겠습니다. 예측결과에는 바운딩 박스의 좌표(boxes)와 클래스(labels), 점수(scores)가 포함됩니다. 점수(scores)에는 해당 클래스의 신뢰도 값이 저장되는데 threshold로 0.5 이상인 것만 추출하도록 함수<code class="docutils literal notranslate"><span class="pre">make_prediction</span></code>를 정의하겠습니다. 그리고 test_data_loader의 첫번째 배치에 대해서만 결과를 출력해보았습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_prediction</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
@@ -725,7 +954,7 @@ epoch : 5, Loss : 33.883331298828125, time : 272.2374768257141
         <span class="n">idx_list</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">preds</span><span class="p">[</span><span class="nb">id</span><span class="p">][</span><span class="s1">&#39;scores&#39;</span><span class="p">])</span> <span class="p">:</span>
-            <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="n">threshold</span> <span class="p">:</span> <span class="c1">#threshold 넘는 idx 구함</span>
+            <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="n">threshold</span> <span class="p">:</span> 
                 <span class="n">idx_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
 
         <span class="n">preds</span><span class="p">[</span><span class="nb">id</span><span class="p">][</span><span class="s1">&#39;boxes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">preds</span><span class="p">[</span><span class="nb">id</span><span class="p">][</span><span class="s1">&#39;boxes&#39;</span><span class="p">][</span><span class="n">idx_list</span><span class="p">]</span>
@@ -740,7 +969,7 @@ epoch : 5, Loss : 33.883331298828125, time : 272.2374768257141
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span> 
-
+    <span class="c1"># 테스트셋 배치사이즈= 2</span>
     <span class="k">for</span> <span class="n">imgs</span><span class="p">,</span> <span class="n">annotations</span> <span class="ow">in</span> <span class="n">test_data_loader</span><span class="p">:</span>
         <span class="n">imgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">imgs</span><span class="p">)</span>
 
@@ -751,22 +980,22 @@ epoch : 5, Loss : 33.883331298828125, time : 272.2374768257141
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;boxes&#39;: tensor([[213.8170,  60.3228, 257.5329,  99.4139],
-        [116.9146,   2.2618, 133.8999,  17.7742]], device=&#39;cuda:0&#39;), &#39;labels&#39;: tensor([2, 2], device=&#39;cuda:0&#39;), &#39;scores&#39;: tensor([0.9491, 0.9181], device=&#39;cuda:0&#39;)}, {&#39;boxes&#39;: tensor([[218.1418, 100.7296, 257.6489, 138.6261],
-        [130.1944, 111.2079, 180.6899, 151.8661],
-        [302.6493, 131.3666, 332.1136, 158.1566],
-        [ 40.7404, 110.1605,  67.1615, 140.2841],
-        [164.7895,  90.4779, 179.6878, 107.9786],
-        [ 28.9578,  89.8970,  45.3396, 104.7100],
-        [ 83.2690,  84.5476,  95.3321,  96.8537],
-        [  1.6865, 104.6856,  21.2249, 128.0417],
-        [ 82.4948,  86.1961,  95.4540, 111.2381]], device=&#39;cuda:0&#39;), &#39;labels&#39;: tensor([2, 2, 1, 1, 1, 1, 1, 1, 2], device=&#39;cuda:0&#39;), &#39;scores&#39;: tensor([0.9930, 0.9866, 0.9491, 0.9489, 0.9451, 0.9442, 0.9338, 0.8371, 0.5053],
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;boxes&#39;: tensor([[117.7811,   1.4936, 132.9596,  18.4192],
+        [214.8204,  59.8669, 249.7893,  97.6275]], device=&#39;cuda:0&#39;), &#39;labels&#39;: tensor([2, 2], device=&#39;cuda:0&#39;), &#39;scores&#39;: tensor([0.9430, 0.9414], device=&#39;cuda:0&#39;)}, {&#39;boxes&#39;: tensor([[218.8598,  99.3362, 260.0332, 138.8516],
+        [130.5172, 109.1189, 179.2908, 152.5566],
+        [ 29.2499,  88.7732,  45.5664, 104.5635],
+        [ 40.9168, 109.1093,  67.3653, 140.0567],
+        [165.5889,  90.0294, 179.4471, 109.1606],
+        [ 83.7276,  84.3918,  94.5928,  96.4693],
+        [302.4648, 130.4534, 332.0580, 158.8674],
+        [258.4624,  90.7134, 269.2498, 102.2883],
+        [  2.8419, 103.6409,  21.9580, 125.5492]], device=&#39;cuda:0&#39;), &#39;labels&#39;: tensor([2, 2, 1, 1, 1, 1, 1, 1, 1], device=&#39;cuda:0&#39;), &#39;scores&#39;: tensor([0.9962, 0.9918, 0.9900, 0.9894, 0.9891, 0.9653, 0.9652, 0.9573, 0.9046],
        device=&#39;cuda:0&#39;)}]
 </pre></div>
 </div>
 </div>
 </div>
-<p>아래 <code class="docutils literal notranslate"><span class="pre">plot_image_from_output</span></code> 함수를 통해 예측한 바운딩 박스를 그림으로 출력해보겠습니다. Target이 실제 바운딩 박스 위치이며 Prediction이 모델의 예측 결과입니다. 모델이 실제 바운딩 박스의 위치를 잘 찾은 것을 확인할 수 있습니다.</p>
+<p>예측된 결과를 이용하여 이미지 위에 바운딩 박스를 그려보도록 하겠습니다. 위에서 정의한 <code class="docutils literal notranslate"><span class="pre">plot_image_from_output</span></code> 함수로 그림을 출력합니다. Target이 실제 바운딩 박스 위치이며 Prediction이 모델의 예측 결과입니다. 모델이 실제 바운딩 박스의 위치를 잘 찾은 것을 확인할 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">_idx</span> <span class="o">=</span> <span class="mi">1</span>
@@ -781,14 +1010,14 @@ epoch : 5, Loss : 33.883331298828125, time : 272.2374768257141
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Target :  tensor([1, 1, 1, 2, 2, 1, 1, 1])
 </pre></div>
 </div>
-<img alt="../../_images/Ch5 성능 향상을 위한 방법_35_1.png" src="../../_images/Ch5 성능 향상을 위한 방법_35_1.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction :  tensor([2, 2, 1, 1, 1, 1, 1, 1, 2], device=&#39;cuda:0&#39;)
+<img alt="../../_images/Ch5 성능 향상을 위한 방법_38_1.png" src="../../_images/Ch5 성능 향상을 위한 방법_38_1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction :  tensor([2, 2, 1, 1, 1, 1, 1, 1, 1], device=&#39;cuda:0&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/Ch5 성능 향상을 위한 방법_35_3.png" src="../../_images/Ch5 성능 향상을 위한 방법_35_3.png" />
+<img alt="../../_images/Ch5 성능 향상을 위한 방법_38_3.png" src="../../_images/Ch5 성능 향상을 위한 방법_38_3.png" />
 </div>
 </div>
-<p>이번엔 전체 시험 데이터에 대해서 예측 결과를 평가해보도록 하겠습니다. 예측 평가 지표로는 mAP를 사용합니다.</p>
+<p>이번엔 전체 시험 데이터에 대해서 예측 결과를 평가해보도록 하겠습니다. 먼저 모든 시험 데이터에 대한 예측 결과와 실제 label을 각각 <code class="docutils literal notranslate"><span class="pre">preds_adj_all</span></code>, <code class="docutils literal notranslate"><span class="pre">annot_all</span></code>에 담아줍니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
@@ -813,11 +1042,12 @@ epoch : 5, Loss : 33.883331298828125, time : 272.2374768257141
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 85/85 [00:26&lt;00:00,  3.26it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 85/85 [00:25&lt;00:00,  3.34it/s]
 </pre></div>
 </div>
 </div>
 </div>
+<p>그리고 Tutorial-Book-Utils 폴더 내에 있는 utils_ObjectDetection.py 파일을 통해서 mAP 값을 산출합니다. <code class="docutils literal notranslate"><span class="pre">get_batch_statistics</span></code> 함수를 통해 iou값이 0.5가 넘는 바운딩 박스로 매트릭스를 만들어주고 <code class="docutils literal notranslate"><span class="pre">ap_per_class</span></code> 함수를 통해 각 클래스에 대한 AP값을 계산해줍니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="n">Tutorial</span><span class="o">-</span><span class="n">Book</span><span class="o">-</span><span class="n">Utils</span><span class="o">/</span>
@@ -846,15 +1076,15 @@ epoch : 5, Loss : 33.883331298828125, time : 272.2374768257141
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mAP : 0.5902535719285487
-AP : tensor([0.8146, 0.9562, 0.0000], dtype=torch.float64)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mAP : 0.7182363990382057
+AP : tensor([0.8694, 0.9189, 0.3664], dtype=torch.float64)
 </pre></div>
 </div>
 </div>
 </div>
-<p>5 epoch만 학습했는데 30 epoch을 학습시킨 RetinaNet과 성능이 유사한 것을 확인할 수 있습니다.</p>
-<p>추가 설명</p>
-<p>마무리 문장</p>
+<p>AP값은 background 클래스를 제외한 실제 3개의 클래스에 대해서만 보여줍니다.  10번만 학습했음에도 불구하고 4장의 RetinaNet 결과보다 향상된 것을 확인할 수 있습니다. 특히나 1번 클래스인 마스크 착용 객체에 대해서는 0.9189 AP에 해당하는 정확도까지 보이고 2번 클래스인 마스크를 제대로 착용하고 있지 않는 객체에서도 0.3664 AP를 보이고 있습니다.
+RetinaNet이 FPN과 Focal loss로 one-stage method임에도 높은 성능을 보인다고 알려져 있지만, 이 데이터셋에는 적합하지 않았나봅니다. 또는 하이퍼파라미터 튜닝이 부족하여 최적화 작업이 더 필요해 보입니다.</p>
+<p>이상으로 의료용 마스크 탐지 튜토리얼을 마치도록 하겠습니다. 이번 튜토리얼을 통해서 데이터셋을 전처리하는 것부터 모델을 학습하고 예측하는 것까지 진행해보았습니다. 더 좋은 성능을 내기 위해서는 학습 횟수를 늘리거나 하이퍼파라미터 튜닝을 해보는 방법도 있습니다. 자신이 원하는 데이터에 객체 탐지 모델을 자유롭게 활용해보시기 바랍니다.</p>
 </div>
 </div>
 
@@ -871,7 +1101,7 @@ AP : tensor([0.8146, 0.9562, 0.0000], dtype=torch.float64)
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./docs\object_detection"
+            path: "./chapters\object_detection"
         },
         predefinedOutput: true
     }

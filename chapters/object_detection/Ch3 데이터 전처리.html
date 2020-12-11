@@ -199,7 +199,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/docs/object_detection/Ch3 데이터 전처리.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/chapters/object_detection/Ch3 데이터 전처리.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -219,7 +219,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fdocs/object_detection/Ch3 데이터 전처리.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/object_detection/Ch3 데이터 전처리.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -240,7 +240,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/docs/object_detection/Ch3 데이터 전처리.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/chapters/object_detection/Ch3 데이터 전처리.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -308,16 +308,20 @@ commentsRunWhenDOMLoaded(addUtterances);
   <div class="section" id="id1">
 <h1>3. 데이터 전처리<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/drive/1Ud7aNqGMDyyeFCByjybqMwcH43r5u_ti?usp=sharing"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/sa1dCkCwCWA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+</div>
 <p>2장에서는 Face Mask Detection 데이터셋에 대한 데이터 탐색을 해보았습니다. 이번 장에서는 데이터 전처리를 진행하겠습니다.</p>
-<p>인기 있는 데이터셋의 경우 수천 수만장의 이미지를 가지고 있습니다. 하지만 모든 데이터셋이 그렇진 못합니다. 그러면 제한된 데이터셋을 학습 시키기 위해서는 어떻게 해결 해야 할까요?</p>
+<p>인기 있는 데이터셋의 경우 수천 수만 장의 이미지를 가지고 있습니다. 하지만 모든 데이터셋이 그렇진 못합니다. 그러면 제한된 데이터셋을 학습시키기 위해서는 어떻게 해결해야 할까요?</p>
 <p>데이터셋이 부족하다고 새로운 이미지를 찾을 필요는 없습니다. 왜냐하면 데이터 augmentation을 이용해 다양한 상태의 이미지를 얻을 수 있기 때문입니다.</p>
 <p><img alt="" src="https://drive.google.com/uc?id=1ammM-EnG9aCvMsLvpm-P-6UvOz56M9P3" /></p>
 <ul class="simple">
-<li><p>그림 3.1 같아 보이지만 다른 테니스 공 (출처:https://nanonets.com/blog/data-augmentation-how-to-use-deep-learning-when-you-have-limited-data-part-2/)</p></li>
+<li><p>그림 3-1 같아 보이지만 다른 테니스 공 (출처:https://nanonets.com/blog/data-augmentation-how-to-use-deep-learning-when-you-have-limited-data-part-2/)</p></li>
 </ul>
-<p>그림 3.1은 사람이 보기엔 다 똑같은 테니스 공입니다. 하지만 딥러닝 모델은 3개의 테니스 공을 다 다르게 봅니다. 이와 같은 원리로 우리는 하나의 사진을 변조 시켜 여러 개의 데이터를 추출해낼 수 있습니다.</p>
+<p>그림 3-1은 사람이 보기엔 다 똑같은 테니스 공입니다. 하지만 딥러닝 모델은 3개의 테니스공을 다 다르게 봅니다. 이와 같은 원리로 우리는 하나의 사진을 변조 시켜 여러 개의 데이터를 추출할 수 있습니다.</p>
 <p>3.1절에서는 이미지 augmentation에 사용되는 <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>와 <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> 모듈을 알아보겠습니다. <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>는 파이토치에서 공식적으로 제공하는 모듈이며 <code class="docutils literal notranslate"><span class="pre">albumentations</span></code>는 <code class="docutils literal notranslate"><span class="pre">OpenCV</span></code>와 같은 오픈 소스 컴퓨터 비젼 라이브러리를 최적화 하였기에 다른 라이브러리보다 더 빠른 처리 속도 및 기타 기능을 제공하는 모듈입니다.</p>
-<p>언급된 두 모듈 모두 이미지 분류용 모델 구축을 위한 augmentation에는 사용 가능합니다. 하지만 객체 탐지용 모델 구축을 위한 이미지 augmentation 기능은 <code class="docutils literal notranslate"><span class="pre">albumentations</span></code>에서만 제공 됩니다. 객체 탐지용 이미지 augmentation은 이미지 뿐만 아니라 바운딩 박스 까지 변형을 주어야 하는데, <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>에는 해당 기능을 제공하지 않습니다.</p>
+<p>언급된 두 모듈 모두 이미지 분류용 모델 구축을 위한 augmentation에는 사용 가능합니다. 하지만 객체 탐지용 모델 구축을 위한 이미지 augmentation 기능은 <code class="docutils literal notranslate"><span class="pre">albumentations</span></code>에서만 제공됩니다. 객체 탐지용 이미지 augmentation은 이미지 뿐만 아니라 바운딩 박스까지 변형을 주어야 하는데, <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>에는 해당 기능을 제공하지 않습니다.</p>
 <p>그러므로 3.2절에서는 <code class="docutils literal notranslate"><span class="pre">albumentations</span></code>를 활용해 바운딩 박스 augmentation을 실습해보겠습니다. 마지막으로 3.3절에서는 데이터를 훈련용 데이터와 시험용 데이터로 분리하는 작업을 실시하겠습니다.</p>
 <div class="section" id="augmentation">
 <h2>3.1. Augmentation 실습<a class="headerlink" href="#augmentation" title="Permalink to this headline">¶</a></h2>
@@ -349,147 +353,9 @@ Face Mask Detection.zip is done!
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting albumentations
-?25l  Downloading https://files.pythonhosted.org/packages/95/b2/9492c74a5d260bc39f0cba9fcdc6652d0f87d342aaeb32197c62029f82df/albumentations-0.5.1-py3-none-any.whl (71kB)
-
-     |████▋                           | 10kB 14.1MB/s eta 0:00:01
-     |█████████▏                      | 20kB 20.0MB/s eta 0:00:01
-     |█████████████▊                  | 30kB 16.0MB/s eta 0:00:01
-     |██████████████████▎             | 40kB 14.3MB/s eta 0:00:01
-     |██████████████████████▉         | 51kB 16.0MB/s eta 0:00:01
-     |███████████████████████████▍    | 61kB 15.6MB/s eta 0:00:01
-     |████████████████████████████████| 71kB 11.7MB/s eta 0:00:01
-     |████████████████████████████████| 81kB 5.7MB/s 
-?25hRequirement already satisfied, skipping upgrade: scikit-image&gt;=0.16.1 in /usr/local/lib/python3.6/dist-packages (from albumentations) (0.16.2)
-Collecting imgaug&gt;=0.4.0
-?25l  Downloading https://files.pythonhosted.org/packages/66/b1/af3142c4a85cba6da9f4ebb5ff4e21e2616309552caca5e8acefe9840622/imgaug-0.4.0-py2.py3-none-any.whl (948kB)
-
-     |▍                               | 10kB 17.9MB/s eta 0:00:01
-     |▊                               | 20kB 23.9MB/s eta 0:00:01
-     |█                               | 30kB 28.9MB/s eta 0:00:01
-     |█▍                              | 40kB 31.2MB/s eta 0:00:01
-     |█▊                              | 51kB 27.1MB/s eta 0:00:01
-     |██                              | 61kB 19.9MB/s eta 0:00:01
-     |██▍                             | 71kB 20.3MB/s eta 0:00:01
-     |██▊                             | 81kB 21.9MB/s eta 0:00:01
-     |███                             | 92kB 20.6MB/s eta 0:00:01
-     |███▌                            | 102kB 19.8MB/s eta 0:00:01
-     |███▉                            | 112kB 19.8MB/s eta 0:00:01
-     |████▏                           | 122kB 19.8MB/s eta 0:00:01
-     |████▌                           | 133kB 19.8MB/s eta 0:00:01
-     |████▉                           | 143kB 19.8MB/s eta 0:00:01
-     |█████▏                          | 153kB 19.8MB/s eta 0:00:01
-     |█████▌                          | 163kB 19.8MB/s eta 0:00:01
-     |█████▉                          | 174kB 19.8MB/s eta 0:00:01
-     |██████▏                         | 184kB 19.8MB/s eta 0:00:01
-     |██████▋                         | 194kB 19.8MB/s eta 0:00:01
-     |███████                         | 204kB 19.8MB/s eta 0:00:01
-     |███████▎                        | 215kB 19.8MB/s eta 0:00:01
-     |███████▋                        | 225kB 19.8MB/s eta 0:00:01
-     |████████                        | 235kB 19.8MB/s eta 0:00:01
-     |████████▎                       | 245kB 19.8MB/s eta 0:00:01
-     |████████▋                       | 256kB 19.8MB/s eta 0:00:01
-     |█████████                       | 266kB 19.8MB/s eta 0:00:01
-     |█████████▎                      | 276kB 19.8MB/s eta 0:00:01
-     |█████████▊                      | 286kB 19.8MB/s eta 0:00:01
-     |██████████                      | 296kB 19.8MB/s eta 0:00:01
-     |██████████▍                     | 307kB 19.8MB/s eta 0:00:01
-     |██████████▊                     | 317kB 19.8MB/s eta 0:00:01
-     |███████████                     | 327kB 19.8MB/s eta 0:00:01
-     |███████████▍                    | 337kB 19.8MB/s eta 0:00:01
-     |███████████▊                    | 348kB 19.8MB/s eta 0:00:01
-     |████████████                    | 358kB 19.8MB/s eta 0:00:01
-     |████████████▍                   | 368kB 19.8MB/s eta 0:00:01
-     |████████████▉                   | 378kB 19.8MB/s eta 0:00:01
-     |█████████████▏                  | 389kB 19.8MB/s eta 0:00:01
-     |█████████████▌                  | 399kB 19.8MB/s eta 0:00:01
-     |█████████████▉                  | 409kB 19.8MB/s eta 0:00:01
-     |██████████████▏                 | 419kB 19.8MB/s eta 0:00:01
-     |██████████████▌                 | 430kB 19.8MB/s eta 0:00:01
-     |██████████████▉                 | 440kB 19.8MB/s eta 0:00:01
-     |███████████████▏                | 450kB 19.8MB/s eta 0:00:01
-     |███████████████▌                | 460kB 19.8MB/s eta 0:00:01
-     |████████████████                | 471kB 19.8MB/s eta 0:00:01
-     |████████████████▎               | 481kB 19.8MB/s eta 0:00:01
-     |████████████████▋               | 491kB 19.8MB/s eta 0:00:01
-     |█████████████████               | 501kB 19.8MB/s eta 0:00:01
-     |█████████████████▎              | 512kB 19.8MB/s eta 0:00:01
-     |█████████████████▋              | 522kB 19.8MB/s eta 0:00:01
-     |██████████████████              | 532kB 19.8MB/s eta 0:00:01
-     |██████████████████▎             | 542kB 19.8MB/s eta 0:00:01
-     |██████████████████▋             | 552kB 19.8MB/s eta 0:00:01
-     |███████████████████             | 563kB 19.8MB/s eta 0:00:01
-     |███████████████████▍            | 573kB 19.8MB/s eta 0:00:01
-     |███████████████████▊            | 583kB 19.8MB/s eta 0:00:01
-     |████████████████████            | 593kB 19.8MB/s eta 0:00:01
-     |████████████████████▍           | 604kB 19.8MB/s eta 0:00:01
-     |████████████████████▊           | 614kB 19.8MB/s eta 0:00:01
-     |█████████████████████           | 624kB 19.8MB/s eta 0:00:01
-     |█████████████████████▍          | 634kB 19.8MB/s eta 0:00:01
-     |█████████████████████▊          | 645kB 19.8MB/s eta 0:00:01
-     |██████████████████████▏         | 655kB 19.8MB/s eta 0:00:01
-     |██████████████████████▌         | 665kB 19.8MB/s eta 0:00:01
-     |██████████████████████▉         | 675kB 19.8MB/s eta 0:00:01
-     |███████████████████████▏        | 686kB 19.8MB/s eta 0:00:01
-     |███████████████████████▌        | 696kB 19.8MB/s eta 0:00:01
-     |███████████████████████▉        | 706kB 19.8MB/s eta 0:00:01
-     |████████████████████████▏       | 716kB 19.8MB/s eta 0:00:01
-     |████████████████████████▌       | 727kB 19.8MB/s eta 0:00:01
-     |████████████████████████▉       | 737kB 19.8MB/s eta 0:00:01
-     |█████████████████████████▎      | 747kB 19.8MB/s eta 0:00:01
-     |█████████████████████████▋      | 757kB 19.8MB/s eta 0:00:01
-     |██████████████████████████      | 768kB 19.8MB/s eta 0:00:01
-     |██████████████████████████▎     | 778kB 19.8MB/s eta 0:00:01
-     |██████████████████████████▋     | 788kB 19.8MB/s eta 0:00:01
-     |███████████████████████████     | 798kB 19.8MB/s eta 0:00:01
-     |███████████████████████████▎    | 808kB 19.8MB/s eta 0:00:01
-     |███████████████████████████▋    | 819kB 19.8MB/s eta 0:00:01
-     |████████████████████████████    | 829kB 19.8MB/s eta 0:00:01
-     |████████████████████████████▍   | 839kB 19.8MB/s eta 0:00:01
-     |████████████████████████████▊   | 849kB 19.8MB/s eta 0:00:01
-     |█████████████████████████████   | 860kB 19.8MB/s eta 0:00:01
-     |█████████████████████████████▍  | 870kB 19.8MB/s eta 0:00:01
-     |█████████████████████████████▊  | 880kB 19.8MB/s eta 0:00:01
-     |██████████████████████████████  | 890kB 19.8MB/s eta 0:00:01
-     |██████████████████████████████▍ | 901kB 19.8MB/s eta 0:00:01
-     |██████████████████████████████▊ | 911kB 19.8MB/s eta 0:00:01
-     |███████████████████████████████ | 921kB 19.8MB/s eta 0:00:01
-     |███████████████████████████████▌| 931kB 19.8MB/s eta 0:00:01
-     |███████████████████████████████▉| 942kB 19.8MB/s eta 0:00:01
-     |████████████████████████████████| 952kB 19.8MB/s 
-?25hRequirement already satisfied, skipping upgrade: scipy in /usr/local/lib/python3.6/dist-packages (from albumentations) (1.4.1)
-Requirement already satisfied, skipping upgrade: numpy&gt;=1.11.1 in /usr/local/lib/python3.6/dist-packages (from albumentations) (1.18.5)
-Collecting opencv-python-headless&gt;=4.1.1
-?25l  Downloading https://files.pythonhosted.org/packages/08/e9/57d869561389884136be65a2d1bc038fe50171e2ba348fda269a4aab8032/opencv_python_headless-4.4.0.46-cp36-cp36m-manylinux2014_x86_64.whl (36.7MB)
-     |████████████████████████████████| 36.7MB 1.3MB/s 
-?25hRequirement already satisfied, skipping upgrade: PyYAML in /usr/local/lib/python3.6/dist-packages (from albumentations) (3.13)
-Requirement already satisfied, skipping upgrade: PyWavelets&gt;=0.4.0 in /usr/local/lib/python3.6/dist-packages (from scikit-image&gt;=0.16.1-&gt;albumentations) (1.1.1)
-Requirement already satisfied, skipping upgrade: matplotlib!=3.0.0,&gt;=2.0.0 in /usr/local/lib/python3.6/dist-packages (from scikit-image&gt;=0.16.1-&gt;albumentations) (3.2.2)
-Requirement already satisfied, skipping upgrade: pillow&gt;=4.3.0 in /usr/local/lib/python3.6/dist-packages (from scikit-image&gt;=0.16.1-&gt;albumentations) (7.0.0)
-Requirement already satisfied, skipping upgrade: imageio&gt;=2.3.0 in /usr/local/lib/python3.6/dist-packages (from scikit-image&gt;=0.16.1-&gt;albumentations) (2.4.1)
-Requirement already satisfied, skipping upgrade: networkx&gt;=2.0 in /usr/local/lib/python3.6/dist-packages (from scikit-image&gt;=0.16.1-&gt;albumentations) (2.5)
-Requirement already satisfied, skipping upgrade: six in /usr/local/lib/python3.6/dist-packages (from imgaug&gt;=0.4.0-&gt;albumentations) (1.15.0)
-Requirement already satisfied, skipping upgrade: Shapely in /usr/local/lib/python3.6/dist-packages (from imgaug&gt;=0.4.0-&gt;albumentations) (1.7.1)
-Requirement already satisfied, skipping upgrade: opencv-python in /usr/local/lib/python3.6/dist-packages (from imgaug&gt;=0.4.0-&gt;albumentations) (4.1.2.30)
-Requirement already satisfied, skipping upgrade: kiwisolver&gt;=1.0.1 in /usr/local/lib/python3.6/dist-packages (from matplotlib!=3.0.0,&gt;=2.0.0-&gt;scikit-image&gt;=0.16.1-&gt;albumentations) (1.3.1)
-Requirement already satisfied, skipping upgrade: python-dateutil&gt;=2.1 in /usr/local/lib/python3.6/dist-packages (from matplotlib!=3.0.0,&gt;=2.0.0-&gt;scikit-image&gt;=0.16.1-&gt;albumentations) (2.8.1)
-Requirement already satisfied, skipping upgrade: pyparsing!=2.0.4,!=2.1.2,!=2.1.6,&gt;=2.0.1 in /usr/local/lib/python3.6/dist-packages (from matplotlib!=3.0.0,&gt;=2.0.0-&gt;scikit-image&gt;=0.16.1-&gt;albumentations) (2.4.7)
-Requirement already satisfied, skipping upgrade: cycler&gt;=0.10 in /usr/local/lib/python3.6/dist-packages (from matplotlib!=3.0.0,&gt;=2.0.0-&gt;scikit-image&gt;=0.16.1-&gt;albumentations) (0.10.0)
-Requirement already satisfied, skipping upgrade: decorator&gt;=4.3.0 in /usr/local/lib/python3.6/dist-packages (from networkx&gt;=2.0-&gt;scikit-image&gt;=0.16.1-&gt;albumentations) (4.4.2)
-Installing collected packages: imgaug, opencv-python-headless, albumentations
-  Found existing installation: imgaug 0.2.9
-    Uninstalling imgaug-0.2.9:
-      Successfully uninstalled imgaug-0.2.9
-  Found existing installation: albumentations 0.1.12
-    Uninstalling albumentations-0.1.12:
-      Successfully uninstalled albumentations-0.1.12
-Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-4.4.0.46
-</pre></div>
 </div>
-</div>
-</div>
-<p>augmentation 결과물을 시각화하기 위해 2.3절에 나온 바운딩 박스 도식화 코드를 가지고 오겠습니다.</p>
+<p>augmentation 결과물을 시각화하기 위해 2.3절에 나온 바운딩 박스 도식화 코드를
+가지고 오겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -571,8 +437,8 @@ Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-
 </div>
 </div>
 </div>
-<p>2장에서 확인한 함수들과 다른 점이 존재합니다 추후 딥러닝 모델 학습을 위한 tensor간의 연산을 준비하기 위해 <code class="docutils literal notranslate"><span class="pre">generate_target</span></code>함수에 <code class="docutils literal notranslate"><span class="pre">torch.as_tensor</span></code>함수가 추가된 것을 확인할 수 있습니다.</p>
-<p>또한, 2장에서 소개된 <code class="docutils literal notranslate"><span class="pre">plot_image</span></code>함수는 이미지를 파일 경로에서 부터 읽어옵니다. 반면 <code class="docutils literal notranslate"><span class="pre">plot_image_from_output</span></code>함수는 <code class="docutils literal notranslate"><span class="pre">torch.Tensor</span></code>로 변환된 이미지를 시각화 합니다. PyTorch에서는 이미지를 <code class="docutils literal notranslate"><span class="pre">[channels,</span> <span class="pre">height,</span> <span class="pre">width]</span></code>로 표현하는 반면 <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>에서는 <code class="docutils literal notranslate"><span class="pre">[height,</span> <span class="pre">width,</span> <span class="pre">channels]</span></code>로 표현합니다 그렇기 때문에 채널 순서를 바꿔주는 <code class="docutils literal notranslate"><span class="pre">permute</span></code>함수를 활용해 <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>에서 기대하는 채널 순서로 바꿔줍니다.</p>
+<p>2장에서 확인한 함수들과 다른 점이 존재합니다. 추후 딥러닝 모델 학습을 위한 tensor간의 연산을 준비하기 위해 <code class="docutils literal notranslate"><span class="pre">generate_target</span></code>함수에 <code class="docutils literal notranslate"><span class="pre">torch.as_tensor</span></code>함수가 추가된 것을 확인할 수 있습니다.</p>
+<p>또한, 2장에서 소개된 <code class="docutils literal notranslate"><span class="pre">plot_image</span></code>함수는 이미지를 파일 경로에서 부터 읽어옵니다. 반면 <code class="docutils literal notranslate"><span class="pre">plot_image_from_output</span></code>함수는 <code class="docutils literal notranslate"><span class="pre">torch.Tensor</span></code>로 변환된 이미지를 시각화합니다. PyTorch에서는 이미지를 <code class="docutils literal notranslate"><span class="pre">[channels,</span> <span class="pre">height,</span> <span class="pre">width]</span></code>로 표현하는 반면 <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>에서는 <code class="docutils literal notranslate"><span class="pre">[height,</span> <span class="pre">width,</span> <span class="pre">channels]</span></code>로 표현합니다. 그렇기 때문에 채널 순서를 바꿔주는 <code class="docutils literal notranslate"><span class="pre">permute</span></code>함수를 활용해 <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>에서 기대하는 채널 순서로 바꿔줍니다.</p>
 <div class="section" id="torchvision-transforms">
 <h3>3.1.1. Torchvision Transforms<a class="headerlink" href="#torchvision-transforms" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>을 실습하기 위해 <code class="docutils literal notranslate"><span class="pre">TorchvisionDataset</span></code> 클래스를 먼저 정의하겠습니다. <code class="docutils literal notranslate"><span class="pre">TorchvisionDataset</span></code> 클래스는<code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> 메소드를 통해 image를 불러온 다음 데이터 augmentation을 진행합니다. <code class="docutils literal notranslate"><span class="pre">transform</span></code> 파라미터에 저장돼 있는 augmentation 규칙에 따라 augmentation이 이뤄집니다. 시간 측정을 위해 <code class="docutils literal notranslate"><span class="pre">time</span></code>함수를 사용해 시간 측정 후, 최종적으로 <code class="docutils literal notranslate"><span class="pre">image</span></code>, <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">total_time</span></code>을 반환해줍니다.</p>
@@ -626,7 +492,7 @@ Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>에서 제공하는 함수를 활용해 이미지 augmentation 실습을 진행해보겠습니다. 이미지를 (300, 300) 크기로 만든 후, 224 크기로 자르도록 하겠습니다. 그리고 나서 이미지의 밝기(brightness), 대비(contrast), 채도(saturation), 색조(hue)를 무작위로 바꿔보겠습니다. 마지막으로 이미지 좌우반전을 적용시킨 후 tensor로 변환하는 작업을 진행해보겠습니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>에서 제공하는 함수를 활용해 이미지 augmentation 실습을 진행해보겠습니다. 이미지를 (300, 300) 크기로 만든 후, 224 크기로 자르도록 하겠습니다. 그리고 나서 이미지의 밝기(brightness), 대비(contrast), 채도(saturation), 색조(hue)를 무작위로 바꿔보겠습니다. 마지막으로 이미지 좌우 반전을 적용한 후 tensor로 변환하는 작업을 진행해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">torchvision_transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
@@ -665,7 +531,7 @@ Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>transforms 적용 전
 </pre></div>
 </div>
-<img alt="../../_images/Ch3 데이터 전처리_15_1.png" src="../../_images/Ch3 데이터 전처리_15_1.png" />
+<img alt="../../_images/Ch3 데이터 전처리_17_1.png" src="../../_images/Ch3 데이터 전처리_17_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -681,11 +547,11 @@ Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>transforms 적용 후
 </pre></div>
 </div>
-<img alt="../../_images/Ch3 데이터 전처리_16_1.png" src="../../_images/Ch3 데이터 전처리_16_1.png" />
+<img alt="../../_images/Ch3 데이터 전처리_18_1.png" src="../../_images/Ch3 데이터 전처리_18_1.png" />
 </div>
 </div>
-<p>변경 전에 비해 변경 후 이미지는 앞서 언급한 변화들이 적용된 것을 볼 수 있습니다. 또한 이미지 자체적인 변화는 이뤄졌지만 바운딩 박스는 변화된 이미지에서 위치가 어긋 난 것을 확인할 수 있습니다. <code class="docutils literal notranslate"><span class="pre">torchvision.transform</span></code>에서 제공하는 augmentation은 이미지 값에 대한 augmentation만 진행이 되며, 바운딩 박스는 같이 변환 되지 않는 것을 알 수 있습니다.</p>
-<p>이미지 분류 문제에서는 이미지가 변해도 라벨 값이 고정이지만, 객체 검출 문제에서는 이미지가 변함에 따라 라벨 값 또한 함께 변해야 합니다. 3.2 절에서 이러한 문제를 해결하는 방법에 대해 알아보겠습니다. 우선 3.1 절에서는 torchvision과 albumentations 모듈 비교를 계속 진행하도록 하겠습니다. <code class="docutils literal notranslate"><span class="pre">torchvision_dataset</span></code>에서 이미지 변환에 소요된 시간을 계산하고 그것을 100번 반복한 시간을 아래 코드를 활용해 측정하겠습니다.</p>
+<p>변경 전에 비해 변경 후 이미지는 앞서 언급한 변화들이 적용된 것을 볼 수 있습니다. 또한 이미지 자체적인 변화는 이뤄졌지만 바운딩 박스는 변화된 이미지에서 위치가 어긋난 것을 확인할 수 있습니다. <code class="docutils literal notranslate"><span class="pre">torchvision.transform</span></code>에서 제공하는 augmentation은 이미지 값에 대한 augmentation만 진행이 되며, 바운딩 박스는 같이 변환되지 않는 것을 알 수 있습니다.</p>
+<p>이미지 분류 문제에서는 이미지가 변해도 라벨값이 고정이지만, 객체 검출 문제에서는 이미지가 변함에 따라 라벨 값 또한 함께 변해야 합니다. 3.2 절에서 이러한 문제를 해결하는 방법에 대해 알아보겠습니다. 우선 3.1 절에서는 torchvision과 albumentations 모듈 비교를 계속 진행하도록 하겠습니다. <code class="docutils literal notranslate"><span class="pre">torchvision_dataset</span></code>에서 이미지 변환에 소요된 시간을 계산하고 그것을 100번 반복한 시간을 아래 코드를 활용해 측정하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span>
@@ -772,7 +638,7 @@ Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Ch3 데이터 전처리_24_0.png" src="../../_images/Ch3 데이터 전처리_24_0.png" />
+<img alt="../../_images/Ch3 데이터 전처리_26_0.png" src="../../_images/Ch3 데이터 전처리_26_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -789,7 +655,7 @@ Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Ch3 데이터 전처리_25_0.png" src="../../_images/Ch3 데이터 전처리_25_0.png" />
+<img alt="../../_images/Ch3 데이터 전처리_27_0.png" src="../../_images/Ch3 데이터 전처리_27_0.png" />
 </div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">torchvision</span></code>과 마찬가지로 이미지 변환이 이루어 졌지만, 바운딩 박스는 변하지 않은 것을 알 수 있습니다. 속도 측정을 위해 <code class="docutils literal notranslate"><span class="pre">transform</span></code>을 100번 적용 시킨 뒤 시간을 측정하겠습니다</p>
@@ -814,7 +680,7 @@ Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-
 </div>
 <div class="section" id="id2">
 <h3>3.1.3. 확률 기반 Augmentation 조합<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">Albmentations</span></code>는 <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code> 보다 속도가 빠를 뿐만 아니라 새로운 기능 또한 제공합니다. 이번 절에서는 Albumentations에서 제공하는 <code class="docutils literal notranslate"><span class="pre">OneOf</span></code> 함수에 대해 알아보겠습니다. 이 함수는 list 안에 있는 augmentation 기능 들을 주어진 확률 값에 기반하여 가져옵니다. list 값 자체의 확률 값과 더불어 해당 함수의 확률 값을 함께 고려하여 실행 여부를 결정합니다. 아래의 <code class="docutils literal notranslate"><span class="pre">OneOf</span></code> 함수는 각각 선택될 확률이 1 입니다. 각각의 함수 내부에 있는 3개의 <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> 기능들 또한 각각 확률 값이 1로 부여 됬으므로, 실질적으로 1/3의 확률로 3개의 기능 중 하나가 선택되어 실행 된다는 것을 알 수 있습니다. 이렇게 확률 값을 조정하여 다양한 <code class="docutils literal notranslate"><span class="pre">augmentation</span></code>이 가능합니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Albmentations</span></code>는 <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code> 보다 속도가 빠를 뿐만 아니라 새로운 기능 또한 제공합니다. 이번 절에서는 Albumentations에서 제공하는 <code class="docutils literal notranslate"><span class="pre">OneOf</span></code> 함수에 대해 알아보겠습니다. 이 함수는 list 안에 있는 augmentation 기능 들을 주어진 확률 값에 기반하여 가져옵니다. list 값 자체의 확률 값과 더불어 해당 함수의 확률 값을 함께 고려하여 실행 여부를 결정합니다. 아래의 <code class="docutils literal notranslate"><span class="pre">OneOf</span></code> 함수는 각각 선택될 확률이 1 입니다. 각각의 함수 내부에 있는 3개의 <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> 기능들 또한 각각 확률 값이 1로 부여 됬으므로, 실질적으로 1/3의 확률로 3개의 기능 중 하나가 선택되어 실행된다는 것을 알 수 있습니다. 이렇게 확률 값을 조정하여 다양한 <code class="docutils literal notranslate"><span class="pre">augmentation</span></code>이 가능합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">albumentations_transform_oneof</span> <span class="o">=</span> <span class="n">albumentations</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
@@ -853,7 +719,7 @@ Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Ch3 데이터 전처리_32_0.png" src="../../_images/Ch3 데이터 전처리_32_0.png" />
+<img alt="../../_images/Ch3 데이터 전처리_34_0.png" src="../../_images/Ch3 데이터 전처리_34_0.png" />
 </div>
 </div>
 </div>
@@ -861,7 +727,7 @@ Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-
 <div class="section" id="id3">
 <h2>3.2. 바운딩 박스 Augmentation<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>객체 탐지 모델 구축에 사용되는 이미지에 대한 augmentation 진행 시, 이미지 변환 뿐만 아니라 그에 따른 바운딩 박스 변환 또한 함께 진행해주어야 합니다. 3.1절에서 보았듯이 바운딩 박스를 함께 변환 시켜 주지 않으면 바운딩 박스가 엉뚱한 곳을 탐지하고 있기 때문에 모델 학습이 제대로 이뤄지지 않을 것입니다. <code class="docutils literal notranslate"><span class="pre">Albumentations</span></code>에서 제공하는 <code class="docutils literal notranslate"><span class="pre">Compose</span></code> 함수에 있는 <code class="docutils literal notranslate"><span class="pre">bbox_params</span></code> 파라미터를 활용하면 바운딩 박스 augmentation이 가능합니다.</p>
-<p>우선 아래 코드를 활용하여 새로운 데이터셋 클래스를 생성하겠습니다. 3.1.2 절에서 확인한 <code class="docutils literal notranslate"><span class="pre">AlbumentationsDataset</span></code> 클래스의 transform 부분을 수정하였습니다. 이미지 뿐만 아니라 바운딩 박스도 transform이 진행되기 때문에 필요한 입력값, 출력값 수정을 진행해주었습니다.</p>
+<p>우선 아래 코드를 활용하여 새로운 데이터셋 클래스를 생성하겠습니다. 3.1.2 절에서 확인한 <code class="docutils literal notranslate"><span class="pre">AlbumentationsDataset</span></code> 클래스의 transform 부분을 수정하였습니다. 이미지뿐만 아니라 바운딩 박스도 transform이 진행되기 때문에 필요한 입력값, 출력값 수정을 진행해주었습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BboxAugmentationDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
@@ -899,7 +765,7 @@ Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-
 </div>
 </div>
 </div>
-<p>다음으로는 <code class="docutils literal notranslate"><span class="pre">albumentations.Compose</span></code> 함수를 활용해 변환을 정의해보겠습니다. 가장 먼저 좌우반전을 실시할 것이며, 그 이후에 -90도에서 90도 사이의 회전을 진행하겠습니다. 바운딩 박스도 함께 변환을 진행해주기 위해 bbox_params 파라미터에 <code class="docutils literal notranslate"><span class="pre">albumentations.BboxParams</span></code> 객체를 입력해줍니다. Face Mask Detection 데이터셋은 바운딩 박스 표기법이 <code class="docutils literal notranslate"><span class="pre">xmin</span></code>, <code class="docutils literal notranslate"><span class="pre">ymin</span></code>, <code class="docutils literal notranslate"><span class="pre">xmax</span></code>, <code class="docutils literal notranslate"><span class="pre">ymax</span></code>으로 돼있고, 이것은 pascal_voc 표기법과 같습니다. 그러므로 format 파라미터에 pascal_voc을 입력합니다. 또한 <code class="docutils literal notranslate"><span class="pre">transform</span></code> 진행 시 객체 별 클래스 값은 <code class="docutils literal notranslate"><span class="pre">labels</span></code> 파라미터에 저장해두기 위해 <code class="docutils literal notranslate"><span class="pre">label_field</span></code>에 <code class="docutils literal notranslate"><span class="pre">labels</span></code>를 입력합니다.</p>
+<p>다음으로는 <code class="docutils literal notranslate"><span class="pre">albumentations.Compose</span></code> 함수를 활용해 변환을 정의해보겠습니다. 가장 먼저 좌우반전을 실시할 것이며, 그 이후에 -90도에서 90도 사이의 회전을 진행하겠습니다. 바운딩 박스도 함께 변환을 진행해주기 위해 bbox_params 파라미터에 <code class="docutils literal notranslate"><span class="pre">albumentations.BboxParams</span></code> 객체를 입력해줍니다. Face Mask Detection 데이터셋은 바운딩 박스 표기법이 <code class="docutils literal notranslate"><span class="pre">xmin</span></code>, <code class="docutils literal notranslate"><span class="pre">ymin</span></code>, <code class="docutils literal notranslate"><span class="pre">xmax</span></code>, <code class="docutils literal notranslate"><span class="pre">ymax</span></code>으로 돼 있고, 이것은 pascal_voc 표기법과 같습니다. 그러므로 format 파라미터에 pascal_voc을 입력합니다. 또한 <code class="docutils literal notranslate"><span class="pre">transform</span></code> 진행 시 객체별 클래스 값은 <code class="docutils literal notranslate"><span class="pre">labels</span></code> 파라미터에 저장해두기 위해 <code class="docutils literal notranslate"><span class="pre">label_field</span></code>에 <code class="docutils literal notranslate"><span class="pre">labels</span></code>를 입력합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bbox_transform</span> <span class="o">=</span> <span class="n">albumentations</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>
@@ -926,14 +792,14 @@ Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Ch3 데이터 전처리_38_0.png" src="../../_images/Ch3 데이터 전처리_38_0.png" />
+<img alt="../../_images/Ch3 데이터 전처리_40_0.png" src="../../_images/Ch3 데이터 전처리_40_0.png" />
 </div>
 </div>
-<p>위 코드를 실행할 때 마다 이미지가 변환되어서 출력되는 것을 확인할 수 있습니다. 그와 더불어 바운딩 박스 또한 알맞게 변환되어 변환된 이미지에 있는 마스크 착용 얼굴들을 정확히 탐지하는 것을 볼 수 있습니다. 이렇게 이미지와 바운딩 박스를 함께 변환한 데이터를 활용해 4장과 5장에서 모델을 구축해보겠습니다.</p>
+<p>위 코드를 실행할 때마다 이미지가 변환되어서 출력되는 것을 확인할 수 있습니다. 그와 더불어 바운딩 박스 또한 알맞게 변환되어 변환된 이미지에 있는 마스크 착용 얼굴들을 정확히 탐지하는 것을 볼 수 있습니다. 이렇게 이미지와 바운딩 박스를 함께 변환한 데이터를 활용해 4장과 5장에서 모델을 구축해보겠습니다.</p>
 </div>
 <div class="section" id="id4">
 <h2>3.3. 데이터 분리<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<p>인공지능 모델을 구축하기 위해선 학습용 데이터와 시험 데이터가 필요합니다. 학습용 데이터는 모델 훈련 시 사용하며 시험 데이터는 모델 평가 시 사용합니다. 시험 데이터는 학습용 데이터와 중복 되지 않아야 합니다. 3.1절에서 불러온 데이터를 학습 데이터와 시험 데이터로 나누어 보겠습니다. 우선 전체 데이터의 개수를 아래 코드를 통해 확인해보겠습니다.</p>
+<p>인공지능 모델을 구축하기 위해선 학습용 데이터와 시험 데이터가 필요합니다. 학습용 데이터는 모델 훈련 시 사용하며 시험 데이터는 모델 평가 시 사용합니다. 시험 데이터는 학습용 데이터와 중복되지 않아야 합니다. 3.1절에서 불러온 데이터를 학습 데이터와 시험 데이터로 나누어 보겠습니다. 우선 전체 데이터의 개수를 아래 코드를 통해 확인해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span><span class="p">)))</span>
@@ -948,7 +814,7 @@ Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-
 </div>
 </div>
 </div>
-<p>총 853개의 이미지가 존재하는 것을 볼 수 있습니다. 일반적으로 학습 데이터와 시험 데이터의 비율은 7:3 으로 가져갑니다. 이번 데이터는 전체 데이터셋 개수가 적으므로 8:2 비율을 가져가보도록 하겠습니다. 853개의 데이터 중 170개를 시험 데이터로 사용하기 위해 해당 데이터를 별도의 폴더로 옮겨 주도록 하겠습니다. 우선 리눅스 명령어 mkdir를 활용하여 시험 데이터를 담을 폴더를 생성합니다.</p>
+<p>총 853개의 이미지가 존재하는 것을 볼 수 있습니다. 일반적으로 학습 데이터와 시험 데이터의 비율은 7:3 으로 가져갑니다. 이번 데이터는 전체 데이터셋 개수가 적으므로 8:2 비율을 가져가 보도록 하겠습니다. 853개의 데이터 중 170개를 시험 데이터로 사용하기 위해 해당 데이터를 별도의 폴더로 옮겨 주도록 하겠습니다. 우선 리눅스 명령어 mkdir를 활용하여 시험 데이터를 담을 폴더를 생성합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!mkdir test_images
@@ -957,7 +823,7 @@ Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-
 </div>
 </div>
 </div>
-<p>위 코드를 실행 하면 test_images 폴더와 test_annotations 폴더가 생성된 것을 확인할 수 있습니다. 이제 images 폴더와 annotations 폴더에 있는 파일 각각 170개씩을 새로 생성한 폴더로 옮기겠습니다. random 모듈에 있는 sample 함수를 활용해 무작위로 숫자를 추출한 후 인덱스 값으로 활용하겠습니다.</p>
+<p>위 코드를 실행하면 test_images 폴더와 test_annotations 폴더가 생성된 것을 확인할 수 있습니다. 이제 images 폴더와 annotations 폴더에 있는 파일 각각 170개씩을 새로 생성한 폴더로 옮기겠습니다. random 모듈에 있는 sample 함수를 활용해 무작위로 숫자를 추출한 후 인덱스값으로 활용하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
@@ -1057,8 +923,8 @@ Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">get_num_objects_for_each_class</span></code>는 데이터셋에 있는 모든 바운딩 박스의 라벨 값을 <code class="docutils literal notranslate"><span class="pre">total_labels</span></code>에 저장후 <code class="docutils literal notranslate"><span class="pre">Counter</span></code> 클래스를 활용해 라벨별 개수를 세어 반환하는 함수입니다. 학습용 데이터에는 532개의 0번 클래스, 2,691개의 1번 클래스, 97개의 2번 클래스가 위치해 있으며 시험용 데이터에는 185개의 0번 클래스, 541개의 1번 클래스, 26개의 2번 클래스가 위치해 있습니다. 데이터셋별로 0,1,2 비율이 유사한 것을 보아 적절히 데이터가 나뉘어 진 것을 확인할 수 있습니다.</p>
-<p>지금까지 Albumentations 모듈을 활용해 객체 검출 모델 구축에 사용되는 이미지를 부풀리는 방법을 알아보았고, 보유한 데이터를 학습용 데이터와 시험용 데이터로 분리하는 방법을 알아보았습니다. 4장에서는 One-Stage 모델인 RetinaNet을 학습시켜 마스크 착용 탐지 모델을 구축해보겠습니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">get_num_objects_for_each_class</span></code>는 데이터셋에 있는 모든 바운딩 박스의 라벨 값을 <code class="docutils literal notranslate"><span class="pre">total_labels</span></code>에 저장 후 <code class="docutils literal notranslate"><span class="pre">Counter</span></code> 클래스를 활용해 라벨별 개수를 세어 반환하는 함수입니다. 학습용 데이터에는 532개의 0번 클래스, 2,691개의 1번 클래스, 97개의 2번 클래스가 위치해 있으며 시험용 데이터에는 185개의 0번 클래스, 541개의 1번 클래스, 26개의 2번 클래스가 위치해 있습니다. 데이터셋별로 0,1,2 비율이 유사한 것을 보아 적절히 데이터가 나뉘어 진 것을 확인할 수 있습니다.</p>
+<p>지금까지 Albumentations 모듈을 활용해 객체 검출 모델 구축에 사용되는 이미지를 부풀리는 방법을 알아보았고, 보유한 데이터를 학습용 데이터와 시험용 데이터로 분리하는 방법을 알아보았습니다. 4장에서는 One-Stage 모델인 RetinaNet을 학습 시켜 마스크 착용 탐지 모델을 구축해보겠습니다.</p>
 </div>
 </div>
 
@@ -1075,7 +941,7 @@ Successfully installed albumentations-0.5.1 imgaug-0.4.0 opencv-python-headless-
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./docs\object_detection"
+            path: "./chapters\object_detection"
         },
         predefinedOutput: true
     }
