@@ -1,4 +1,4 @@
-# 파이토치를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials using PyTorch) 
+# 파이토치를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch) 
 
 해당 자료는 가짜연구소 AI School 튜토리얼 팀에 의해 제작 되었습니다.
 
