@@ -40,6 +40,7 @@ latex:
     
 html:
   favicon: 'PseudoLab_logo.png'
+  google_analytics_id: UA-185350287-1
   use_issues_button: true
   use_repository_button: true
   comments:
