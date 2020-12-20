@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>5. 성능 향상을 위한 방법 &#8212; PseudoLab Tutorial Book</title>
+    <title>5. Faster R-CNN &#8212; PseudoLab Tutorial Book</title>
     
   <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -80,6 +80,8 @@ commentsRunWhenDOMLoaded(addUtterances);
 </script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -91,7 +93,7 @@ commentsRunWhenDOMLoaded(addUtterances);
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="6. 참고 문헌" href="References.html" />
-    <link rel="prev" title="4. 데이터 모델링" href="Ch4%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%AA%A8%EB%8D%B8%EB%A7%81.html" />
+    <link rel="prev" title="4. RetinaNet" href="Ch4%20RetinaNet.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -124,7 +126,7 @@ commentsRunWhenDOMLoaded(addUtterances);
     <ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../../index.html">
-   파이토치를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials using PyTorch)
+   파이토치를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch)
   </a>
  </li>
 </ul>
@@ -150,18 +152,50 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Ch4%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%AA%A8%EB%8D%B8%EB%A7%81.html">
-   4. 데이터 모델링
+  <a class="reference internal" href="Ch4%20RetinaNet.html">
+   4. RetinaNet
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   5. 성능 향상을 위한 방법
+   5. Faster R-CNN
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="References.html">
    6. 참고 문헌
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  시계열 분석(Time Series)
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time_series/Ch1%20Time%20Series.html">
+   1. Time Series 소개
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time_series/Ch2%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%ED%83%90%EC%83%89.html">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time_series/Ch3%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A0%84%EC%B2%98%EB%A6%AC.html">
+   3. 데이터 전처리
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time_series/Ch4%20LSTM.html">
+   4. LSTM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time_series/Ch5%20CNN-LSTM.html">
+   5. CNN-LSTM
   </a>
  </li>
 </ul>
@@ -204,7 +238,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/chapters/object_detection/Ch5 성능 향상을 위한 방법.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/chapters/object_detection/Ch5 Faster R-CNN.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -224,7 +258,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/object_detection/Ch5 성능 향상을 위한 방법.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/object_detection/Ch5 Faster R-CNN.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -245,7 +279,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/chapters/object_detection/Ch5 성능 향상을 위한 방법.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/chapters/object_detection/Ch5 Faster R-CNN.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -268,32 +302,32 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
+  <a class="reference internal nav-link" href="#id1">
    5.1 데이터 불러오기
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
+  <a class="reference internal nav-link" href="#id2">
    5.2 데이터 분리
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id4">
+  <a class="reference internal nav-link" href="#id3">
    5.3 데이터셋 클래스 정의
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id5">
+  <a class="reference internal nav-link" href="#id4">
    5.4 모델 불러오기
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id6">
+  <a class="reference internal nav-link" href="#id5">
    5.5 전이 학습
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id7">
+  <a class="reference internal nav-link" href="#id6">
    5.6 예측
   </a>
  </li>
@@ -308,8 +342,8 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="id1">
-<h1>5. 성능 향상을 위한 방법<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="faster-r-cnn">
+<h1>5. Faster R-CNN<a class="headerlink" href="#faster-r-cnn" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/drive/1cbQQ2CntUah9N0rsJdtWELseb-N_raFk?usp=sharing"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
@@ -341,8 +375,8 @@ We will use the GPU: Tesla T4
 </div>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>5.1 데이터 불러오기<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h2>5.1 데이터 불러오기<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>모델링 실습을 위해 2.1절에 나온 코드를 활용하여 데이터를 불러오겠습니다. 가짜연구소 깃허브의 Tutorial-Book-Utils에 있는 PL_data_loader.py 파일로 FascMaskDetection 데이터셋을 다운받고 압축 파일을 푸는 순서입니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -416,8 +450,8 @@ Face Mask Detection.zip is done!
 </div>
 </div>
 </div>
-<div class="section" id="id3">
-<h2>5.2 데이터 분리<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h2>5.2 데이터 분리<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>3.3절과 같이 데이터셋을 분리해보도록 하겠습니다. 아래 코드를 통해 임의로 170장을 추출하고 test폴더에 옮기는 작업을 수행합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -478,8 +512,8 @@ print(len(os.listdir(&#39;test_images&#39;)))
 </div>
 </div>
 </div>
-<div class="section" id="id4">
-<h2>5.3 데이터셋 클래스 정의<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>5.3 데이터셋 클래스 정의<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>이번에는 바운딩 박스를 위한 함수들을 2.3절과 마찬가지로 정의해줍니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -611,8 +645,8 @@ print(len(os.listdir(&#39;test_images&#39;)))
 </div>
 </div>
 </div>
-<div class="section" id="id5">
-<h2>5.4 모델 불러오기<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>5.4 모델 불러오기<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">torchvision.models.detection</span></code>에서는 Faster R-CNN API(<code class="docutils literal notranslate"><span class="pre">torchvision.models.detection.fasterrcnn_resnet50_fpn</span></code>)를 제공하고 있어 쉽게 구현이 가능합니다. 이는 COCO 데이터셋을 ResNet50으로 pre-trained한 모델을 제공하고 있으며, <code class="docutils literal notranslate"><span class="pre">pretrained=True/False</span></code>로 설정할 수 있습니다.</p>
 <p>이후 모델을 불러올 때는 <code class="docutils literal notranslate"><span class="pre">num_classes</span></code>에 원하는 클래스 개수를 설정하고 모델을 사용하면 됩니다. Faster R-CNN 사용 시 주의할 점은 background 클래스를 포함한 개수를 <code class="docutils literal notranslate"><span class="pre">num_classes</span></code>에 명시해주어야 합니다. 즉, 실제 데이터셋의 클래스 개수에 1개를 늘려 background 클래스를 추가해주어야 합니다.</p>
 <div class="cell docutils container">
@@ -629,8 +663,8 @@ print(len(os.listdir(&#39;test_images&#39;)))
 </div>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>5.5 전이 학습<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>5.5 전이 학습<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>Face Mask Detection에 전이 학습을 실시해 보겠습니다. Face Mask Detection 데이터셋은 3개의 클래스로 이루어져 있지만 background 클래스를 포함하여 <code class="docutils literal notranslate"><span class="pre">num_classes</span></code>를 4로 설정한 후 모델을 불러옵니다.</p>
 <p>GPU를 사용할 수 있는 환경이라면 device로 지정하여 불러온 모델을 GPU에 보내줍니다.</p>
 <div class="cell docutils container">
@@ -948,8 +982,8 @@ epoch : 10, Loss : 23.59230613708496, time : 266.9004054069519
 </div>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>5.6 예측<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>5.6 예측<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>모델 학습이 끝났으면 잘 학습되었는지 예측 결과를 확인해보겠습니다. 예측결과에는 바운딩 박스의 좌표(boxes)와 클래스(labels), 점수(scores)가 포함됩니다. 점수(scores)에는 해당 클래스의 신뢰도 값이 저장되는데 threshold로 0.5 이상인 것만 추출하도록 함수<code class="docutils literal notranslate"><span class="pre">make_prediction</span></code>를 정의하겠습니다. 그리고 test_data_loader의 첫번째 배치에 대해서만 결과를 출력해보았습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1016,11 +1050,11 @@ epoch : 10, Loss : 23.59230613708496, time : 266.9004054069519
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Target :  tensor([1, 1, 1, 2, 2, 1, 1, 1])
 </pre></div>
 </div>
-<img alt="../../_images/Ch5 성능 향상을 위한 방법_38_1.png" src="../../_images/Ch5 성능 향상을 위한 방법_38_1.png" />
+<img alt="../../_images/Ch5 Faster R-CNN_38_1.png" src="../../_images/Ch5 Faster R-CNN_38_1.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Prediction :  tensor([2, 2, 1, 1, 1, 1, 1, 1, 1], device=&#39;cuda:0&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/Ch5 성능 향상을 위한 방법_38_3.png" src="../../_images/Ch5 성능 향상을 위한 방법_38_3.png" />
+<img alt="../../_images/Ch5 Faster R-CNN_38_3.png" src="../../_images/Ch5 Faster R-CNN_38_3.png" />
 </div>
 </div>
 <p>이번엔 전체 시험 데이터에 대해서 예측 결과를 평가해보도록 하겠습니다. 먼저 모든 시험 데이터에 대한 예측 결과와 실제 label을 각각 <code class="docutils literal notranslate"><span class="pre">preds_adj_all</span></code>, <code class="docutils literal notranslate"><span class="pre">annot_all</span></code>에 담아줍니다.</p>
@@ -1122,7 +1156,7 @@ RetinaNet이 FPN과 Focal loss로 one-stage method임에도 높은 성능을 보
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="Ch4%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EB%AA%A8%EB%8D%B8%EB%A7%81.html" title="previous page">4. 데이터 모델링</a>
+    <a class='left-prev' id="prev-link" href="Ch4%20RetinaNet.html" title="previous page">4. RetinaNet</a>
     <a class='right-next' id="next-link" href="References.html" title="next page">6. 참고 문헌</a>
 
     </div>

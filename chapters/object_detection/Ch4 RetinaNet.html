@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>4. 데이터 모델링 &#8212; PseudoLab Tutorial Book</title>
+    <title>4. RetinaNet &#8212; PseudoLab Tutorial Book</title>
     
   <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -80,6 +80,8 @@ commentsRunWhenDOMLoaded(addUtterances);
 </script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -90,7 +92,7 @@ commentsRunWhenDOMLoaded(addUtterances);
     <link rel="shortcut icon" href="../../_static/PseudoLab_logo.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="5. 성능 향상을 위한 방법" href="Ch5%20%EC%84%B1%EB%8A%A5%20%ED%96%A5%EC%83%81%EC%9D%84%20%EC%9C%84%ED%95%9C%20%EB%B0%A9%EB%B2%95.html" />
+    <link rel="next" title="5. Faster R-CNN" href="Ch5%20Faster%20R-CNN.html" />
     <link rel="prev" title="3. 데이터 전처리" href="Ch3%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A0%84%EC%B2%98%EB%A6%AC.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -124,7 +126,7 @@ commentsRunWhenDOMLoaded(addUtterances);
     <ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="../../index.html">
-   파이토치를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials using PyTorch)
+   파이토치를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch)
   </a>
  </li>
 </ul>
@@ -151,17 +153,49 @@ commentsRunWhenDOMLoaded(addUtterances);
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   4. 데이터 모델링
+   4. RetinaNet
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Ch5%20%EC%84%B1%EB%8A%A5%20%ED%96%A5%EC%83%81%EC%9D%84%20%EC%9C%84%ED%95%9C%20%EB%B0%A9%EB%B2%95.html">
-   5. 성능 향상을 위한 방법
+  <a class="reference internal" href="Ch5%20Faster%20R-CNN.html">
+   5. Faster R-CNN
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="References.html">
    6. 참고 문헌
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  시계열 분석(Time Series)
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time_series/Ch1%20Time%20Series.html">
+   1. Time Series 소개
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time_series/Ch2%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%ED%83%90%EC%83%89.html">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time_series/Ch3%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A0%84%EC%B2%98%EB%A6%AC.html">
+   3. 데이터 전처리
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time_series/Ch4%20LSTM.html">
+   4. LSTM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time_series/Ch5%20CNN-LSTM.html">
+   5. CNN-LSTM
   </a>
  </li>
 </ul>
@@ -204,7 +238,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/chapters/object_detection/Ch4 데이터 모델링.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/chapters/object_detection/Ch4 RetinaNet.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -224,7 +258,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/object_detection/Ch4 데이터 모델링.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/object_detection/Ch4 RetinaNet.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -245,7 +279,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/chapters/object_detection/Ch4 데이터 모델링.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/chapters/object_detection/Ch4 RetinaNet.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -268,32 +302,32 @@ commentsRunWhenDOMLoaded(addUtterances);
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
+  <a class="reference internal nav-link" href="#id1">
    4.1 데이터 다운로드
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
+  <a class="reference internal nav-link" href="#id2">
    4.2 데이터 분리
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id4">
+  <a class="reference internal nav-link" href="#id3">
    4.3 데이터셋 클래스 정의
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id5">
+  <a class="reference internal nav-link" href="#id4">
    4.4 모델 불러오기
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id6">
+  <a class="reference internal nav-link" href="#id5">
    4.5 전이 학습
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id7">
+  <a class="reference internal nav-link" href="#id6">
    4.6 예측
   </a>
  </li>
@@ -308,8 +342,8 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="id1">
-<h1>4. 데이터 모델링<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="retinanet">
+<h1>4. RetinaNet<a class="headerlink" href="#retinanet" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/drive/1hb5MB94nNjOvPKgq7p5-gXbz0Qi4BjZz?usp=sharing"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
@@ -317,8 +351,8 @@ commentsRunWhenDOMLoaded(addUtterances);
 </div>
 <p>3장에서는 제공된 데이터에 augmentation을 가하는 방법과 데이터셋 클래스를 만드는 방법을 확인했습니다. 이번 장에서는 torchvision에서 제공하는 one-stage 모델인 RetinaNet을 활용해 의료용 마스크 검출 모델을 구축해보겠습니다.</p>
 <p>4.1절부터 4.3절까지는 2장과 3장에서 확인한 내용을 바탕으로 데이터를 불러오고 훈련용, 시험용 데이터로 나눈 후 데이터셋 클래스를 정의하겠습니다. 4.4절에서는 torchvision API를 활용하여 사전 훈련된 모델을 불러오겠습니다. 4.5절에서는 전이 학습을 통해 모델 학습을 진행한 후 4.6절에서 예측값 산출 및 모델 성능을 확인해보겠습니다.</p>
-<div class="section" id="id2">
-<h2>4.1 데이터 다운로드<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h2>4.1 데이터 다운로드<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>모델링 실습을 위해 2.1절에 나온 코드를 활용하여 데이터를 불러오겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -341,8 +375,8 @@ Face Mask Detection.zip is done!
 </div>
 </div>
 </div>
-<div class="section" id="id3">
-<h2>4.2 데이터 분리<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h2>4.2 데이터 분리<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>3.3절에서 확인한 데이터 분리 방법을 활용하여 데이터를 분리하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -386,8 +420,8 @@ print(len(os.listdir(&#39;test_images&#39;)))
 </div>
 </div>
 </div>
-<div class="section" id="id4">
-<h2>4.3 데이터셋 클래스 정의<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>4.3 데이터셋 클래스 정의<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>파이토치 모델을 학습시키기 위해선 데이터셋 클래스를 정의해야 합니다. torchvision에서 제공하는 객체 탐지 모델을 학습시키기 위한 데이터셋 클래스의 <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> 메서드는 이미지 파일과 바운딩 박스 좌표를 반환 합니다. 데이터셋 클래스를 3장에서 활용한 코드를 응용해 아래와 같이 정의 하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -526,8 +560,8 @@ print(len(os.listdir(&#39;test_images&#39;)))
 </div>
 <p>최종적으로 훈련용 데이터와 시험용 데이터를 batch 단위로 불러올 수 있게 <code class="docutils literal notranslate"><span class="pre">torch.utils.data.DataLoader</span></code> 함수를 활용해 <code class="docutils literal notranslate"><span class="pre">data_loader</span></code>와 <code class="docutils literal notranslate"><span class="pre">test_data_loader</span></code>를 각각 정의합니다.</p>
 </div>
-<div class="section" id="id5">
-<h2>4.4 모델 불러오기<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>4.4 모델 불러오기<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">torchvision</span></code>에서는 각종 컴퓨터 비전 문제를 해결하기 위한 딥러닝 모델을 쉽게 불러올 수 있는 API를 제공합니다. <code class="docutils literal notranslate"><span class="pre">torchvision.models</span></code> 모듈을 활용하여 RetinaNet 모델을 불러오도록 하겠습니다. RetinaNet은 <code class="docutils literal notranslate"><span class="pre">torchvision</span></code> 0.8.0 이상에서 제공되므로, 아래 코드를 활용하여 <code class="docutils literal notranslate"><span class="pre">torchvision</span></code> 버전을 맞춰줍니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -582,8 +616,8 @@ Successfully installed torchaudio-0.7.0
 </div>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>4.5 전이 학습<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>4.5 전이 학습<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>모델을 불러왔으면 아래 코드를 활용하여 전이 학습을 진행합니다. (코드 셀 나눠서 설명 더 추가해야함)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -693,8 +727,8 @@ tensor(28.5899, device=&#39;cuda:0&#39;, grad_fn=&lt;AddBackward0&gt;) time: 253
 </div>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>4.6 예측<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>4.6 예측<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>훈련이 마무리 되었으면, 예측 결과를 확인하도록 하겠습니다. test_data_loader에서 데이터를 불러와 모델에 넣어 학습 후, 예측된 결과와 실제 값을 각각 시각화 해보도록 하겠습니다. 우선 예측에 필요한 함수를 정의하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -846,7 +880,7 @@ AP : tensor([0.7684, 0.9188, 0.0603], dtype=torch.float64)
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="Ch3%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A0%84%EC%B2%98%EB%A6%AC.html" title="previous page">3. 데이터 전처리</a>
-    <a class='right-next' id="next-link" href="Ch5%20%EC%84%B1%EB%8A%A5%20%ED%96%A5%EC%83%81%EC%9D%84%20%EC%9C%84%ED%95%9C%20%EB%B0%A9%EB%B2%95.html" title="next page">5. 성능 향상을 위한 방법</a>
+    <a class='right-next' id="next-link" href="Ch5%20Faster%20R-CNN.html" title="next page">5. Faster R-CNN</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
