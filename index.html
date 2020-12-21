@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>파이토치를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch) &#8212; PseudoLab Tutorial Book</title>
+    <title>PyTorch를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch) &#8212; PseudoLab Tutorial Book</title>
     
   <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -92,7 +92,7 @@ commentsRunWhenDOMLoaded(addUtterances);
     <link rel="shortcut icon" href="_static/PseudoLab_logo.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="1. 객체 탐지(Object Detection)" href="chapters/object_detection/Ch1%20Object%20Detection.html" />
+    <link rel="next" title="의료용 마스크 탐지 모델 구축" href="chapters/object_detection/intro.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -125,7 +125,7 @@ commentsRunWhenDOMLoaded(addUtterances);
     <ul class="nav sidenav_l1">
  <li class="toctree-l1 current active">
   <a class="reference internal" href="#">
-   파이토치를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch)
+   PyTorch를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch)
   </a>
  </li>
 </ul>
@@ -135,35 +135,44 @@ commentsRunWhenDOMLoaded(addUtterances);
  </span>
 </p>
 <ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="chapters/object_detection/Ch1%20Object%20Detection.html">
-   1. 객체 탐지(Object Detection)
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="chapters/object_detection/intro.html">
+   의료용 마스크 탐지 모델 구축
   </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="chapters/object_detection/Ch2%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%ED%83%90%EC%83%89.html">
-   2. 데이터 탐색
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="chapters/object_detection/Ch3%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A0%84%EC%B2%98%EB%A6%AC.html">
-   3. 데이터 전처리
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="chapters/object_detection/Ch4%20RetinaNet.html">
-   4. RetinaNet
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="chapters/object_detection/Ch5%20Faster%20R-CNN.html">
-   5. Faster R-CNN
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="chapters/object_detection/References.html">
-   6. 참고 문헌
-  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="chapters/object_detection/Ch1%20Object%20Detection.html">
+     1. 객체 탐지 소개
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="chapters/object_detection/Ch2%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%ED%83%90%EC%83%89.html">
+     2. 데이터 탐색
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="chapters/object_detection/Ch3%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A0%84%EC%B2%98%EB%A6%AC.html">
+     3. 데이터 전처리
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="chapters/object_detection/Ch4%20RetinaNet.html">
+     4. RetinaNet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="chapters/object_detection/Ch5%20Faster%20R-CNN.html">
+     5. Faster R-CNN
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="chapters/object_detection/References.html">
+     6. 참고 문헌
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
  </li>
 </ul>
 <p class="caption collapsible-parent">
@@ -172,30 +181,39 @@ commentsRunWhenDOMLoaded(addUtterances);
  </span>
 </p>
 <ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="chapters/time_series/Ch1%20Time%20Series.html">
-   1. Time Series 소개
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="chapters/time_series/intro.html">
+   코로나 확진자 수 예측 모델 구축
   </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="chapters/time_series/Ch2%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%ED%83%90%EC%83%89.html">
-   2. 데이터 탐색
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="chapters/time_series/Ch3%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A0%84%EC%B2%98%EB%A6%AC.html">
-   3. 데이터 전처리
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="chapters/time_series/Ch4%20LSTM.html">
-   4. LSTM
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="chapters/time_series/Ch5%20CNN-LSTM.html">
-   5. CNN-LSTM
-  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="chapters/time_series/Ch1%20Time%20Series.html">
+     1. Time Series 소개
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="chapters/time_series/Ch2%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%ED%83%90%EC%83%89.html">
+     2. 데이터 탐색
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="chapters/time_series/Ch3%20%EB%8D%B0%EC%9D%B4%ED%84%B0%20%EC%A0%84%EC%B2%98%EB%A6%AC.html">
+     3. 데이터 전처리
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="chapters/time_series/Ch4%20LSTM.html">
+     4. LSTM
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="chapters/time_series/Ch5%20CNN-LSTM.html">
+     5. CNN-LSTM
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
  </li>
 </ul>
 
@@ -285,16 +303,34 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="deep-learning-tutorials-with-pytorch">
-<h1>파이토치를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch)<a class="headerlink" href="#deep-learning-tutorials-with-pytorch" title="Permalink to this headline">¶</a></h1>
-<p>해당 자료는 가짜연구소 AI School 튜토리얼 팀에 의해 제작 되었습니다.</p>
+  <div class="section" id="pytorch-deep-learning-tutorials-with-pytorch">
+<h1>PyTorch를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch)<a class="headerlink" href="#pytorch-deep-learning-tutorials-with-pytorch" title="Permalink to this headline">¶</a></h1>
+<p>PyTorch를 활용한 딥러닝 튜토리얼 홈페이지에 오신 것을 환영합니다!</p>
+<p>PyTorch를 활용해 여러 딥러닝 모델을 구축하는 과정을 정리한 저장소입니다.</p>
+<p>해당 자료는 가짜연구소(<a class="reference external" href="https://pseudo-lab.com/">Pseudo Lab</a>) 튜토리얼 팀에 의해 제작 되었습니다.</p>
 <p>가짜연구소는 진짜 연구소는 아니지만 <strong>머신러닝 연구를 중심</strong>으로 모인 커뮤니티입니다. 오픈(open)의 가치를 추구하는 좋은 영향력을 끼칠 수 있는 그룹을 만들고자 합니다!</p>
-<p><strong>비영리적</strong>으로 <strong>머신러닝/딥러닝, 케글</strong> 관련한 <strong>밋업</strong>, <strong>스터디</strong>, <strong>코드 공유</strong>, <strong>유튜브</strong>, <strong>해커톤</strong> 및 <strong>각종 이벤트</strong>를 통해 공유의 가치를 형성하고자 합니다.</p>
+<p><strong>비영리적</strong>으로 <strong>머신러닝/딥러닝</strong>, <strong>케글(Kaggle)</strong> 관련한 <strong>밋업</strong>, <strong>스터디</strong>, <strong>코드 공유</strong>, <strong>유튜브</strong>, <strong>해커톤</strong> 및 <strong>각종 이벤트</strong>를 통해 공유의 가치를 형성하고자 합니다.</p>
+<hr class="docutils" />
 <p><strong>제작</strong></p>
-<ul class="simple">
-<li><p>객체 탐지: 튜토리얼 팀 1기 (<a class="reference external" href="https://github.com/mmminji">강민지</a>, <a class="reference external" href="https://github.com/elibooklover">김호열</a>, <a class="reference external" href="https://github.com/oopsys6">박준형</a>, <a class="reference external" href="https://www.linkedin.com/in/sungjin-ahn/">안성진</a>)</p></li>
-<li><p>시계열 분석: 튜토리얼 팀 1기 (<a class="reference external" href="https://github.com/mmminji">강민지</a>, <a class="reference external" href="https://github.com/elibooklover">김호열</a>, <a class="reference external" href="https://github.com/oopsys6">박준형</a>, <a class="reference external" href="https://www.linkedin.com/in/sungjin-ahn/">안성진</a>)</p></li>
-</ul>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>챕터명</p></th>
+<th class="head"><p>모델</p></th>
+<th class="text-align:left head"><p>참여 인원</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>객체 탐지 (Object Detection)</p></td>
+<td><p>의료용 마스크 탐지</p></td>
+<td class="text-align:left"><p><a class="reference external" href="https://github.com/mmminji">강민지</a>, <a class="reference external" href="https://github.com/elibooklover">김호열</a>, <a class="reference external" href="https://github.com/oopsys6">박준형</a>, <a class="reference external" href="https://www.linkedin.com/in/sungjin-ahn/">안성진</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>시계열 분석 (Time Series)</p></td>
+<td><p>코로나 확진자 수 예측</p></td>
+<td class="text-align:left"><p><a class="reference external" href="https://github.com/mmminji">강민지</a>, <a class="reference external" href="https://github.com/elibooklover">김호열</a>, <a class="reference external" href="https://github.com/oopsys6">박준형</a>, <a class="reference external" href="https://www.linkedin.com/in/sungjin-ahn/">안성진</a></p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
 <p><strong>가짜연구소</strong></p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://pseudo-lab.com/">홈페이지</a>, <a class="reference external" href="https://github.com/Pseudo-Lab">Github</a>, <a class="reference external" href="https://www.facebook.com/groups/pseudolab/">Facebook</a>, <a class="reference external" href="https://www.linkedin.com/company/pseudolab/?originalSubdomain=kr">Linkedin</a></p></li>
@@ -334,7 +370,7 @@ commentsRunWhenDOMLoaded(addUtterances);
     
     <div class='prev-next-bottom'>
         
-    <a class='right-next' id="next-link" href="chapters/object_detection/Ch1%20Object%20Detection.html" title="next page">1. 객체 탐지(Object Detection)</a>
+    <a class='right-next' id="next-link" href="chapters/object_detection/intro.html" title="next page">의료용 마스크 탐지 모델 구축</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
