@@ -384,6 +384,10 @@ commentsRunWhenDOMLoaded(addUtterances);
   <div class="section" id="time-series">
 <h1>1. Time Series 소개<a class="headerlink" href="#time-series" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/drive/1BqHW6UuKS5I5QykIlRPo1V8w9qeb82Y2?usp=sharing"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/DRZFhCBsGQY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+</div>
 <p>시계열 예측은 과거에 관측된 값을 바탕으로 미래 값을 예측하는 문제입니다. 과거에 관측된 데이터와 미래 값 사이의 패턴을 발견해야 한다는 점에서 지도학습 문제로 정의가 가능합니다. 그렇기 때문에 이번 장에서는 신경망 구조에 기반한 지도학습을 통해 미래 값을 예측하는 모델을 구축해보겠습니다.</p>
 <p>시계열 예측은 다방면에서 필요로 하는 기술입니다. 가장 대표적으로 에너지 분야가 있습니다. 전력발전소에서는 효율적인 예비전력 확보를 위해 미래의 전력 수요를 예측해야 하며, 도시가스 회사는 검침기 고장 및 검침기 치팅에 대한 선제적 조치를 하기 위해 미래의 도시가스 사용량 예측 모델이 필요합니다. 실제로 해당 문제들은 새로운 모델 발굴을 위해 데이터 경진대회(<a class="reference external" href="https://dacon.io/competitions/official/235606/overview/">전력</a>, <a class="reference external" href="https://icim.nims.re.kr/platform/question/16">도시가스</a>)로도 개최가 됐습니다. 이 외에도 유통 분야에서도 효율적인 물품 관리를 위해 품목별 판매량 예측에 관심있으며, 마찬가지로 데이터 경진대회(<a class="reference external" href="https://www.kaggle.com/c/m5-forecasting-accuracy/overview">유통</a>)로도 개최가 됐습니다.</p>
 <p>이번 튜토리얼에서는 Johns Hopkins University의 Center for Systems Science and Engineering에서 제공하는 <a class="reference external" href="https://github.com/CSSEGISandData/COVID-19">코로나 확진자 데이터</a>를 활용해 과거 확진자 데이터를 바탕으로 미래 확진자를 예측하는 모델을 구축해보겠습니다. 1장에서는 시계열 예측 모델 구축 시 사용 가능한 신경망 구조에 대해 알아 볼 것이며, 모델 성능 평가 시 사용 가능한 평가지표를 확인해보겠습니다. 2장에서는 데이터 탐색적 분석을 통해 코로나 확진자 데이터에 대한 이해를 심화시킬 것이며 3장에서는 시계열 데이터를 지도학습을 위한 데이터 형식으로 바꾸는 법을 알아볼 것입니다. 4장과 5장에서는 각각 딥러닝 모델을 활용해 미래 확진자를 예측해보겠습니다.</p>
@@ -437,7 +441,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>L1 Loss로도 불리는 MAE는 예측한 값과 실제 값의 차이에 절대값을 취해 모두 더해주고나서 계산한 샘플 갯수(n)로 나눠서 구할 수 있습니다. 샘플 갯수 만큼 모두 더한 후 나눠준다는 것은 평균을 구한다는 것이므로, 앞으로 나오는 평가지표들에 대해서는 평균을 구한다는 표현을 사용하겠습니다. MAE의 스케일(scale)은 예측 대상인 타겟 변수와 같은 스케일이기 때문에 값이 내포하는 의미를 직관적으로 이해하기에 좋습니다. 코드로 구현하면 아래와 같습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1">#넘파이 패키지 불러오기</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1">#넘파이 패키지 불러오기</span>
 
 <span class="k">def</span> <span class="nf">MAE</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
@@ -471,7 +475,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>L2 Loss로도 불리는 MSE는 예측값과 실제값의 차이를 제곱하여 산출한 후 평균을 구한 값입니다. 예측값이 실제값에서 더 많이 벗어날 수록 MSE 값은 기하 급수적으로 증가하는 특성을 지닙니다. 산출된 값은 제곱이 되었기 때문에 타겟 변수와 값의 스케일이 다릅니다. 타겟 변수와 스케일을 맞춰주기 위해서는 MSE값에 루트를 씌워줄 수 있으며 이 값을 RMSE라고 부릅니다. 코드로 구현하면 아래와 같습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">MSE</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">MSE</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    true: np.array </span>
 <span class="sd">    pred: np.array</span>
@@ -502,7 +506,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>하지만 실제값에 0이 존재한다면 MAPE가 정의 되지 않는 문제점이 있습니다. 또한 절대적인 값의 오차가 같더라도 실제값과 예측값과의 대소 관계에 따라 과대 추정하는 예측값에 패널티를 더 부여하는 문제가 있습니다(<a class="reference external" href="https://doi.org/10.1016/0169-2070(93)90079-3">Makridakis, 1993</a>). 이는 아래 코드를 통해 확인해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">MAPE</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">MAPE</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    true: np.array </span>
 <span class="sd">    pred: np.array</span>
@@ -554,7 +558,7 @@ MAPE: 0.4371428571428571
 <p>SMAPE는 앞서 언급한 예시에 대해 MAPE가 지닌 한계점을 보완하기 위해 고완됐습니다(<a class="reference external" href="https://doi.org/10.1016/0169-2070(93)90079-3">Makridakis, 1993</a>). 아래 코드를 통해 확인해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">SMAPE</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">SMAPE</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    true: np.array </span>
 <span class="sd">    pred: np.array</span>
@@ -591,7 +595,7 @@ SMAPE: 0.29
 <p>MAPE는 0.91, 0.43의 다른 값을 산출했지만 SMAPE는 0.29의 같은 값을 산출하는 것을 확인할 수 있습니다. 하지만 SMAPE는 분모에 예측값 <span class="math notranslate nohighlight">\(\hat{y}_i\)</span>이 들어가서 <span class="math notranslate nohighlight">\(\hat{y}_i\)</span>에 의존적인 특성을 지니고 있습니다. 예측값이 과소추정할 때 분모가 더 작아지므로 계산되는 오차가 커지는 현상이 발생합니다. 아래 코드를 통해 확인해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TRUE2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">80</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TRUE2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">80</span><span class="p">])</span>
 <span class="n">PRED2_UNDER</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">])</span>
 <span class="n">PRED2_OVER</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
 
@@ -643,7 +647,7 @@ SMAPE: 0.21857142857142856
 <p><span class="math notranslate nohighlight">\(i\)</span> 시점의 예측값을 <span class="math notranslate nohighlight">\(i-1\)</span> 시점의 실제값으로 예측하는 방법입니다. naive forecast 방법에 대한 MSE값으로 나눠주기 때문에, RMSSE값이 1보다 크면 naive forecast 방법보다 예측을 못한다는 뜻이며 1보다 적으면 naive forecast 방법보다 예측을 잘한다는 의미를 지닙니다. 아래 코드를 통해 RMSSE를 구현해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">RMSSE</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">,</span> <span class="n">train</span><span class="p">):</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">RMSSE</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">,</span> <span class="n">train</span><span class="p">):</span> 
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    true: np.array </span>
 <span class="sd">    pred: np.array</span>
@@ -665,14 +669,14 @@ SMAPE: 0.21857142857142856
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TRAIN</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span> <span class="c1">#RMSSE 계산을 위한 임의의 훈련 데이터셋 생성</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TRAIN</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span> <span class="c1">#RMSSE 계산을 위한 임의의 훈련 데이터셋 생성</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">RMSSE</span><span class="p">(</span><span class="n">TRUE_UNDER</span><span class="p">,</span> <span class="n">PRED_OVER</span><span class="p">,</span> <span class="n">TRAIN</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">RMSSE</span><span class="p">(</span><span class="n">TRUE_UNDER</span><span class="p">,</span> <span class="n">PRED_OVER</span><span class="p">,</span> <span class="n">TRAIN</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">RMSSE</span><span class="p">(</span><span class="n">TRUE_OVER</span><span class="p">,</span> <span class="n">PRED_UNDER</span><span class="p">,</span> <span class="n">TRAIN</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">RMSSE</span><span class="p">(</span><span class="n">TRUE2</span><span class="p">,</span> <span class="n">PRED2_OVER</span><span class="p">,</span> <span class="n">TRAIN</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">RMSSE</span><span class="p">(</span><span class="n">TRUE2</span><span class="p">,</span> <span class="n">PRED2_UNDER</span><span class="p">,</span> <span class="n">TRAIN</span><span class="p">))</span>

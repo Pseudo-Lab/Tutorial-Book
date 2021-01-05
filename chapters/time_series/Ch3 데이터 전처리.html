@@ -340,6 +340,10 @@ commentsRunWhenDOMLoaded(addUtterances);
   <div class="section" id="id1">
 <h1>3. 데이터 전처리<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/drive/1yBd5UM049dC_XHex7Zx8D9ZO8mXfCElP?usp=sharing"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/mgkUDA-V9oA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+</div>
 <p>2장에서는 모델 학습에 사용할 데이터를 탐색하여 데이터 특성을 확인해보았습니다. 3장에서는 시계열 데이터 전처리 방법을 확인해보겠습니다.</p>
 <p>시계열 데이터를 지도학습 문제로 변환 하기 위해서는 예측 대상이 되는 타겟 변수와 예측할 때 사용하는 입력 변수 쌍으로 데이터를 가공해야 합니다. 또한 딥러닝 모델을 안정적으로 학습시키기 위해선 데이터의 스케일(scale)을 통일 시키는 작업이 필요합니다. 3.1절에서는 코로나 확진자 데이터를 지도학습용 데이터로 변환하는 과정을 알아볼 예정이며, 3.2절에서는 데이터 스케일링 방법을 확인하겠습니다.</p>
 <div class="section" id="id2">
@@ -347,9 +351,9 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>데이터 전처리 실습을 위해 앞서 2.1절에 나온 코드를 활용해 데이터를 불러오겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
-!python Tutorial-Book-Utils/PL_data_loader.py --data COVIDTimeSeries
-!unzip -q COVIDTimeSeries.zip
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
+<span class="o">!</span>python Tutorial-Book-Utils/PL_data_loader.py --data COVIDTimeSeries
+<span class="o">!</span>unzip -q COVIDTimeSeries.zip
 </pre></div>
 </div>
 </div>
@@ -368,7 +372,7 @@ COVIDTimeSeries.zip is done!
 <p>2.3절에 나온 코드를 활용해 대한민국 일자별 확진자 데이터인 <code class="docutils literal notranslate"><span class="pre">daily_cases</span></code>를 산출하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="n">confirmed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;time_series_covid19_confirmed_global.csv&#39;</span><span class="p">)</span>
 <span class="n">confirmed</span><span class="p">[</span><span class="n">confirmed</span><span class="p">[</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Korea, South&#39;</span><span class="p">]</span>
 <span class="n">korea</span> <span class="o">=</span> <span class="n">confirmed</span><span class="p">[</span><span class="n">confirmed</span><span class="p">[</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Korea, South&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">4</span><span class="p">:]</span><span class="o">.</span><span class="n">T</span>
@@ -458,7 +462,7 @@ COVIDTimeSeries.zip is done!
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="k">def</span> <span class="nf">create_sequences</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">seq_length</span><span class="p">):</span>
     <span class="n">xs</span> <span class="o">=</span> <span class="p">[]</span>
@@ -479,7 +483,7 @@ COVIDTimeSeries.zip is done!
 <p><code class="docutils literal notranslate"><span class="pre">seq_length</span></code>를 5로 정의하고 <code class="docutils literal notranslate"><span class="pre">create_sequences</span></code> 함수를 <code class="docutils literal notranslate"><span class="pre">daily_cases</span></code>에 적용하니 총 327개의 지도학습용 데이터가 구축된 것을 확인할 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
@@ -492,7 +496,7 @@ COVIDTimeSeries.zip is done!
 <p>구축된 데이터를 학습용, 검증용, 시험용 데이터로 분리하겠습니다. 8:1:1 비율로 데이터를 분리하겠습니다. 327개의 80%는 약 261이므로 처음 261개 데이터를 학습용으로, 그 후 33개의 데이터를 검증용으로, 그리고 마지막 33개의 데이터를 시험용으로 사용하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">train_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">327</span> <span class="o">*</span> <span class="mf">0.8</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">327</span> <span class="o">*</span> <span class="mf">0.8</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">train_size</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -505,7 +509,7 @@ COVIDTimeSeries.zip is done!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="n">train_size</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:</span><span class="n">train_size</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="n">train_size</span><span class="p">]</span>
 <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">train_size</span><span class="p">:</span><span class="n">train_size</span><span class="o">+</span><span class="mi">33</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">train_size</span><span class="p">:</span><span class="n">train_size</span><span class="o">+</span><span class="mi">33</span><span class="p">]</span>
 <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">train_size</span><span class="o">+</span><span class="mi">33</span><span class="p">:],</span> <span class="n">y</span><span class="p">[</span><span class="n">train_size</span><span class="o">+</span><span class="mi">33</span><span class="p">:]</span>
 </pre></div>
@@ -514,7 +518,7 @@ COVIDTimeSeries.zip is done!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_val</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_val</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y_val</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -537,7 +541,7 @@ COVIDTimeSeries.zip is done!
 <p>MinMax scaling을 적용하기 위해 <code class="docutils literal notranslate"><span class="pre">X_train</span></code> 데이터의 최소값과 최대값을 구하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MIN</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MIN</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
 <span class="n">MAX</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">MIN</span><span class="p">,</span> <span class="n">MAX</span><span class="p">)</span>
 </pre></div>
@@ -552,7 +556,7 @@ COVIDTimeSeries.zip is done!
 <p>최소값이 0이고 최대값은 851입니다. 다음으로는 MinMax scaling 함수를 정의하도록 하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">MinMaxScale</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">MinMaxScale</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span><span class="p">):</span>
 
     <span class="k">return</span> <span class="p">(</span><span class="n">array</span> <span class="o">-</span> <span class="nb">min</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nb">max</span> <span class="o">-</span> <span class="nb">min</span><span class="p">)</span>
 </pre></div>
@@ -562,7 +566,7 @@ COVIDTimeSeries.zip is done!
 <p><code class="docutils literal notranslate"><span class="pre">MinMaxScale</span></code>함수를 활용해 스케일링을 진행하겠습니다</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span> <span class="o">=</span> <span class="n">MinMaxScale</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">MIN</span><span class="p">,</span> <span class="n">MAX</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span> <span class="o">=</span> <span class="n">MinMaxScale</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">MIN</span><span class="p">,</span> <span class="n">MAX</span><span class="p">)</span>
 <span class="n">y_train</span> <span class="o">=</span> <span class="n">MinMaxScale</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">MIN</span><span class="p">,</span> <span class="n">MAX</span><span class="p">)</span>
 <span class="n">X_val</span> <span class="o">=</span> <span class="n">MinMaxScale</span><span class="p">(</span><span class="n">X_val</span><span class="p">,</span> <span class="n">MIN</span><span class="p">,</span> <span class="n">MAX</span><span class="p">)</span>
 <span class="n">y_val</span> <span class="o">=</span> <span class="n">MinMaxScale</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">MIN</span><span class="p">,</span> <span class="n">MAX</span><span class="p">)</span>
@@ -575,7 +579,7 @@ COVIDTimeSeries.zip is done!
 <p>다음으로는 PyTorch 모델에 입력되기 위해 <code class="docutils literal notranslate"><span class="pre">np.array</span></code> 데이터 타입를 <code class="docutils literal notranslate"><span class="pre">torch.Tensor</span></code> 타입으로 변환해주겠습니다. 먼저 데이터 타입 변환하는 함수를 정의하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
 
 <span class="k">def</span> <span class="nf">make_Tensor</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
@@ -586,7 +590,7 @@ COVIDTimeSeries.zip is done!
 <p><code class="docutils literal notranslate"><span class="pre">make_Tensor</span></code>함수를 활용해 데이터 타입 변환을 진행하겠습니다</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span> <span class="o">=</span> <span class="n">make_Tensor</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span> <span class="o">=</span> <span class="n">make_Tensor</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
 <span class="n">y_train</span> <span class="o">=</span> <span class="n">make_Tensor</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
 <span class="n">X_val</span> <span class="o">=</span> <span class="n">make_Tensor</span><span class="p">(</span><span class="n">X_val</span><span class="p">)</span>
 <span class="n">y_val</span> <span class="o">=</span> <span class="n">make_Tensor</span><span class="p">(</span><span class="n">y_val</span><span class="p">)</span>

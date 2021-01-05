@@ -345,6 +345,10 @@ commentsRunWhenDOMLoaded(addUtterances);
   <div class="section" id="id1">
 <h1>2. 데이터 탐색<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/drive/1MyAms-lqAygJwen4PiB5PAVngh23aN7d?usp=sharing"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/9E130rYSzaE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+</div>
 <p>이전 장에서 시계열 분석에 활용 가능한 딥러닝 모델 구조와 모델 평가지표에 대해 알아보았습니다. 2장부터는 본격적으로 시계열 데이터를 사용하여 분석을 해보도록 하겠습니다. 분석에 앞서 활용하게 될 데이터에 대한 탐색과 시각화를 실시하겠습니다.</p>
 <p>시계열 예측에 사용할 데이터는 코로나 확진자 데이터입니다. 데이터셋은 <a class="reference external" href="https://github.com/CSSEGISandData/COVID-19">COVID-19 Data Repository by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University</a>와 <a class="reference external" href="https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset?select=covid_19_data.csv">Kaggle: Novel Corona Virus 2019 Dataset
 </a>에서 확보했습니다.</p>
@@ -356,7 +360,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code> 명령어를 사용하여 Tutorial-Book-Utils 저장소를 Colab 환경에 다운로드 합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
 </pre></div>
 </div>
 </div>
@@ -374,7 +378,7 @@ Unpacking objects: 100% (24/24), done.
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code> 명령어 실행 후, Tutorial-Book-Utils 폴더 내에 <code class="docutils literal notranslate"><span class="pre">PL_data_loader.py</span></code> 파일이 위치한 것을 알 수 있습니다. 해당 파일 내에는 구글 드라이브의 데이터셋을 다운로드 하는 함수가 저장되어 있습니다. <code class="docutils literal notranslate"><span class="pre">--data</span></code> 파라미터에 <code class="docutils literal notranslate"><span class="pre">COVIDTimeSeries</span></code>을 입력함으로써 코로나 확진자 예측 모델 구축에 활용할 데이터를 받을 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!python Tutorial-Book-Utils/PL_data_loader.py --data COVIDTimeSeries
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>python Tutorial-Book-Utils/PL_data_loader.py --data COVIDTimeSeries
 </pre></div>
 </div>
 </div>
@@ -387,7 +391,7 @@ Unpacking objects: 100% (24/24), done.
 <p>위와 같이 COVIDTimeSeries.zip 파일이 다운로드 된 것을 확인할 수 있습니다. 다음으로 리눅스 명령어인 <code class="docutils literal notranslate"><span class="pre">unzip</span></code>을 활용하여 압축파일을 풀어보도록 하겠습니다. <code class="docutils literal notranslate"><span class="pre">-q</span></code> 옵션을 통해 불필요한 출력물이 나오지 않게 제어 가능합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!unzip -q COVIDTimeSeries.zip
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>unzip -q COVIDTimeSeries.zip
 </pre></div>
 </div>
 </div>
@@ -396,7 +400,7 @@ Unpacking objects: 100% (24/24), done.
 <p>!!!!!그림추가!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="nb">all</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;covid_19_data.csv&#39;</span><span class="p">)</span>
 <span class="n">confirmed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;time_series_covid19_confirmed_global.csv&#39;</span><span class="p">)</span>
@@ -407,7 +411,7 @@ Unpacking objects: 100% (24/24), done.
 <p><code class="docutils literal notranslate"><span class="pre">all</span></code>는 전세계의 일별 확진자, 사망자, 완치자에 대한 데이터입니다. <code class="docutils literal notranslate"><span class="pre">ObservationDate</span></code>는 발생 날짜, <code class="docutils literal notranslate"><span class="pre">Province/State</span></code>, <code class="docutils literal notranslate"><span class="pre">Country/Region</span></code>는 발생 지역과 국가, <code class="docutils literal notranslate"><span class="pre">Confirmed</span></code>는 확진자수, <code class="docutils literal notranslate"><span class="pre">Deaths</span></code>는 사망자수,	그리고 <code class="docutils literal notranslate"><span class="pre">Recovered</span></code>는 완치자수를 의미합니다. 해당 데이터프레임은 다음과 같습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">all</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">all</span>
 </pre></div>
 </div>
 </div>
@@ -570,7 +574,7 @@ Unpacking objects: 100% (24/24), done.
 <p><code class="docutils literal notranslate"><span class="pre">confirmed</span></code>는 지역별 확진자 수에 대한 시퀀스(sequence) 데이터입니다. <code class="docutils literal notranslate"><span class="pre">Country/Region</span></code>, <code class="docutils literal notranslate"><span class="pre">Province/State</span></code>는 발생 지역과 국가, <code class="docutils literal notranslate"><span class="pre">Long</span></code>,	<code class="docutils literal notranslate"><span class="pre">Lat</span></code>는 경도와 위도, 그리고 <code class="docutils literal notranslate"><span class="pre">MM/DD/YYYY</span></code>는 일자별 확진자 수를 의미합니다. 해당 데이터프레임은 다음과 같습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">confirmed</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">confirmed</span>
 </pre></div>
 </div>
 </div>
@@ -1612,7 +1616,7 @@ Unpacking objects: 100% (24/24), done.
 <p><code class="docutils literal notranslate"><span class="pre">all</span></code>을 활용해 시간에 따른 국가별 코로나 확진자 수를 시각화 해보도록 하겠습니다. 국가별 코로나 확진자는 <code class="docutils literal notranslate"><span class="pre">Province/State</span></code> 기준으로 나눠져 있습니다. 그러므로 시각화 하기 전에 <code class="docutils literal notranslate"><span class="pre">Country/Region</span></code>기준으로 해당 국가내의 모든 확진자를 합해줘야 합니다. 아래 코드를 통해 구현해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">group</span> <span class="o">=</span> <span class="nb">all</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;ObservationDate&#39;</span><span class="p">,</span> <span class="s1">&#39;Country/Region&#39;</span><span class="p">])[</span><span class="s1">&#39;Confirmed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">group</span> <span class="o">=</span> <span class="nb">all</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;ObservationDate&#39;</span><span class="p">,</span> <span class="s1">&#39;Country/Region&#39;</span><span class="p">])[</span><span class="s1">&#39;Confirmed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 <span class="n">group</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 <span class="n">group</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -1680,7 +1684,7 @@ Unpacking objects: 100% (24/24), done.
 <p>일자별 국가별 총 확진자 수가 도출 된 것을 확인할 수 있습니다. 다음으로는 세계지도 위에 국가별 확진자수가 나타나지도록 애니메이션 효과로 표현해보겠습니다. 이는 <code class="docutils literal notranslate"><span class="pre">plotly.express</span></code> 패키지를 이용하여 나타낼 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plotly</span> <span class="k">as</span> <span class="nn">py</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plotly</span> <span class="k">as</span> <span class="nn">py</span>
 <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 </pre></div>
 </div>
@@ -1697,7 +1701,7 @@ Unpacking objects: 100% (24/24), done.
 <p>재생버튼을 누르면 일별 확진자 그래프를 확인할 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">choro_map</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">choropleth</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">choro_map</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">choropleth</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> 
                     <span class="n">locations</span><span class="o">=</span><span class="s2">&quot;Country/Region&quot;</span><span class="p">,</span> 
                     <span class="n">locationmode</span> <span class="o">=</span> <span class="s2">&quot;country names&quot;</span><span class="p">,</span>
                     <span class="n">color</span><span class="o">=</span><span class="s2">&quot;Confirmed&quot;</span><span class="p">,</span> 
@@ -1776,7 +1780,7 @@ if (outputEl) {{
 <p>이번에는 <code class="docutils literal notranslate"><span class="pre">confirmed</span></code>에서 대한민국 데이터만 뽑아보겠습니다. 이 데이터는 누적데이터로 해당 날짜까지의 총 확진자수를 의미합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">confirmed</span><span class="p">[</span><span class="n">confirmed</span><span class="p">[</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Korea, South&#39;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">confirmed</span><span class="p">[</span><span class="n">confirmed</span><span class="p">[</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Korea, South&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1975,7 +1979,7 @@ if (outputEl) {{
 <p>여기서 지역명, 위경도를 제외한 확진자수에 대한 정보만 남기도록 하겠습니다. 그리고 이후 편의성을 위해 행과 열을 바꾸고(<code class="docutils literal notranslate"><span class="pre">.T</span></code>), 인덱스인 날짜를 str 형식에서 datetime 형식으로 바꿔주었습니다(<code class="docutils literal notranslate"><span class="pre">to_datetime</span></code>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">korea</span> <span class="o">=</span> <span class="n">confirmed</span><span class="p">[</span><span class="n">confirmed</span><span class="p">[</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Korea, South&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">4</span><span class="p">:]</span><span class="o">.</span><span class="n">T</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">korea</span> <span class="o">=</span> <span class="n">confirmed</span><span class="p">[</span><span class="n">confirmed</span><span class="p">[</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Korea, South&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">4</span><span class="p">:]</span><span class="o">.</span><span class="n">T</span>
 <span class="n">korea</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">korea</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 <span class="n">korea</span>
 </pre></div>
@@ -2056,9 +2060,9 @@ if (outputEl) {{
 <p>가장 대표적인 시각화 패키지인 <code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code>과 <code class="docutils literal notranslate"><span class="pre">seaborn</span></code>을 이용하여 시각화해보도록 하겠습니다. 이 때, <code class="docutils literal notranslate"><span class="pre">%matplotlib</span> <span class="pre">inline</span></code>은 해당 셀에서 바로 그래프를 보이게 할 수 있습니다. 그리고 <code class="docutils literal notranslate"><span class="pre">pylab</span></code>의 <code class="docutils literal notranslate"><span class="pre">rcParams['figure.figsize']</span></code>은 그래프 크기를 조정할 수 있으며, <code class="docutils literal notranslate"><span class="pre">sns.set</span></code>은 격자의 색깔과 글짜 크기를 조정할 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
-<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
 <span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="n">rcParams</span>
 <span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">8</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;muted&#39;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
@@ -2069,13 +2073,13 @@ if (outputEl) {{
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Ch2 데이터 탐색_30_0.png" src="../../_images/Ch2 데이터 탐색_30_0.png" />
+<img alt="../../_images/Ch2 데이터 탐색_31_0.png" src="../../_images/Ch2 데이터 탐색_31_0.png" />
 </div>
 </div>
 <p>이번에는 누적데이터가 아닌 일일 단위로 확진자 수를 알아보겠습니다. <code class="docutils literal notranslate"><span class="pre">diff</span></code>를 이용하면 이전 행과 차이를 구할 수 있어 누적데이터를 쉽게 일별데이터로 바꿀 수 있습니다. 하지만 첫번째 행에는 결측치가 생겨 이를 누적데이터의 첫번째 값으로 채워주어야 합니다. 그리고 데이터 형식은 int(정수)로 바꿔줍니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">daily_cases</span> <span class="o">=</span> <span class="n">korea</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">korea</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">daily_cases</span> <span class="o">=</span> <span class="n">korea</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">korea</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
 <span class="n">daily_cases</span>
 </pre></div>
 </div>
@@ -2155,13 +2159,13 @@ if (outputEl) {{
 <p>마찬가지로 일별 확진자수 데이터를 그래프로 나타내면 다음과 같습니다. 위에서 그래프 형식에 대한 셋팅을 미리 해두면 이후에는 똑같이 적용됩니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">daily_cases</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">daily_cases</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Ch2 데이터 탐색_34_0.png" src="../../_images/Ch2 데이터 탐색_34_0.png" />
+<img alt="../../_images/Ch2 데이터 탐색_35_0.png" src="../../_images/Ch2 데이터 탐색_35_0.png" />
 </div>
 </div>
 <p>3월초와 8월말에 급증하는 시기가 있고, 지속적으로 확진자가 발생하고 있는 것을 볼 수 있습니다. 그리고 연말이 되면서 다시 증가 추세를 보이고 있습니다.</p>

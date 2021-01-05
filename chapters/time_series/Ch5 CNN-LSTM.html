@@ -367,12 +367,24 @@ commentsRunWhenDOMLoaded(addUtterances);
   <div class="section" id="cnn-lstm">
 <h1>5. CNN-LSTM<a class="headerlink" href="#cnn-lstm" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/drive/1jjFiq5pZyytlmouN6B1_Y8g39fXKyfMB#scrollTo=iIEvXM16HsVt"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html">
+<iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/il6UhdKycew"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+</div></div>
+</div>
 <p>이전 4장에서는 LSTM을 활용하여 대한민국 코로나19 확진자 수를 예측해보았습니다. LSTM은 <a class="reference external" href="http://www.bioinf.jku.at/publications/older/2604.pdf">Hochreiter &amp; Schmidhuber (1997)</a>에 의해 처음 소개되었고, 이후 지속적인 연구와 함께 발전해오고 있습니다.</p>
 <p>이번 장에서는 모델 성능 향상을 위한 다른 방법을 실험해보도록 하겠습니다. 모델 성능 향상을 위해서는 배치 (batch) 사이즈와 에폭 (epoch) 수 변경, 데이터셋 큐레이팅(Dataset Curating), 데이터셋 비율 조정, 손실 함수(Loss Function) 변경, 모델 변경 등의 방법이 있지만, 이번 실습에서는 모델 구조 변경을 통해 성능을 향상을 진행해보겠습니다. CNN-LSTM 모델을 사용하여, 대한민국 코로나19 확진자 수 예측에 있어서 더 나은 성능을 보일 수 있는지 살펴보도록 하겠습니다.</p>
 <p>가장 먼저 이번 장에 필요한 라이브러리들을 불러오도록 하겠습니다. 가장 기본적인 <code class="docutils literal notranslate"><span class="pre">torch</span></code>, <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">pandas</span></code>와, 프로세스 상태를 표시하는 <code class="docutils literal notranslate"><span class="pre">tqdm</span></code>, 시각화 라이브러리인 <code class="docutils literal notranslate"><span class="pre">pylab</span></code>, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> 등을 사용하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -385,8 +397,8 @@ commentsRunWhenDOMLoaded(addUtterances);
 <span class="kn">from</span> <span class="nn">pandas.plotting</span> <span class="kn">import</span> <span class="n">register_matplotlib_converters</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span><span class="p">,</span> <span class="n">optim</span>
 
-<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
-<span class="o">%</span><span class="n">config</span> <span class="n">InlineBackend</span><span class="o">.</span><span class="n">figure_format</span><span class="o">=</span><span class="s1">&#39;retina&#39;</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format=&#39;retina&#39;
 
 <span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;whitegrid&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;muted&#39;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
 <span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">10</span>
@@ -409,9 +421,9 @@ commentsRunWhenDOMLoaded(addUtterances);
 데이터를 불러오겠습니다. 2.1절에 나온 코드를 활용하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
-!python Tutorial-Book-Utils/PL_data_loader.py --data COVIDTimeSeries
-!unzip -q COVIDTimeSeries.zip
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
+<span class="o">!</span>python Tutorial-Book-Utils/PL_data_loader.py --data COVIDTimeSeries
+<span class="o">!</span>unzip -q COVIDTimeSeries.zip
 </pre></div>
 </div>
 </div>
@@ -430,7 +442,7 @@ COVIDTimeSeries.zip is done!
 <p><code class="docutils literal notranslate"><span class="pre">pandas</span></code> 라이브러리를 이용하여 코로나 확진자 데이터를 불러온 후 3장에서 실습한 데이터 전처리를 실시하겠습니다. 데이터셋 기간은 2020년 1월 22일 부터 2020년 12월 18일 입니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">confirmed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;time_series_covid19_confirmed_global.csv&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">confirmed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;time_series_covid19_confirmed_global.csv&#39;</span><span class="p">)</span>
 <span class="n">confirmed</span><span class="p">[</span><span class="n">confirmed</span><span class="p">[</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Korea, South&#39;</span><span class="p">]</span>
 <span class="n">korea</span> <span class="o">=</span> <span class="n">confirmed</span><span class="p">[</span><span class="n">confirmed</span><span class="p">[</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Korea, South&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">4</span><span class="p">:]</span><span class="o">.</span><span class="n">T</span>
 <span class="n">korea</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">korea</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
@@ -487,7 +499,7 @@ COVIDTimeSeries.zip is done!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">daily_cases</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">daily_cases</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -495,7 +507,7 @@ COVIDTimeSeries.zip is done!
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f77cc4d1438&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/Ch5 CNN-LSTM_9_1.png" src="../../_images/Ch5 CNN-LSTM_9_1.png" />
+<img alt="../../_images/Ch5 CNN-LSTM_10_1.png" src="../../_images/Ch5 CNN-LSTM_10_1.png" />
 </div>
 </div>
 </div>
@@ -523,7 +535,7 @@ COVIDTimeSeries.zip is done!
 <p>우선 1D CNN 레어이를 정의해서 <code class="docutils literal notranslate"><span class="pre">c</span></code>에 저장합니다. 그림 5-2 &amp; 5-3처럼 <code class="docutils literal notranslate"><span class="pre">in_channels</span></code> 1개, <code class="docutils literal notranslate"><span class="pre">out_channels</span></code> 1개, <code class="docutils literal notranslate"><span class="pre">kernel_size</span></code> 2개, <code class="docutils literal notranslate"><span class="pre">stride</span></code>는 1로 설정을 하였습니다. 그리고 나서 입력 값으로 활용할 <code class="docutils literal notranslate"><span class="pre">input</span></code>변수를 정의하고 <code class="docutils literal notranslate"><span class="pre">c</span></code>에 입력해 예측값을 산출합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv1d</span><span class="p">(</span><span class="n">in_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">out_channels</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]]])</span>
 <span class="n">output</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
 <span class="n">output</span>
@@ -539,7 +551,7 @@ COVIDTimeSeries.zip is done!
 <p>5개의 입력 예시들이 <code class="docutils literal notranslate"><span class="pre">kernel_size</span></code>가 2인 1D CNN을 통과하니 4개의 값이 산출됐습니다. 해당 값들이 어떻게 산출 됐는지 알아보게습니다. 우선 <code class="docutils literal notranslate"><span class="pre">c</span></code>에 저장된 weight와 bias 값을 확인해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -556,7 +568,7 @@ tensor([0.5037], requires_grad=True)
 <p>첫번째로 나오는 값은 weight 값을 의미합니다. <code class="docutils literal notranslate"><span class="pre">kernel_size</span></code>가 2 이므로 총 2개의 weight값이 존재합니다. 다음으로 나오는 값은 bias 값입니다. 하나의 1D CNN 레이어에 대해 하나의 bias 값이 존재합니다. 이제 해당 값들을 각각 <code class="docutils literal notranslate"><span class="pre">w1</span></code>, <code class="docutils literal notranslate"><span class="pre">w2</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code> 변수에 저장해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">w_list</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w_list</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">parameters</span><span class="p">():</span>
     <span class="n">w_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
 
@@ -584,7 +596,7 @@ tensor([0.5037], requires_grad=True)
 <p>인덱싱을 통해 가중치 값들을 각각 <code class="docutils literal notranslate"><span class="pre">w1</span></code>, <code class="docutils literal notranslate"><span class="pre">w2</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code> 변수에 저장했습니다. 그림 5-2와 5-3에서 <span class="math notranslate nohighlight">\(y1\)</span> 과 <span class="math notranslate nohighlight">\(y2\)</span>를 산출할 때 사용한 산식을 응용하여 1D CNN을 통과했을 때의 나온 <code class="docutils literal notranslate"><span class="pre">output</span></code>값을 계산할 수 있습니다. 1D CNN 필터가 3과 4를 지날 때 산출되는 값을 계산하면 아래와 같습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">w1</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">w2</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">b</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w1</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="n">w2</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">b</span>
 </pre></div>
 </div>
 </div>
@@ -597,7 +609,7 @@ tensor([0.5037], requires_grad=True)
 <p>이는 <code class="docutils literal notranslate"><span class="pre">output</span></code>의 3번째 값과 같다는 것을 알 수 있으며, 나머지 값들도 이런 방식으로 계산되었음을 알 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">output</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">output</span>
 </pre></div>
 </div>
 </div>
@@ -614,7 +626,7 @@ tensor([0.5037], requires_grad=True)
 <p>이제 CNN-LSTM 모델을 생성해보겠습니다. 4장에서 생성한 LSTM 모델과의 가장 큰 차이점은 1D CNN 레이어를 추가한 것입니다. 아래 코드를 보시면, <code class="docutils literal notranslate"><span class="pre">CovidPredictor</span></code> 클래스 안에, <code class="docutils literal notranslate"><span class="pre">nn.Conv1d</span></code>를 통해 1D CNN 레이어를 추가한 것을 확인할 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CovidPredictor</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CovidPredictor</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_features</span><span class="p">,</span> <span class="n">n_hidden</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">n_layers</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CovidPredictor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_hidden</span> <span class="o">=</span> <span class="n">n_hidden</span>
@@ -651,7 +663,7 @@ tensor([0.5037], requires_grad=True)
 <p>4장에서 구축한 <code class="docutils literal notranslate"><span class="pre">train_model</span></code> 함수를 활용해 모델 학습을 해보겠습니다. 옵티마이저로는 <code class="docutils literal notranslate"><span class="pre">Adam</span></code>을 선택하였습니다. 학습비율은 <code class="docutils literal notranslate"><span class="pre">0.001</span></code>로 설정하였습니다. 손실 함수(Loss Function)로는 <code class="docutils literal notranslate"><span class="pre">MAE</span> <span class="pre">(Mean</span> <span class="pre">Absolute</span> <span class="pre">Error)</span></code>를 선택했습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">val_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">val_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">patience</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">train_data</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">,</span> <span class="n">val_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">val_labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">num_epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">patience</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
     <span class="n">loss_fn</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">L1Loss</span><span class="p">()</span> <span class="c1">#</span>
     <span class="n">optimiser</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
     <span class="n">train_hist</span> <span class="o">=</span> <span class="p">[]</span>
@@ -721,7 +733,7 @@ tensor([0.5037], requires_grad=True)
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">CovidPredictor</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">CovidPredictor</span><span class="p">(</span>
     <span class="n">n_features</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">n_hidden</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
     <span class="n">seq_len</span><span class="o">=</span><span class="n">seq_length</span><span class="p">,</span>
@@ -734,7 +746,7 @@ tensor([0.5037], requires_grad=True)
 <p>예측 모델을 간략히 살펴보도록 하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -751,7 +763,7 @@ tensor([0.5037], requires_grad=True)
 <p>이제 모델 학습을 진행해보겠습니다</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="p">,</span> <span class="n">train_hist</span><span class="p">,</span> <span class="n">val_hist</span> <span class="o">=</span> <span class="n">train_model</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="p">,</span> <span class="n">train_hist</span><span class="p">,</span> <span class="n">val_hist</span> <span class="o">=</span> <span class="n">train_model</span><span class="p">(</span>
     <span class="n">model</span><span class="p">,</span>
     <span class="n">X_train</span><span class="p">,</span>
     <span class="n">y_train</span><span class="p">,</span>
@@ -782,7 +794,7 @@ Epoch 90 train loss: 0.033151885962927306 val loss: 0.034998856484889984
 <p>시각화를 통해 훈련 손실값(Training Loss)과 시헙 손실값(Test Loss)을 살펴보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_hist</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training loss&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_hist</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training loss&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">val_hist</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Val loss&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
@@ -792,7 +804,7 @@ Epoch 90 train loss: 0.033151885962927306 val loss: 0.034998856484889984
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f77c2ac9fd0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/Ch5 CNN-LSTM_36_1.png" src="../../_images/Ch5 CNN-LSTM_36_1.png" />
+<img alt="../../_images/Ch5 CNN-LSTM_37_1.png" src="../../_images/Ch5 CNN-LSTM_37_1.png" />
 </div>
 </div>
 <p>두 개의 손실값이 모두 수렴하는 것을 확인할 수 있습니다.</p>
@@ -802,7 +814,7 @@ Epoch 90 train loss: 0.033151885962927306 val loss: 0.034998856484889984
 <p>모델 학습을 마쳤으니 확진자 수 예측을 해보도록 하겠습니다. 예측할 때도 새로운 시퀀스가 입력될 때 마다 <code class="docutils literal notranslate"><span class="pre">hidden_state</span></code>는 초기화를 해줘야 이전 시퀀스의 <code class="docutils literal notranslate"><span class="pre">hidden_state</span></code>가 반영되지 않습니다. <code class="docutils literal notranslate"><span class="pre">torch.unsqueeze</span></code> 함수를 사용하여 입력 데이터의 차원을 늘려 모델이 예상하는 3차원 형태로 만들어줍니다. 그리고 예측된 데이터 내에 존재하는 스칼라값만 추출하여 <code class="docutils literal notranslate"><span class="pre">preds</span></code> 리스트에 추가합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pred_dataset</span> <span class="o">=</span> <span class="n">X_test</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_dataset</span> <span class="o">=</span> <span class="n">X_test</span>
 
 <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
     <span class="n">preds</span> <span class="o">=</span> <span class="p">[]</span>
@@ -817,7 +829,7 @@ Epoch 90 train loss: 0.033151885962927306 val loss: 0.034998856484889984
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="n">MAX</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;True&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="n">MAX</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;True&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span><span class="o">*</span><span class="n">MAX</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Pred&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
@@ -827,12 +839,12 @@ Epoch 90 train loss: 0.033151885962927306 val loss: 0.034998856484889984
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f77c29aafd0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/Ch5 CNN-LSTM_40_1.png" src="../../_images/Ch5 CNN-LSTM_40_1.png" />
+<img alt="../../_images/Ch5 CNN-LSTM_41_1.png" src="../../_images/Ch5 CNN-LSTM_41_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">MAE</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">MAE</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">true</span><span class="o">-</span><span class="n">pred</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -840,7 +852,7 @@ Epoch 90 train loss: 0.033151885962927306 val loss: 0.034998856484889984
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MAE</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="n">MAX</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span><span class="o">*</span><span class="n">MAX</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MAE</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span><span class="o">*</span><span class="n">MAX</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span><span class="o">*</span><span class="n">MAX</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
