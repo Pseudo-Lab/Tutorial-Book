@@ -208,6 +208,11 @@ commentsRunWhenDOMLoaded(addUtterances);
    5. CNN-LSTM
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="References.html">
+   6. 참고 문헌
+  </a>
+ </li>
 </ul>
 
 </nav> <!-- To handle the deprecated key -->
@@ -1681,25 +1686,15 @@ Unpacking objects: 100% (24/24), done.
 </div>
 </div>
 </div>
-<p>먼저 <code class="docutils literal notranslate"><span class="pre">px.choropleth</span></code>로 지도 레이어를 만들고 <code class="docutils literal notranslate"><span class="pre">.update_layout</span></code>를 통해 날짜를 업데이트 하는 방식입니다.
-
-각 파라미터의 의미는 다음과 같습니다.
-
-- l</p>
+<p>먼저 <code class="docutils literal notranslate"><span class="pre">px.choropleth</span></code>로 지도 레이어를 만들고 <code class="docutils literal notranslate"><span class="pre">.update_layout</span></code>를 통해 날짜를 업데이트 하는 방식입니다.</p>
+<p>각 파라미터의 의미는 다음과 같습니다.</p>
 <ul class="simple">
-<li><p>tion : dataframe에서 위치를 나타내는 column
-
-- loc</p></li>
-<li><p>onmode : 나타낼 지역(‘ISO-3’, ‘USA-states’, ‘country names’중 하나)의 범위
-
-- color</p></li>
-<li><p>dataframe에서 그래프로 나타낼 column
-
-- animati</p></li>
-<li><p>frame : dataframe에서 애니메이션 효과를 줄 기준 column
-
-재생버튼을 누르면 일별 확진자 그래프를 확인할 수 있습니다.</p></li>
+<li><p>location : dataframe에서 위치를 나타내는 column</p></li>
+<li><p>locationmode : 나타낼 지역(‘ISO-3’, ‘USA-states’, ‘country names’중 하나)의 범위</p></li>
+<li><p>color : dataframe에서 그래프로 나타낼 column</p></li>
+<li><p>animation_frame : dataframe에서 애니메이션 효과를 줄 기준 column</p></li>
 </ul>
+<p>재생버튼을 누르면 일별 확진자 그래프를 확인할 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">choro_map</span><span class="o">=</span><span class="n">px</span><span class="o">.</span><span class="n">choropleth</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> 
@@ -2169,9 +2164,8 @@ if (outputEl) {{
 <img alt="../../_images/Ch2 데이터 탐색_34_0.png" src="../../_images/Ch2 데이터 탐색_34_0.png" />
 </div>
 </div>
-<p>3월초와 8월말에 급증하는 시기가 있고, 지속적으로 확진자가 발생하고 있는 것을 볼 수 있습니다. 그리고 연말이 되면서 다시 증가 추세를 보이고 있습니다.
-
-이렇게 이번장에서 전세계와 대한민국의 코로나 확진자 수 데이터에 대해 알아보았습니다. 다음장부터는 대한민국 일별 코로나 확진자 수에 대해서 전처리하고 모델링하는 과정에 대해 알아보도록 하겠습니다.</p>
+<p>3월초와 8월말에 급증하는 시기가 있고, 지속적으로 확진자가 발생하고 있는 것을 볼 수 있습니다. 그리고 연말이 되면서 다시 증가 추세를 보이고 있습니다.</p>
+<p>이렇게 이번장에서 전세계와 대한민국의 코로나 확진자 수 데이터에 대해 알아보았습니다. 다음장부터는 대한민국 일별 코로나 확진자 수에 대해서 전처리하고 모델링하는 과정에 대해 알아보도록 하겠습니다.</p>
 </div>
 </div>
 

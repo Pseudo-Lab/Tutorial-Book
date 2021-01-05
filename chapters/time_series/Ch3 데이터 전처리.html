@@ -208,6 +208,11 @@ commentsRunWhenDOMLoaded(addUtterances);
    5. CNN-LSTM
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="References.html">
+   6. 참고 문헌
+  </a>
+ </li>
 </ul>
 
 </nav> <!-- To handle the deprecated key -->
@@ -335,9 +340,8 @@ commentsRunWhenDOMLoaded(addUtterances);
   <div class="section" id="id1">
 <h1>3. 데이터 전처리<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/drive/1yBd5UM049dC_XHex7Zx8D9ZO8mXfCElP?usp=sharing"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
-<p>2장에서는 모델 학습에 사용할 데이터를 탐색하여 데이터 특성을 확인해보았습니다. 3장에서는 시계열 데이터 전처리 방법을 확인해보겠습니다.<br />
-
-시계열 데이터를 지도학습 문제로 변환 하기 위해서는 예측 대상이 되는 타겟 변수와 예측할 때 사용하는 입력 변수 쌍으로 데이터를 가공해야 합니다. 또한 딥러닝 모델을 안정적으로 학습시키기 위해선 데이터의 스케일(scale)을 통일 시키는 작업이 필요합니다. 3.1절에서는 코로나 확진자 데이터를 지도학습용 데이터로 변환하는 과정을 알아볼 예정이며, 3.2절에서는 데이터 스케일링 방법을 확인하겠습니다.</p>
+<p>2장에서는 모델 학습에 사용할 데이터를 탐색하여 데이터 특성을 확인해보았습니다. 3장에서는 시계열 데이터 전처리 방법을 확인해보겠습니다.</p>
+<p>시계열 데이터를 지도학습 문제로 변환 하기 위해서는 예측 대상이 되는 타겟 변수와 예측할 때 사용하는 입력 변수 쌍으로 데이터를 가공해야 합니다. 또한 딥러닝 모델을 안정적으로 학습시키기 위해선 데이터의 스케일(scale)을 통일 시키는 작업이 필요합니다. 3.1절에서는 코로나 확진자 데이터를 지도학습용 데이터로 변환하는 과정을 알아볼 예정이며, 3.2절에서는 데이터 스케일링 방법을 확인하겠습니다.</p>
 <div class="section" id="id2">
 <h2>3.1 지도학습용 데이터 구축<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>데이터 전처리 실습을 위해 앞서 2.1절에 나온 코드를 활용해 데이터를 불러오겠습니다.</p>
@@ -446,12 +450,9 @@ COVIDTimeSeries.zip is done!
 <p>332 rows × 1 columns</p>
 </div></div></div>
 </div>
-<p>위와 같은 시계열 데이터를 모델이 지도학습에 사용할 수 있도록 입력 변수와 타겟 변수의 쌍으로 데이터를 가공해야 합니다. 시계열 문제에서는 이러한 데이터를 시퀀스(sequence) 데이터라고도 합니다. 시퀀스 데이터로 가공하기 위해서는 먼저 시퀀스 길이(sequence length)를 정의해야 합니다. 시퀀스 길이는 과거 몇 개의 데이터를 바탕으로 미래를 예측할지를 정합니다. 예를 들어 시퀀스 길이가 5인 경우 <span class="math notranslate nohighlight">\(t\)</span> 시점을 예측하기 위해 과거 <span class="math notranslate nohighlight">\(t-1\)</span>, <span class="math notranslate nohighlight">\(t-2\)</span>, <span class="math notranslate nohighlight">\(t-3\)</span>, <span class="math notranslate nohighlight">\(t-4\)</span>, <span class="math notranslate nohighlight">\(t-5\)</span> 시점의 데이터를 활용하게 됩니다. 이처럼 <span class="math notranslate nohighlight">\(t-k\)</span> 부터 <span class="math notranslate nohighlight">\(t-1\)</span> 까지의 데이터로 <span class="math notranslate nohighlight">\(t\)</span> 시점을 예측하는 것을 one-step prediction 과제라고 칭합니다.
-
-아래에 정의한 <code class="docutils literal notranslate"><span class="pre">create_sequences</span></code> 함수는 그림 3-1 처럼 크기가 N인 시계열 데이터를 N - seq_length 개의 지도학습용 데이터로 변환합니다.
-
-<img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/sungjin/pics/TS-ch3img01.png?raw=true" /></p>
-<p></p>
+<p>위와 같은 시계열 데이터를 모델이 지도학습에 사용할 수 있도록 입력 변수와 타겟 변수의 쌍으로 데이터를 가공해야 합니다. 시계열 문제에서는 이러한 데이터를 시퀀스(sequence) 데이터라고도 합니다. 시퀀스 데이터로 가공하기 위해서는 먼저 시퀀스 길이(sequence length)를 정의해야 합니다. 시퀀스 길이는 과거 몇 개의 데이터를 바탕으로 미래를 예측할지를 정합니다. 예를 들어 시퀀스 길이가 5인 경우 <span class="math notranslate nohighlight">\(t\)</span> 시점을 예측하기 위해 과거 <span class="math notranslate nohighlight">\(t-1\)</span>, <span class="math notranslate nohighlight">\(t-2\)</span>, <span class="math notranslate nohighlight">\(t-3\)</span>, <span class="math notranslate nohighlight">\(t-4\)</span>, <span class="math notranslate nohighlight">\(t-5\)</span> 시점의 데이터를 활용하게 됩니다. 이처럼 <span class="math notranslate nohighlight">\(t-k\)</span> 부터 <span class="math notranslate nohighlight">\(t-1\)</span> 까지의 데이터로 <span class="math notranslate nohighlight">\(t\)</span> 시점을 예측하는 것을 one-step prediction 과제라고 칭합니다.</p>
+<p>아래에 정의한 <code class="docutils literal notranslate"><span class="pre">create_sequences</span></code> 함수는 그림 3-1 처럼 크기가 N인 시계열 데이터를 N - seq_length 개의 지도학습용 데이터로 변환합니다.</p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/sungjin/pics/TS-ch3img01.png?raw=true" /></p>
 <ul class="simple">
 <li><p>그림 3-1 시계열 데이터 변환 과정</p></li>
 </ul>
@@ -532,9 +533,8 @@ COVIDTimeSeries.zip is done!
 <blockquote>
 <div><p><span class="math notranslate nohighlight">\(x_{scaled} = \displaystyle\frac{x - x_{min}}{x_{max} - x_{min}}\)</span></p>
 </div></blockquote>
-<p>스케일링 시 주의할 점은 훈련용 데이터의 통계량을 활용해 훈련용, 검증용, 시험용 데이터셋을 스케일링 해야 합니다. 시험용 데이터의 정보는 모델 학습시 입력되면 안되므로 훈련용 데이터의 통계량을 활용해 훈련용 데이터를 스케일링 합니다. 훈련용 데이터의 통계값으로 스케일링 된 데이터로 모델을 학습했기 때문에 추후 모델 성능 평가를 위해 입력되는 시험용 데이터에도 훈련용 데이터의 통계량으로 스케일링 합니다. 마찬가지로 검증용 데이터도 시험용 데이터가 겪게 되는 전처리 과정을 똑같이 적용해줘야 하기 때문에 훈련용 데이터의 통계량으로 스케일링 합니다.<br />
-
-MinMax scaling을 적용하기 위해 <code class="docutils literal notranslate"><span class="pre">X_train</span></code> 데이터의 최소값과 최대값을 구하겠습니다.</p>
+<p>스케일링 시 주의할 점은 훈련용 데이터의 통계량을 활용해 훈련용, 검증용, 시험용 데이터셋을 스케일링 해야 합니다. 시험용 데이터의 정보는 모델 학습시 입력되면 안되므로 훈련용 데이터의 통계량을 활용해 훈련용 데이터를 스케일링 합니다. 훈련용 데이터의 통계값으로 스케일링 된 데이터로 모델을 학습했기 때문에 추후 모델 성능 평가를 위해 입력되는 시험용 데이터에도 훈련용 데이터의 통계량으로 스케일링 합니다. 마찬가지로 검증용 데이터도 시험용 데이터가 겪게 되는 전처리 과정을 똑같이 적용해줘야 하기 때문에 훈련용 데이터의 통계량으로 스케일링 합니다.</p>
+<p>MinMax scaling을 적용하기 위해 <code class="docutils literal notranslate"><span class="pre">X_train</span></code> 데이터의 최소값과 최대값을 구하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MIN</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>

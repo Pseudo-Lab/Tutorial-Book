@@ -208,6 +208,11 @@ commentsRunWhenDOMLoaded(addUtterances);
    5. CNN-LSTM
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="References.html">
+   6. 참고 문헌
+  </a>
+ </li>
 </ul>
 
 </nav> <!-- To handle the deprecated key -->
@@ -389,10 +394,6 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p align="center">
 <img align="center" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/sungjin/pics/TS-ch1img01.PNG?raw=true">
 </p>
-
-
-
-<p></p>
 <ul class="simple">
 <li><p>그림 1-1 CNN 적용 예시 (출처: Lim et al. 2020. Time Series Forecasting With Deep Learning: A Survey)</p></li>
 </ul>
@@ -403,11 +404,6 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p align="center">
 <img align="center" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/sungjin/pics/TS-ch1img02.PNG?raw=true">
 </p>
-
-
-
-
-<p></p>
 <ul class="simple">
 <li><p>그림 1-2 RNN 적용 예시 (출처: Lim et al. 2020. Time Series Forecasting With Deep Learning: A Survey)</p></li>
 </ul>
@@ -418,7 +414,6 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p align="center">
 <img align="center" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/sungjin/pics/TS-ch1img03.PNG?raw=true">
 </p>
-<p></p>
 <ul class="simple">
 <li><p>그림 1-3 Attention Mechanism 적용 예시 (출처: Lim et al. 2020. Time Series Forecasting With Deep Learning: A Survey)</p></li>
 </ul>
@@ -428,13 +423,11 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div class="section" id="id2">
 <h2>1.2 평가지표<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>이번 튜토리얼에서는 코로나 확진자 예측 모델을 구축해볼 예정입니다. 확진자는 연속된 값을 지니고 있기 때문에 예측 된 값과 실제 값 사이의 차이 값을 통해 모델의 성능을 가늠할 수 있습니다. 이번 절에서는 예측 값과 실제 값 사이의 차이를 계산하는 다양한 방법을 알아보겠습니다. 평가지표를 설명하기에 앞서 여러 기호들에 대한 정의를 먼저 실시하겠습니다.</p>
-<p></p>
 <blockquote>
 <div><p><span class="math notranslate nohighlight">\(y_i\)</span>: 예측 대상인 실제 값 <br />
 <span class="math notranslate nohighlight">\(\hat{y}_i\)</span>: 모델에 의한 예측 값 <br />
 <span class="math notranslate nohighlight">\(n\)</span>: 시험 데이터셋(test dataset)의 크기</p>
 </div></blockquote>
-<p></p>
 <p>1.2.1절 부터 1.2.4절 까지는 위의 기호를 사용하며, 1.2.5절에서는 기호 정의가 달라지게 되므로 이 점에 주의 부탁드립니다.</p>
 <div class="section" id="mae-mean-absolute-error">
 <h3>1.2.1 MAE (Mean Absolute Error)<a class="headerlink" href="#mae-mean-absolute-error" title="Permalink to this headline">¶</a></h3>
@@ -505,9 +498,8 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div><p><span class="math notranslate nohighlight">\(MAPE=\frac{1}{n}\displaystyle\sum_{i=1}^{n} |\frac{y_i-\hat{y}_i}{y_i}|\)</span></p>
 </div></blockquote>
 <p>(출처: https://en.wikipedia.org/wiki/Mean_absolute_percentage_error)</p>
-<p>MAPE는 실제값과 예측값 사이의 차이를 실제값으로 나눠줌으로써 오차가 실제값에서 차지하는 상대적인 비율을 산출합니다. 그리고 해당 값을 절대값 취한 후 평균을 구합니다. 오차의 정도를 백분율 값으로 나타내기 때문에 모델의 성능을 직관적으로 이해하기 쉬우며, 타겟 변수가 여러개 일 때 각 변수별 모델의 성능을 평가하기 용이합니다.
-
-하지만 실제값에 0이 존재한다면 MAPE가 정의 되지 않는 문제점이 있습니다. 또한 절대적인 값의 오차가 같더라도 실제값과 예측값과의 대소 관계에 따라 과대 추정하는 예측값에 패널티를 더 부여하는 문제가 있습니다(<a class="reference external" href="https://doi.org/10.1016/0169-2070(93)90079-3">Makridakis, 1993</a>). 이는 아래 코드를 통해 확인해보겠습니다.</p>
+<p>MAPE는 실제값과 예측값 사이의 차이를 실제값으로 나눠줌으로써 오차가 실제값에서 차지하는 상대적인 비율을 산출합니다. 그리고 해당 값을 절대값 취한 후 평균을 구합니다. 오차의 정도를 백분율 값으로 나타내기 때문에 모델의 성능을 직관적으로 이해하기 쉬우며, 타겟 변수가 여러개 일 때 각 변수별 모델의 성능을 평가하기 용이합니다.</p>
+<p>하지만 실제값에 0이 존재한다면 MAPE가 정의 되지 않는 문제점이 있습니다. 또한 절대적인 값의 오차가 같더라도 실제값과 예측값과의 대소 관계에 따라 과대 추정하는 예측값에 패널티를 더 부여하는 문제가 있습니다(<a class="reference external" href="https://doi.org/10.1016/0169-2070(93)90079-3">Makridakis, 1993</a>). 이는 아래 코드를 통해 확인해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">MAPE</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
@@ -550,16 +542,14 @@ MAPE: 0.4371428571428571
 </div>
 </div>
 </div>
-<p>MAPE는 산식 특성 상 백분율로 변환하기 위해서 실제값인 <span class="math notranslate nohighlight">\(y\)</span>로 나눠주는 방법을 취하고 있습니다. 그러므로 도출되는 값이 <span class="math notranslate nohighlight">\(y\)</span>에 의존적인 특성을 지니고 있습니다. 분자가 같더라도 분모가 더 작아지면 오차가 커지게 됩니다.
-
-위의 코드에서는 실제값이 예측값보다 20 만큼 작은 (<code class="docutils literal notranslate"><span class="pre">TRUE_UNDER</span></code>, <code class="docutils literal notranslate"><span class="pre">PRED_OVER</span></code>)와 20 만큼 큰 (<code class="docutils literal notranslate"><span class="pre">TRUE_OVER</span></code>, <code class="docutils literal notranslate"><span class="pre">PRED_UNDER</span></code>)를 통해 이를 확인했습니다. MAE 값은 <code class="docutils literal notranslate"><span class="pre">TRUE_UNDER</span></code>와 <code class="docutils literal notranslate"><span class="pre">PRED_OVER</span></code>, 그리고 <code class="docutils literal notranslate"><span class="pre">TRUE_OVER</span></code>와 <code class="docutils literal notranslate"><span class="pre">PRED_UNDER</span></code> 모두 20으로 같습니다. 하지만 MAPE는 실제값이 <code class="docutils literal notranslate"><span class="pre">TRUE_UNDER</span></code>일 경우 0.913, <code class="docutils literal notranslate"><span class="pre">TRUE_OVER</span></code>일 경우 0.437를 산출하고 있습니다.</p>
+<p>MAPE는 산식 특성 상 백분율로 변환하기 위해서 실제값인 <span class="math notranslate nohighlight">\(y\)</span>로 나눠주는 방법을 취하고 있습니다. 그러므로 도출되는 값이 <span class="math notranslate nohighlight">\(y\)</span>에 의존적인 특성을 지니고 있습니다. 분자가 같더라도 분모가 더 작아지면 오차가 커지게 됩니다.</p>
+<p>위의 코드에서는 실제값이 예측값보다 20 만큼 작은 (<code class="docutils literal notranslate"><span class="pre">TRUE_UNDER</span></code>, <code class="docutils literal notranslate"><span class="pre">PRED_OVER</span></code>)와 20 만큼 큰 (<code class="docutils literal notranslate"><span class="pre">TRUE_OVER</span></code>, <code class="docutils literal notranslate"><span class="pre">PRED_UNDER</span></code>)를 통해 이를 확인했습니다. MAE 값은 <code class="docutils literal notranslate"><span class="pre">TRUE_UNDER</span></code>와 <code class="docutils literal notranslate"><span class="pre">PRED_OVER</span></code>, 그리고 <code class="docutils literal notranslate"><span class="pre">TRUE_OVER</span></code>와 <code class="docutils literal notranslate"><span class="pre">PRED_UNDER</span></code> 모두 20으로 같습니다. 하지만 MAPE는 실제값이 <code class="docutils literal notranslate"><span class="pre">TRUE_UNDER</span></code>일 경우 0.913, <code class="docutils literal notranslate"><span class="pre">TRUE_OVER</span></code>일 경우 0.437를 산출하고 있습니다.</p>
 </div>
 <div class="section" id="smape-symmetric-mean-absolute-percentage-error">
 <h3>1.2.4 SMAPE (Symmetric Mean Absolute Percentage Error)<a class="headerlink" href="#smape-symmetric-mean-absolute-percentage-error" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p><span class="math notranslate nohighlight">\(SMAPE=\frac{100}{n}\displaystyle\sum_{i=1}^{n} \frac{|y_i-\hat{y}_i|}{|y_i| + |\hat{y}_i|}\)</span></p>
 </div></blockquote>
-<p></p>
 <p>(출처: https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error)</p>
 <p>SMAPE는 앞서 언급한 예시에 대해 MAPE가 지닌 한계점을 보완하기 위해 고완됐습니다(<a class="reference external" href="https://doi.org/10.1016/0169-2070(93)90079-3">Makridakis, 1993</a>). 아래 코드를 통해 확인해보겠습니다.</p>
 <div class="cell docutils container">
@@ -698,9 +688,8 @@ SMAPE: 0.21857142857142856
 </div>
 </div>
 </div>
-<p>오차의 절대값이 같지만 MAPE와 SMAPE가 불균등하게 패널티를 부여했던 4개의 예시에 대해 균등하게 패널티가 부여됬으며 스케일링도 이뤄진것을 확인할 수 있습니다.
-
-지금까지 시계열 예측시 사용가능한 딥러닝 구조와 평가지표에 대해 알아보았습니다. 다음 장에서는 모델 구축에 활용할 코로나 확진자 데이터셋을 탐색해보겠습니다.</p>
+<p>오차의 절대값이 같지만 MAPE와 SMAPE가 불균등하게 패널티를 부여했던 4개의 예시에 대해 균등하게 패널티가 부여됬으며 스케일링도 이뤄진것을 확인할 수 있습니다.</p>
+<p>지금까지 시계열 예측시 사용가능한 딥러닝 구조와 평가지표에 대해 알아보았습니다. 다음 장에서는 모델 구축에 활용할 코로나 확진자 데이터셋을 탐색해보겠습니다.</p>
 </div>
 </div>
 </div>
