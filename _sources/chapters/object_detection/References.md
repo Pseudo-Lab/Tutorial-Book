@@ -8,10 +8,10 @@
 
 - [Speed/accuracy trade-offs for modern convolutional object detectors](https://arxiv.org/pdf/1611.10012.pdf)
 - [Applications of Object Detection System](https://www.irjet.net/archives/V6/i4/IRJET-V6I4920.pdf)
-- [R-CNN](https://arxiv.org/pdf/1311.2524.pdf)
+- [Rich feature hierarchies for accurate object detection and semantic segmentation](https://arxiv.org/pdf/1311.2524.pdf)
 - [Fast R-CNN](https://arxiv.org/pdf/1504.08083.pdf)
-- [Faster R-CNN](https://arxiv.org/pdf/1506.01497.pdf)
-- [YOLO](https://arxiv.org/pdf/1506.02640.pdf)
+- [Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks](https://arxiv.org/pdf/1506.01497.pdf)
+- [You Only Look Once: Unified, Real-Time Object Detection](https://arxiv.org/pdf/1506.02640.pdf)
 - [SSD: Single Shot Multibox Detector](https://arxiv.org/pdf/1512.02325.pdf)
 - [Object Detection in 20 Years: A Survey](https://arxiv.org/pdf/1905.05055.pdf)
 
