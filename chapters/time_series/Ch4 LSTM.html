@@ -335,6 +335,18 @@ commentsRunWhenDOMLoaded(addUtterances);
   <a class="reference internal nav-link" href="#id5">
    4.5 예측
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#one-step">
+     4.5.1 One-Step 예측
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#multi-step">
+     4.5.2 Multi-Step 예측
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -351,7 +363,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <h1>4. LSTM<a class="headerlink" href="#lstm" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://colab.research.google.com/drive/1fEHXLhLjBIj_sCs4kuZa3WUyzvGn1rFH?usp=sharing"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <p>3장에서는 Johns Hopkins University에서 제공하는 시계열 데이터를 지도학습용 데이터로 변환하는 과정을 실습했습니다. 이번 장에서는 LSTM을 사용하여 앞으로의 대한민국 코로나 확진자 수를 예측해보는 모델을 구축해보겠습니다.</p>
-<p>4.1절과 4.2절에서는 대한민국 코로나 누적 확진자 수 데이터를 불러온 후, 데이터를 훈련용, 검증용, 시험용 데이터로 나누어 보겠습니다. 4.3절에서는 LSTM 모델을 정의하고 4.4절에서는 정의한 모델을 학습시켜 보겠습니다. 마지막으로 앞으로의 코로나 확진자 수에 대한 예측값을 확인해보겠습니다.</p>
+<p>4.1절과 4.2절에서는 대한민국 코로나 누적 확진자 수 데이터를 불러온 후, 데이터를 훈련용, 검증용, 시험용 데이터로 나누어 보겠습니다. 4.3절에서는 LSTM 모델을 정의하고 4.4절에서는 정의한 모델을 학습시켜 보겠습니다. 마지막으로 코로나 확진자 수에 대한 예측값을 확인해보겠습니다.</p>
 <p>우선 기본적인 모듈들을 import 해줍니다.</p>
 <p><code class="docutils literal notranslate"><span class="pre">%matplotlib</span> <span class="pre">inline</span></code>은 notebook을 실행한 브라우저에서 바로 그림을 볼 수 있게 해주는 것, <code class="docutils literal notranslate"><span class="pre">%config</span> <span class="pre">InlineBackend.figure_format='retina'</span></code>는 그래프의 해상도를 높여줍니다.</p>
 <div class="cell docutils container">
@@ -381,7 +393,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;torch._C.Generator at 0x7fc2b27b1b88&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;torch._C.Generator at 0x7f773ce2bb88&gt;
 </pre></div>
 </div>
 </div>
@@ -416,7 +428,8 @@ COVIDTimeSeries.zip is done!
 <p>3장에서 실습한 코드를 활용해 시계열 데이터를 지도학습용 데이터로 변형한 후 학습용, 검증용, 시험용 데이터로 분리하겠습니다. 그리고 훈련용 데이터의 통계량을 활용해 스케일링을 진행하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">confirmed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;time_series_covid19_confirmed_global.csv&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#대한민국 데이터만 추출 후 일자별 확진자 수로 변환</span>
+<span class="n">confirmed</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;time_series_covid19_confirmed_global.csv&#39;</span><span class="p">)</span>
 <span class="n">confirmed</span><span class="p">[</span><span class="n">confirmed</span><span class="p">[</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Korea, South&#39;</span><span class="p">]</span>
 <span class="n">korea</span> <span class="o">=</span> <span class="n">confirmed</span><span class="p">[</span><span class="n">confirmed</span><span class="p">[</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Korea, South&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">4</span><span class="p">:]</span><span class="o">.</span><span class="n">T</span>
 <span class="n">korea</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">korea</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
@@ -433,6 +446,7 @@ COVIDTimeSeries.zip is done!
         <span class="n">ys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
 
+<span class="c1">#지도학습용 데이터로 변환</span>
 <span class="n">seq_length</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">create_sequences</span><span class="p">(</span><span class="n">daily_cases</span><span class="p">,</span> <span class="n">seq_length</span><span class="p">)</span>
 
@@ -616,16 +630,16 @@ torch.Size([261, 1]) torch.Size([33, 1]) torch.Size([33, 1])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 0 train loss: 0.08467356753589093 val loss: 0.047220394015312195
-Epoch 10 train loss: 0.03268902561309751 val loss: 0.03414301946759224
-Epoch 20 train loss: 0.03255926682774363 val loss: 0.03243740275502205
-Epoch 30 train loss: 0.03268276200044572 val loss: 0.03306415677070618
-Epoch 40 train loss: 0.03259286329139495 val loss: 0.032514143735170364
-Epoch 50 train loss: 0.032316437548640185 val loss: 0.03300009295344353
-Epoch 60 train loss: 0.03259847946625588 val loss: 0.032665640115737915
-Epoch 70 train loss: 0.03220883483991341 val loss: 0.03289766609668732
-Epoch 80 train loss: 0.03264666250478691 val loss: 0.03258885443210602
-Epoch 90 train loss: 0.032349442671520554 val loss: 0.03221791982650757
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 0 train loss: 0.0846735675929835 val loss: 0.047220394015312195
+Epoch 10 train loss: 0.03268902644807637 val loss: 0.03414301574230194
+Epoch 20 train loss: 0.03255926527910762 val loss: 0.03243739902973175
+Epoch 30 train loss: 0.032682761279652 val loss: 0.033064160495996475
+Epoch 40 train loss: 0.0325928641549201 val loss: 0.032514143735170364
+Epoch 50 train loss: 0.032316437919741904 val loss: 0.033000096678733826
+Epoch 60 train loss: 0.03259847856704788 val loss: 0.03266565129160881
+Epoch 70 train loss: 0.03220883647418827 val loss: 0.032897673547267914
+Epoch 80 train loss: 0.03264666339685834 val loss: 0.032588861882686615
+Epoch 90 train loss: 0.032349443449406844 val loss: 0.03221791982650757
 </pre></div>
 </div>
 </div>
@@ -640,7 +654,7 @@ Epoch 90 train loss: 0.032349442671520554 val loss: 0.03221791982650757
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fc253c24710&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f76de333fd0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/Ch4 LSTM_19_1.png" src="../../_images/Ch4 LSTM_19_1.png" />
@@ -649,7 +663,14 @@ Epoch 90 train loss: 0.032349442671520554 val loss: 0.03221791982650757
 </div>
 <div class="section" id="id5">
 <h2>4.5 예측<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<p>앞서 만든 모델의 성능을 확인해보기 위해 시험 데이터에 대한 예측을 진행해보겠습니다. 예측할 때도 새로운 시퀀스가 입력될 때 마다 <code class="docutils literal notranslate"><span class="pre">hidden_state</span></code>는 초기화를 해줘야 이전 시퀀스의 <code class="docutils literal notranslate"><span class="pre">hidden_state</span></code>가 반영되지 않습니다. <code class="docutils literal notranslate"><span class="pre">torch.unsqueeze</span></code> 함수를 사용하여 입력 데이터의 차원을 늘려 모델이 예상하는 3차원 형태로 만들어줍니다. 그리고 예측된 데이터 내에 존재하는 스칼라값만 추출하여 <code class="docutils literal notranslate"><span class="pre">preds</span></code> 리스트에 추가합니다.</p>
+<p>이번 절에서는 구축한 모델을 활용해 새로 들어오는 데이터에 대한 예측을 진행해보겠습니다. 현재 구축된 모델은 <span class="math notranslate nohighlight">\(t-5\)</span>시점 부터 <span class="math notranslate nohighlight">\(t-1\)</span>시점까지의 데이터를 활용해 <span class="math notranslate nohighlight">\(t\)</span>시점의 확진자를 예측합니다. 마찬가지로 실제 관측된 <span class="math notranslate nohighlight">\(t-5\)</span>부터 <span class="math notranslate nohighlight">\(t-1\)</span>까지의 새로운 데이터를 입력한다면 <span class="math notranslate nohighlight">\(t\)</span>시점의 확진자에 대한 예측이 가능할 것이며, 이를 <code class="docutils literal notranslate"><span class="pre">One-Step</span></code>예측이라고 합니다. 과거 데이터를 활용해 한 단위 앞만 예측하는 방법입니다.</p>
+<p>반면 과거 데이터를 활용해 두 단위, 세 단위 등의 여러 단위 앞을 예측하는 것을 <code class="docutils literal notranslate"><span class="pre">Multi-Step</span></code>예측이라고 합니다. <code class="docutils literal notranslate"><span class="pre">Multi-Step</span></code>예측에는 크게 2가지 방법으로 나뉘는데, 앞서 구축한 <code class="docutils literal notranslate"><span class="pre">One-Step</span></code>예측하는 모델을 활용하는 방법과 <code class="docutils literal notranslate"><span class="pre">seq2seq</span></code>구조의 모델을 활용하는 방법이 있습니다.</p>
+<p>첫번째 방법은 <code class="docutils literal notranslate"><span class="pre">One-Step</span></code>예측하는 모델에서 반환한 <span class="math notranslate nohighlight">\(t\)</span>시점의 예측값 <span class="math notranslate nohighlight">\(\hat{t}\)</span>을 활용해 <span class="math notranslate nohighlight">\(t-4\)</span>, <span class="math notranslate nohighlight">\(t-3\)</span>, <span class="math notranslate nohighlight">\(t-2\)</span>, <span class="math notranslate nohighlight">\(t-1\)</span>, <span class="math notranslate nohighlight">\(\hat{t}\)</span> 값으로 <span class="math notranslate nohighlight">\(t+1\)</span>시점의 값을 예측합니다. 이처럼 모델에서 나온 예측값을 다시 모델 입력값으로 넣어 반복적으로 예측할 수 있지만, 예측값의 오차가 누적되어 점차 예측 성능이 떨어지는 현상이 발생합니다.</p>
+<p>두번째 방법은 <code class="docutils literal notranslate"><span class="pre">seq2seq</span></code>구조를 활용해 예측하는 것입니다. 예측하고자 하는 미래 기간 만큼 <code class="docutils literal notranslate"><span class="pre">decoder</span></code> 길이를 설정해서 예측하는 방법입니다. <code class="docutils literal notranslate"><span class="pre">decoder</span></code>네트워크를 통해 추가 정보를 예측값 산출 시 활용할 수 있다는 장점이 있지만 예측 시간 단위가 고정돼야 합니다.</p>
+<p>이번 절에서는 <code class="docutils literal notranslate"><span class="pre">One-Step</span></code>예측 모델을 반복적으로 활용해 <code class="docutils literal notranslate"><span class="pre">Multi-Step</span></code>예측하는 것을 코드로 확인해보겠습니다.</p>
+<div class="section" id="one-step">
+<h3>4.5.1 One-Step 예측<a class="headerlink" href="#one-step" title="Permalink to this headline">¶</a></h3>
+<p>우선 앞서 만든 모델에 대한 <code class="docutils literal notranslate"><span class="pre">One-Step</span></code>예측을 진행해 모델 성능을 확인해보겠습니다. 구축된 시험 데이터에 대한 예측을 진행해보겠습니다. 예측할 때도 새로운 시퀀스가 입력될 때 마다 <code class="docutils literal notranslate"><span class="pre">hidden_state</span></code>는 초기화를 해줘야 이전 시퀀스의 <code class="docutils literal notranslate"><span class="pre">hidden_state</span></code>가 반영되지 않습니다. <code class="docutils literal notranslate"><span class="pre">torch.unsqueeze</span></code> 함수를 사용하여 입력 데이터의 차원을 늘려 모델이 예상하는 3차원 형태로 만들어줍니다. 그리고 예측된 데이터 내에 존재하는 스칼라값만 추출하여 <code class="docutils literal notranslate"><span class="pre">preds</span></code> 리스트에 추가합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pred_dataset</span> <span class="o">=</span> <span class="n">X_test</span>
@@ -672,20 +693,22 @@ Epoch 90 train loss: 0.032349442671520554 val loss: 0.03221791982650757
 <p>이번 데이터에서 <span class="math notranslate nohighlight">\(x_{min}\)</span>은 0이였습니다. 그러므로 원래 스케일로 복구하기 위해선 <span class="math notranslate nohighlight">\(x_{max}\)</span>만 곱해주면 됩니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span> <span class="o">*</span> <span class="n">MAX</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;True&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span> <span class="o">*</span> <span class="n">MAX</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;Pred&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">daily_cases</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">):],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span> <span class="o">*</span> <span class="n">MAX</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">daily_cases</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">preds</span><span class="p">):],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span> <span class="o">*</span> <span class="n">MAX</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Pred&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fc25238e710&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f76dc9ac748&gt;
 </pre></div>
 </div>
-<img alt="../../_images/Ch4 LSTM_26_1.png" src="../../_images/Ch4 LSTM_26_1.png" />
+<img alt="../../_images/Ch4 LSTM_28_1.png" src="../../_images/Ch4 LSTM_28_1.png" />
 </div>
 </div>
-<p>파란색 그래프는 시험 데이터의 실제값을 나타내며 주황색 그래프는 예측값을 나타냅니다. 확진자가 상승하는 추세는 모델이 예측하고 있지만 확진자가 급격히 증가하는 구간에 대해서는 예측이 잘 되지 않음을 알 수 있습니다. 예측값의 평균 오차를 구하기 위해 MAE 값을 산출해보겠습니다.</p>
+<p>파란색 그래프는 시험 데이터의 실제값을 나타내며 주황색 그래프는 예측값을 나타냅니다. 확진자가 상승하는 추세는 모델이 예측하고 있지만 확진자가 급격히 증가하는 구간에 대해서는 예측이 잘 되지 않음을 알 수 있습니다.</p>
+<p>예측값의 평균 오차를 구하기 위해 MAE 값을 산출해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">MAE</span><span class="p">(</span><span class="n">true</span><span class="p">,</span> <span class="n">pred</span><span class="p">):</span>
@@ -701,14 +724,53 @@ Epoch 90 train loss: 0.032349442671520554 val loss: 0.03221791982650757
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>247.31322312245575
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>247.3132225984521
 </pre></div>
 </div>
 </div>
 </div>
-<p>시험 데이터에 대한 예측값이 평균적으로 실제값과 약 250명의 차이를 지니고 있다는 것을 알 수 있습니다. 과거 확진자 수 뿐만 아니라 이동성 데이터, 인구 통계 데이터 등을 활용한다면 보다 정교한 예측이 가능할 것으로 보입니다.
-
-지금까지 코로나 확진자 데이터를 활용해 LSTM 모델 구축 실습을 진행했습니다. 다음 장에서는 CNN-LSTM을 시계열 데이터에 적용해보는 실습을 진행하겠습니다.</p>
+<p>시험 데이터에 대한 예측값이 평균적으로 실제값과 약 250명의 차이를 지니고 있다는 것을 알 수 있습니다. 과거 확진자 수 뿐만 아니라 인구 이동 데이터, 인구 통계 데이터 등을 활용한다면 보다 정교한 예측이 가능할 것으로 보입니다.</p>
+</div>
+<div class="section" id="multi-step">
+<h3>4.5.2 Multi-Step 예측<a class="headerlink" href="#multi-step" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">One-Step</span></code>예측 모델을 반복적으로 활용해 <code class="docutils literal notranslate"><span class="pre">Multi-Step</span></code>예측을 진행해보겠습니다. 시험 데이터의 첫번째 샘플을 활용해 나온 예측값을 입력 시퀀스에 포함시켜 다음 값을 예측하고, 또 해당 값을 입력 시퀸스에 포함시켜 다음 값을 예측하는 과정을 반복하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">test_seq</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># 첫번째 테스트 셋, 3차원</span>
+    <span class="n">preds</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">)):</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">reset_hidden_state</span><span class="p">()</span>
+        <span class="n">y_test_pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">test_seq</span><span class="p">)</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">y_test_pred</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="n">preds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+        <span class="n">new_seq</span> <span class="o">=</span> <span class="n">test_seq</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="n">new_seq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_seq</span><span class="p">,</span> <span class="p">[</span><span class="n">pred</span><span class="p">])</span> <span class="c1"># 시퀀스에 추가 </span>
+        <span class="n">new_seq</span> <span class="o">=</span> <span class="n">new_seq</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="c1"># 추가된 값을 포함하여 seq_length가 5개가 되도록 맞추기 </span>
+        <span class="n">test_seq</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">as_tensor</span><span class="p">(</span><span class="n">new_seq</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">seq_length</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>앞서 언급한 것처럼 해당 방법은 예측 기간이 길어질수록 오차가 누적되어 모델의 성능을 보장하기 어렵습니다. 아래 그래프로 예측값을 실제값과 비교해 시각화 해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">daily_cases</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">y_test</span><span class="p">):],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span> <span class="o">*</span> <span class="n">MAX</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;True&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">daily_cases</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">preds</span><span class="p">):],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span> <span class="o">*</span> <span class="n">MAX</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Pred&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f76dc271278&gt;
+</pre></div>
+</div>
+<img alt="../../_images/Ch4 LSTM_37_1.png" src="../../_images/Ch4 LSTM_37_1.png" />
+</div>
+</div>
+<p>지금까지 코로나 확진자 데이터를 활용해 LSTM 모델 구축 실습을 진행했습니다. 다음 장에서는 CNN-LSTM을 시계열 데이터에 적용해보는 실습을 진행하겠습니다.</p>
+</div>
 </div>
 </div>
 

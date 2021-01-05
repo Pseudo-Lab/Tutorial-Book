@@ -360,7 +360,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="cnn-lstm">
 <h1>5. CNN-LSTM<a class="headerlink" href="#cnn-lstm" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/drive/1Gh63lRewiP1sHrQnF21tZrPSkfr_IH9n?usp=sharing"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p><a class="reference external" href="https://colab.research.google.com/drive/1jjFiq5pZyytlmouN6B1_Y8g39fXKyfMB#scrollTo=iIEvXM16HsVt"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <p>이전 4장에서는 LSTM을 활용하여 대한민국 코로나19 확진자 수를 예측해보았습니다. LSTM은 <a class="reference external" href="http://www.bioinf.jku.at/publications/older/2604.pdf">Hochreiter &amp; Schmidhuber (1997)</a>에 의해 처음 소개되었고, 이후 지속적인 연구와 함께 발전해오고 있습니다.</p>
 <p>이번 장에서는 모델 성능 향상을 위한 다른 방법을 실험해보도록 하겠습니다. 모델 성능 향상을 위해서는 배치 (batch) 사이즈와 에폭 (epoch) 수 변경, 데이터셋 큐레이팅(Dataset Curating), 데이터셋 비율 조정, 손실 함수(Loss Function) 변경, 모델 변경 등의 방법이 있지만, 이번 실습에서는 모델 구조 변경을 통해 성능을 향상을 진행해보겠습니다. CNN-LSTM 모델을 사용하여, 대한민국 코로나19 확진자 수 예측에 있어서 더 나은 성능을 보일 수 있는지 살펴보도록 하겠습니다.</p>
 <p>가장 먼저 이번 장에 필요한 라이브러리들을 불러오도록 하겠습니다. 가장 기본적인 <code class="docutils literal notranslate"><span class="pre">torch</span></code>, <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">pandas</span></code>와, 프로세스 상태를 표시하는 <code class="docutils literal notranslate"><span class="pre">tqdm</span></code>, 시각화 라이브러리인 <code class="docutils literal notranslate"><span class="pre">pylab</span></code>, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> 등을 사용하겠습니다.</p>
