@@ -4,25 +4,25 @@
     
 - part: 객체 탐지(Object Detection)
   chapters:
-  - file: chapters/object_detection/intro
+  - file: chapters/object-detection/intro
     title: 의료용 마스크 탐지 모델 구축
   #  sections:
-  - file: chapters/object_detection/Ch1-Object-Detection
-  - file: chapters/object_detection/Ch2-EDA
-  - file: chapters/object_detection/Ch3-preprocessing
-  - file: chapters/object_detection/Ch4-RetinaNet
-  - file: chapters/object_detection/Ch5-Faster-R-CNN
-  - file: chapters/object_detection/References
+  - file: chapters/object-detection/Ch1-Object-Detection
+  - file: chapters/object-detection/Ch2-EDA
+  - file: chapters/object-detection/Ch3-preprocessing
+  - file: chapters/object-detection/Ch4-RetinaNet
+  - file: chapters/object-detection/Ch5-Faster-R-CNN
+  - file: chapters/object-detection/References
     
 - part: 시계열 분석(Time Series)
   chapters:
-  - file: chapters/time_series/intro
+  - file: chapters/time-series/intro
     title: 코로나 확진자 수 예측 모델 구축
   #  sections:
-  - file: chapters/time_series/Ch1-Time-Series
-  - file: chapters/time_series/Ch2-EDA
-  - file: chapters/time_series/Ch3-preprocessing
-  - file: chapters/time_series/Ch4-LSTM
-  - file: chapters/time_series/Ch5-CNN-LSTM
-  - file: chapters/time_series/References
+  - file: chapters/time-series/Ch1-Time-Series
+  - file: chapters/time-series/Ch2-EDA
+  - file: chapters/time-series/Ch3-preprocessing
+  - file: chapters/time-series/Ch4-LSTM
+  - file: chapters/time-series/Ch5-CNN-LSTM
+  - file: chapters/time-series/References
         
