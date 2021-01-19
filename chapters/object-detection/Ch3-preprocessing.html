@@ -178,37 +178,37 @@ commentsRunWhenDOMLoaded(addUtterances);
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../time_series/intro.html">
+  <a class="reference internal" href="../time-series/intro.html">
    코로나 확진자 수 예측 모델 구축
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../time_series/Ch1-Time-Series.html">
+  <a class="reference internal" href="../time-series/Ch1-Time-Series.html">
    1. Time Series 소개
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../time_series/Ch2-EDA.html">
+  <a class="reference internal" href="../time-series/Ch2-EDA.html">
    2. 데이터 탐색
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../time_series/Ch3-preprocessing.html">
+  <a class="reference internal" href="../time-series/Ch3-preprocessing.html">
    3. 데이터 전처리
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../time_series/Ch4-LSTM.html">
+  <a class="reference internal" href="../time-series/Ch4-LSTM.html">
    4. LSTM
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../time_series/Ch5-CNN-LSTM.html">
+  <a class="reference internal" href="../time-series/Ch5-CNN-LSTM.html">
    5. CNN-LSTM
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../time_series/References.html">
+  <a class="reference internal" href="../time-series/References.html">
    6. 참고 문헌
   </a>
  </li>
@@ -252,7 +252,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/chapters/object_detection/Ch3-preprocessing.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/chapters/object-detection/Ch3-preprocessing.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -272,7 +272,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/object_detection/Ch3-preprocessing.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/object-detection/Ch3-preprocessing.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -293,7 +293,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/chapters/object_detection/Ch3-preprocessing.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/chapters/object-detection/Ch3-preprocessing.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -381,9 +381,9 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>Augmentation 실습을 위해 2.1절에 나온 코드를 활용해 데이터를 불러오겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
-!python Tutorial-Book-Utils/PL_data_loader.py --data FaceMaskDetection
-!unzip -q Face\ Mask\ Detection.zip
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
+<span class="o">!</span>python Tutorial-Book-Utils/PL_data_loader.py --data FaceMaskDetection
+<span class="o">!</span>unzip -q Face<span class="se">\ </span>Mask<span class="se">\ </span>Detection.zip
 </pre></div>
 </div>
 </div>
@@ -402,7 +402,7 @@ Face Mask Detection.zip is done!
 <p>최신 버전의 <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> 모듈을 사용하기 위해 업그레이드를 진행합니다. <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--upgrade</span></code> 명령어를 통해 특정 모듈을 업그레이드 할 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!pip install --upgrade albumentations
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install --upgrade albumentations
 </pre></div>
 </div>
 </div>
@@ -411,7 +411,7 @@ Face Mask Detection.zip is done!
 가지고 오겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">patches</span>
@@ -497,7 +497,7 @@ Face Mask Detection.zip is done!
 <p><code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>을 실습하기 위해 <code class="docutils literal notranslate"><span class="pre">TorchvisionDataset</span></code> 클래스를 먼저 정의하겠습니다. <code class="docutils literal notranslate"><span class="pre">TorchvisionDataset</span></code> 클래스는<code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> 메소드를 통해 image를 불러온 다음 데이터 augmentation을 진행합니다. <code class="docutils literal notranslate"><span class="pre">transform</span></code> 파라미터에 저장돼 있는 augmentation 규칙에 따라 augmentation이 이뤄집니다. 시간 측정을 위해 <code class="docutils literal notranslate"><span class="pre">time</span></code>함수를 사용해 시간 측정 후, 최종적으로 <code class="docutils literal notranslate"><span class="pre">image</span></code>, <code class="docutils literal notranslate"><span class="pre">label</span></code>, <code class="docutils literal notranslate"><span class="pre">total_time</span></code>을 반환해줍니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -548,7 +548,7 @@ Face Mask Detection.zip is done!
 <p><code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>에서 제공하는 함수를 활용해 이미지 augmentation 실습을 진행해보겠습니다. 이미지를 (300, 300) 크기로 만든 후, 224 크기로 자르도록 하겠습니다. 그리고 나서 이미지의 밝기(brightness), 대비(contrast), 채도(saturation), 색조(hue)를 무작위로 바꿔보겠습니다. 마지막으로 이미지 좌우 반전을 적용한 후 tensor로 변환하는 작업을 진행해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">torchvision_transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torchvision_transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
     <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">((</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">)),</span> 
     <span class="n">transforms</span><span class="o">.</span><span class="n">RandomCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">),</span>
     <span class="n">transforms</span><span class="o">.</span><span class="n">ColorJitter</span><span class="p">(</span><span class="n">brightness</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">contrast</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">saturation</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="mf">0.2</span><span class="p">),</span>
@@ -567,7 +567,7 @@ Face Mask Detection.zip is done!
 <p>transforms에서 제공하는 <code class="docutils literal notranslate"><span class="pre">Resize</span></code> 함수를 통해 이미지 크기를 조정할 수 있으며, <code class="docutils literal notranslate"><span class="pre">RandomCrop</span></code> 함수를 통해 이미지를 자를 수 있습니다. <code class="docutils literal notranslate"><span class="pre">ColorJitter</span></code> 함수는 밝기, 대비, 채도, 색조 등을 임의로 바꾸는 기능을 하며 <code class="docutils literal notranslate"><span class="pre">RandomHorizontalFlip</span></code>은 정의한 p의 확률로 좌우반전을 실시합니다. 아래 코드를 실행해 변경 전과 변경 후의 이미지를 비교해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">only_totensor</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">only_totensor</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()])</span>
 
 <span class="n">torchvision_dataset_no_transform</span> <span class="o">=</span> <span class="n">TorchvisionMaskDataset</span><span class="p">(</span>
     <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;images/&#39;</span><span class="p">,</span>
@@ -589,7 +589,7 @@ Face Mask Detection.zip is done!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">img</span><span class="p">,</span> <span class="n">annot</span><span class="p">,</span> <span class="n">transform_time</span> <span class="o">=</span> <span class="n">torchvision_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img</span><span class="p">,</span> <span class="n">annot</span><span class="p">,</span> <span class="n">transform_time</span> <span class="o">=</span> <span class="n">torchvision_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;transforms 적용 후&#39;</span><span class="p">)</span>
 <span class="n">plot_image_from_output</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">annot</span><span class="p">)</span>
@@ -607,7 +607,7 @@ Face Mask Detection.zip is done!
 <p>이미지 분류 문제에서는 이미지가 변해도 라벨값이 고정이지만, 객체 검출 문제에서는 이미지가 변함에 따라 라벨 값 또한 함께 변해야 합니다. 3.2 절에서 이러한 문제를 해결하는 방법에 대해 알아보겠습니다. 우선 3.1 절에서는 torchvision과 albumentations 모듈 비교를 계속 진행하도록 하겠습니다. <code class="docutils literal notranslate"><span class="pre">torchvision_dataset</span></code>에서 이미지 변환에 소요된 시간을 계산하고 그것을 100번 반복한 시간을 아래 코드를 활용해 측정하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
   <span class="n">sample</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">transform_time</span> <span class="o">=</span> <span class="n">torchvision_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
   <span class="n">total_time</span> <span class="o">+=</span> <span class="n">transform_time</span>
@@ -630,7 +630,7 @@ Face Mask Detection.zip is done!
 <code class="docutils literal notranslate"><span class="pre">cv2</span></code> 모듈을 사용하여 이미지를 읽고 RGB로 바꿔줍니다. 그리고 이미지 변환을 실시한 후 결과값을 반환합니다</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AlbumentationsDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AlbumentationsDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)))</span>
@@ -670,7 +670,7 @@ Face Mask Detection.zip is done!
 <p><code class="docutils literal notranslate"><span class="pre">torchvision.transform</span></code>과의 속도 비교를 위해 같은 기능인 <code class="docutils literal notranslate"><span class="pre">Resize</span></code>, <code class="docutils literal notranslate"><span class="pre">RandomCrop</span></code>, <code class="docutils literal notranslate"><span class="pre">ColorJitter</span></code>, <code class="docutils literal notranslate"><span class="pre">HorizontalFlip</span></code>을 사용해보겠습니다. 그리고 나서 변경 전과 변경 후 이미지를 비교해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Same transform with torchvision_transform</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Same transform with torchvision_transform</span>
 <span class="n">albumentations_transform</span> <span class="o">=</span> <span class="n">albumentations</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
     <span class="n">albumentations</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> 
     <span class="n">albumentations</span><span class="o">.</span><span class="n">RandomCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span>
@@ -684,7 +684,7 @@ Face Mask Detection.zip is done!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 변경 전</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 변경 전</span>
 <span class="n">img</span><span class="p">,</span> <span class="n">annot</span><span class="p">,</span> <span class="n">transform_time</span> <span class="o">=</span> <span class="n">torchvision_dataset_no_transform</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">plot_image_from_output</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">annot</span><span class="p">)</span>
 </pre></div>
@@ -696,7 +696,7 @@ Face Mask Detection.zip is done!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 변경 후</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 변경 후</span>
 <span class="n">albumentation_dataset</span> <span class="o">=</span> <span class="n">AlbumentationsDataset</span><span class="p">(</span>
     <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;images/&#39;</span><span class="p">,</span>
     <span class="n">transform</span> <span class="o">=</span> <span class="n">albumentations_transform</span>
@@ -714,7 +714,7 @@ Face Mask Detection.zip is done!
 <p><code class="docutils literal notranslate"><span class="pre">torchvision</span></code>과 마찬가지로 이미지 변환이 이루어 졌지만, 바운딩 박스는 변하지 않은 것을 알 수 있습니다. 속도 측정을 위해 <code class="docutils literal notranslate"><span class="pre">transform</span></code>을 100번 적용 시킨 뒤 시간을 측정하겠습니다</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
     <span class="n">sample</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">transform_time</span> <span class="o">=</span> <span class="n">albumentation_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">total_time</span> <span class="o">+=</span> <span class="n">transform_time</span>
@@ -736,7 +736,7 @@ Face Mask Detection.zip is done!
 <p><code class="docutils literal notranslate"><span class="pre">Albmentations</span></code>는 <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code> 보다 속도가 빠를 뿐만 아니라 새로운 기능 또한 제공합니다. 이번 절에서는 Albumentations에서 제공하는 <code class="docutils literal notranslate"><span class="pre">OneOf</span></code> 함수에 대해 알아보겠습니다. 이 함수는 list 안에 있는 augmentation 기능 들을 주어진 확률 값에 기반하여 가져옵니다. list 값 자체의 확률 값과 더불어 해당 함수의 확률 값을 함께 고려하여 실행 여부를 결정합니다. 아래의 <code class="docutils literal notranslate"><span class="pre">OneOf</span></code> 함수는 각각 선택될 확률이 1 입니다. 각각의 함수 내부에 있는 3개의 <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> 기능들 또한 각각 확률 값이 1로 부여 됬으므로, 실질적으로 1/3의 확률로 3개의 기능 중 하나가 선택되어 실행된다는 것을 알 수 있습니다. 이렇게 확률 값을 조정하여 다양한 <code class="docutils literal notranslate"><span class="pre">augmentation</span></code>이 가능합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">albumentations_transform_oneof</span> <span class="o">=</span> <span class="n">albumentations</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">albumentations_transform_oneof</span> <span class="o">=</span> <span class="n">albumentations</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
     <span class="n">albumentations</span><span class="o">.</span><span class="n">Resize</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">300</span><span class="p">),</span> 
     <span class="n">albumentations</span><span class="o">.</span><span class="n">RandomCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">),</span>
     <span class="n">albumentations</span><span class="o">.</span><span class="n">OneOf</span><span class="p">([</span>
@@ -758,7 +758,7 @@ Face Mask Detection.zip is done!
 <p>아래는 albumentations_transform_oneof를 이미지에 10번 적용한 결과입니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">albumentation_dataset_oneof</span> <span class="o">=</span> <span class="n">AlbumentationsDataset</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">albumentation_dataset_oneof</span> <span class="o">=</span> <span class="n">AlbumentationsDataset</span><span class="p">(</span>
     <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;images/&#39;</span><span class="p">,</span>
     <span class="n">transform</span> <span class="o">=</span> <span class="n">albumentations_transform_oneof</span>
 <span class="p">)</span>
@@ -783,7 +783,7 @@ Face Mask Detection.zip is done!
 <p>우선 아래 코드를 활용하여 새로운 데이터셋 클래스를 생성하겠습니다. 3.1.2 절에서 확인한 <code class="docutils literal notranslate"><span class="pre">AlbumentationsDataset</span></code> 클래스의 transform 부분을 수정하였습니다. 이미지뿐만 아니라 바운딩 박스도 transform이 진행되기 때문에 필요한 입력값, 출력값 수정을 진행해주었습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BboxAugmentationDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BboxAugmentationDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">imgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)))</span>
@@ -821,7 +821,7 @@ Face Mask Detection.zip is done!
 <p>다음으로는 <code class="docutils literal notranslate"><span class="pre">albumentations.Compose</span></code> 함수를 활용해 변환을 정의해보겠습니다. 가장 먼저 좌우반전을 실시할 것이며, 그 이후에 -90도에서 90도 사이의 회전을 진행하겠습니다. 바운딩 박스도 함께 변환을 진행해주기 위해 bbox_params 파라미터에 <code class="docutils literal notranslate"><span class="pre">albumentations.BboxParams</span></code> 객체를 입력해줍니다. Face Mask Detection 데이터셋은 바운딩 박스 표기법이 <code class="docutils literal notranslate"><span class="pre">xmin</span></code>, <code class="docutils literal notranslate"><span class="pre">ymin</span></code>, <code class="docutils literal notranslate"><span class="pre">xmax</span></code>, <code class="docutils literal notranslate"><span class="pre">ymax</span></code>으로 돼 있고, 이것은 pascal_voc 표기법과 같습니다. 그러므로 format 파라미터에 pascal_voc을 입력합니다. 또한 <code class="docutils literal notranslate"><span class="pre">transform</span></code> 진행 시 객체별 클래스 값은 <code class="docutils literal notranslate"><span class="pre">labels</span></code> 파라미터에 저장해두기 위해 <code class="docutils literal notranslate"><span class="pre">label_field</span></code>에 <code class="docutils literal notranslate"><span class="pre">labels</span></code>를 입력합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bbox_transform</span> <span class="o">=</span> <span class="n">albumentations</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bbox_transform</span> <span class="o">=</span> <span class="n">albumentations</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>
     <span class="p">[</span><span class="n">albumentations</span><span class="o">.</span><span class="n">HorizontalFlip</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
      <span class="n">albumentations</span><span class="o">.</span><span class="n">Rotate</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
      <span class="n">albumentations</span><span class="o">.</span><span class="n">pytorch</span><span class="o">.</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()],</span>
@@ -834,7 +834,7 @@ Face Mask Detection.zip is done!
 <p>이제 <code class="docutils literal notranslate"><span class="pre">BboxAugmentationDataset</span></code> 클래스를 활성화 하여 augmentation 결과물을 확인해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bbox_transform_dataset</span> <span class="o">=</span> <span class="n">BboxAugmentationDataset</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bbox_transform_dataset</span> <span class="o">=</span> <span class="n">BboxAugmentationDataset</span><span class="p">(</span>
     <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;images/&#39;</span><span class="p">,</span>
     <span class="n">transform</span> <span class="o">=</span> <span class="n">bbox_transform</span>
 <span class="p">)</span>
@@ -855,7 +855,7 @@ Face Mask Detection.zip is done!
 <p>인공지능 모델을 구축하기 위해선 학습용 데이터와 시험 데이터가 필요합니다. 학습용 데이터는 모델 훈련 시 사용하며 시험 데이터는 모델 평가 시 사용합니다. 시험 데이터는 학습용 데이터와 중복되지 않아야 합니다. 3.1절에서 불러온 데이터를 학습 데이터와 시험 데이터로 나누어 보겠습니다. 우선 전체 데이터의 개수를 아래 코드를 통해 확인해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span><span class="p">)))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span><span class="p">)))</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;images&#39;</span><span class="p">)))</span>
 </pre></div>
 </div>
@@ -870,8 +870,8 @@ Face Mask Detection.zip is done!
 <p>총 853개의 이미지가 존재하는 것을 볼 수 있습니다. 일반적으로 학습 데이터와 시험 데이터의 비율은 7:3 으로 가져갑니다. 이번 데이터는 전체 데이터셋 개수가 적으므로 8:2 비율을 가져가 보도록 하겠습니다. 853개의 데이터 중 170개를 시험 데이터로 사용하기 위해 해당 데이터를 별도의 폴더로 옮겨 주도록 하겠습니다. 우선 리눅스 명령어 mkdir를 활용하여 시험 데이터를 담을 폴더를 생성합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!mkdir test_images
-!mkdir test_annotations
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>mkdir test_images
+<span class="o">!</span>mkdir test_annotations
 </pre></div>
 </div>
 </div>
@@ -879,7 +879,7 @@ Face Mask Detection.zip is done!
 <p>위 코드를 실행하면 test_images 폴더와 test_annotations 폴더가 생성된 것을 확인할 수 있습니다. 이제 images 폴더와 annotations 폴더에 있는 파일 각각 170개씩을 새로 생성한 폴더로 옮기겠습니다. random 모듈에 있는 sample 함수를 활용해 무작위로 숫자를 추출한 후 인덱스값으로 활용하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
 <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
 <span class="n">idx</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">853</span><span class="p">),</span> <span class="mi">170</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">idx</span><span class="p">))</span>
@@ -896,7 +896,7 @@ Face Mask Detection.zip is done!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 
 <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;images&#39;</span><span class="p">)))[</span><span class="n">idx</span><span class="p">]:</span>
@@ -904,7 +904,6 @@ Face Mask Detection.zip is done!
 
 <span class="k">for</span> <span class="n">annot</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span><span class="p">)))[</span><span class="n">idx</span><span class="p">]:</span>
     <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="s1">&#39;annotations/&#39;</span><span class="o">+</span><span class="n">annot</span><span class="p">,</span> <span class="s1">&#39;test_annotations/&#39;</span><span class="o">+</span><span class="n">annot</span><span class="p">)</span>
-
 </pre></div>
 </div>
 </div>
@@ -912,7 +911,7 @@ Face Mask Detection.zip is done!
 <p>위의 코드 처럼 shutil 패키지를 활용해 170개의 이미지와 170개의 좌표 파일들을 각각 test_images폴더와 test_annotations 폴더로 옮길 수 있습니다. 각 폴더별 파일 개수를 확인해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span><span class="p">)))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span><span class="p">)))</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;images&#39;</span><span class="p">)))</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;test_annotations&#39;</span><span class="p">)))</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;test_images&#39;</span><span class="p">)))</span>
@@ -931,7 +930,7 @@ Face Mask Detection.zip is done!
 <p>이미지 분류 문제에서는 훈련용 시험용 데이터를 나눈 후 이미지 개수만 확인하면 되겠지만, 객체 탐지 문제에서는 각  클래스 별로 몇 개의 객체가 데이터셋 내부에 존재하는지 확인하는 작업이 필요합니다. 아래 코드를 활용해 데이터셋 내부에 있는 클래스별 객체 수를 확인해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 
@@ -994,7 +993,7 @@ Face Mask Detection.zip is done!
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./chapters\object_detection"
+            path: "./chapters\object-detection"
         },
         predefinedOutput: true
     }

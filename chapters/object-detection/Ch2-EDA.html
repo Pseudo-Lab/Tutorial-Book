@@ -178,37 +178,37 @@ commentsRunWhenDOMLoaded(addUtterances);
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../time_series/intro.html">
+  <a class="reference internal" href="../time-series/intro.html">
    코로나 확진자 수 예측 모델 구축
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../time_series/Ch1-Time-Series.html">
+  <a class="reference internal" href="../time-series/Ch1-Time-Series.html">
    1. Time Series 소개
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../time_series/Ch2-EDA.html">
+  <a class="reference internal" href="../time-series/Ch2-EDA.html">
    2. 데이터 탐색
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../time_series/Ch3-preprocessing.html">
+  <a class="reference internal" href="../time-series/Ch3-preprocessing.html">
    3. 데이터 전처리
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../time_series/Ch4-LSTM.html">
+  <a class="reference internal" href="../time-series/Ch4-LSTM.html">
    4. LSTM
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../time_series/Ch5-CNN-LSTM.html">
+  <a class="reference internal" href="../time-series/Ch5-CNN-LSTM.html">
    5. CNN-LSTM
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../time_series/References.html">
+  <a class="reference internal" href="../time-series/References.html">
    6. 참고 문헌
   </a>
  </li>
@@ -252,7 +252,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/chapters/object_detection/Ch2-EDA.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/chapters/object-detection/Ch2-EDA.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -272,7 +272,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/object_detection/Ch2-EDA.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/object-detection/Ch2-EDA.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -293,7 +293,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/chapters/object_detection/Ch2-EDA.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/chapters/object-detection/Ch2-EDA.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../../_static/images/logo_binder.svg"
@@ -355,7 +355,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>가장 먼저 학습에 사용할 데이터셋을 내려받도록 하겠습니다. 가짜연구소에서 제공하는 데이터 로더 함수를 활용해 쉽게 데이터를 다운로드 할 수 있습니다. <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code> 명령어를 활용하여 Tutorial-Book-Utils 저장소를 Colab 환경에 다운로드 하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
 </pre></div>
 </div>
 </div>
@@ -373,7 +373,7 @@ Unpacking objects: 100% (12/12), done.
 <p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code> 명령어 실행 후, Tutorial-Book-Utils 폴더 내에 <code class="docutils literal notranslate"><span class="pre">PL_data_loader.py</span></code> 파일이 위치한 것을 알 수 있습니다. 해당 파일 내에는 구글 드라이브에 있는 파일을 다운로드 하는 함수가 저장되어 있습니다. <code class="docutils literal notranslate"><span class="pre">--data</span></code> 파라미터에 <code class="docutils literal notranslate"><span class="pre">FaceMaskDetection</span></code>을 입력함으로써 마스크 착용 탐지 모델 구축에 활용할 데이터를 받을 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!python Tutorial-Book-Utils/PL_data_loader.py --data FaceMaskDetection
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>python Tutorial-Book-Utils/PL_data_loader.py --data FaceMaskDetection
 </pre></div>
 </div>
 </div>
@@ -386,13 +386,13 @@ Unpacking objects: 100% (12/12), done.
 <p>위와 같이 Face Mask Detection.zip 파일이 다운로드 된 것을 확인할 수 있습니다. 다음으로 리눅스 명령어인 unzip을 활용하여 압축파일을 풀어보도록 하겠습니다. <code class="docutils literal notranslate"><span class="pre">-q</span></code> 옵션을 통해 불필요한 출력물이 나오지 않게 제어 가능합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!unzip -q Face\ Mask\ Detection.zip
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>unzip -q Face<span class="se">\ </span>Mask<span class="se">\ </span>Detection.zip
 </pre></div>
 </div>
 </div>
 </div>
 <p>Colab 경로를 확인하시면 그림 2.2와 같이 “annotations” 폴더와 “images” 폴더가 생성된 것을 확인할 수 있습니다. “annotations” 폴더에는 이미지별 의료용 마스크 위치 좌표가 저장되어 있고, “images” 폴더에는 이미지가 저장되어 있습니다.</p>
-<p><img alt="dataset example" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/pics/ch2img02.PNG?raw=true" /></p>
+<p><img alt="dataset example" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/ch2img02.PNG?raw=true" /></p>
 <ul class="simple">
 <li><p>그림 2-1 실험을 위한 폴더 경로</p></li>
 </ul>
@@ -403,7 +403,7 @@ Unpacking objects: 100% (12/12), done.
 <p>“annotations” 폴더 안에 있는 xml 파일들은 각각의 이미지 파일의 정보를 가지고 있습니다. 예를 들어, maksssksksss307.xml 파일을 살펴보도록 하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">annotation</span><span class="o">&gt;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">annotation</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="n">folder</span><span class="o">&gt;</span><span class="n">images</span><span class="o">&lt;/</span><span class="n">folder</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="n">filename</span><span class="o">&gt;</span><span class="n">maksssksksss307</span><span class="o">.</span><span class="n">png</span><span class="o">&lt;/</span><span class="n">filename</span><span class="o">&gt;</span>
     <span class="o">&lt;</span><span class="n">size</span><span class="o">&gt;</span>
@@ -457,7 +457,7 @@ Unpacking objects: 100% (12/12), done.
 </div>
 </div>
 <p>파일 내용을 살펴보면, 처음에 폴더명과 파일명이 나오며, 이미지 크기 정보가 포함되어 있는 걸 확인할 수 있습니다. 이제 <code class="docutils literal notranslate"><span class="pre">object</span></code>안 코드를 살펴보면, <code class="docutils literal notranslate"><span class="pre">mask_weared_incorrect</span></code>, <code class="docutils literal notranslate"><span class="pre">with_mask</span></code>, <code class="docutils literal notranslate"><span class="pre">without_mask</span></code> 이렇게 세가지로 나눠지는걸 확인할 수 있습니다. <code class="docutils literal notranslate"><span class="pre">mask_weared_incorrect</span></code>의 경우 마스크를 제대로 쓰지 않은 객체의 정보, <code class="docutils literal notranslate"><span class="pre">with_mask</span></code>는 마스크를 착용하고 있는 객체 위치 정보, <code class="docutils literal notranslate"><span class="pre">without_mask</span></code>은 마스크를 쓰지 않은 객체의 정보를 담고 있습니다. 만약 한 이미지 파일 안에 마스크를 착용한 객체가 2명이라면, <code class="docutils literal notranslate"><span class="pre">with_mask</span></code> 정보를 포함한 <code class="docutils literal notranslate"><span class="pre">object</span></code>가 2개 인것을 볼 수 있을 것입니다. <code class="docutils literal notranslate"><span class="pre">bndbox</span></code>안에는 <code class="docutils literal notranslate"><span class="pre">xmin</span></code>, <code class="docutils literal notranslate"><span class="pre">ymin</span></code>, <code class="docutils literal notranslate"><span class="pre">xmax</span></code>, <code class="docutils literal notranslate"><span class="pre">ymax</span></code>가 순서대로 나오는 걸 볼 수 있습니다. 이는 바운딩 박스 영역을 지정하는 정보입니다.</p>
-<p><img alt="dataset example" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/pics/ch2img01.png?raw=true" /></p>
+<p><img alt="dataset example" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/ch2img01.png?raw=true" /></p>
 <ul class="simple">
 <li><p>그림 2-2 maksssksksss307.png 파일 시각화</p></li>
 </ul>
@@ -468,7 +468,7 @@ Unpacking objects: 100% (12/12), done.
 <p>딥러닝 모델 정확도를 높이기 위해 중요한 것은 데이터셋 검증입니다. 지도학습은 레이블링(labeling) 된 데이터로 모델이 학습을 하기 때문에 올바르게 레이블링 된 데이터임을 확인하는 것이 중요합니다. 이번 절에서는 주어진 이미지에 바운딩 박스를 시각화해 올바르게 레이블링이 된 데이터인지 확인해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib.image</span> <span class="k">as</span> <span class="nn">mpimg</span>
@@ -481,7 +481,7 @@ Unpacking objects: 100% (12/12), done.
 <p>바운딩 박스 시각화 코드를 테스트하기 위해 위의 패키지들을 불러옵니다. matplotlib는 시각화의 대표적인 패키지이며, glob 패키지는 파일을 다루는데 널리 쓰이는 패키지입니다. BeautifulSoup은 HTML과 XML 문서 파일을 파싱(Parsing)하는 패키지이며, 웹스크래핑(Web Scraping)에 유용하게 쓰입니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">img_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;images/*&#39;</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;images/*&#39;</span><span class="p">))</span>
 <span class="n">annot_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;annotations/*&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -490,7 +490,7 @@ Unpacking objects: 100% (12/12), done.
 <p>glob 패키지를 이용해 데이터셋을 불러옵니다. 폴더 경로는 데이터셋이 들어있는 곳으로 지정하셔야 합니다. 추가로 <code class="docutils literal notranslate"><span class="pre">sorted</span></code> 함수를 사용해 <code class="docutils literal notranslate"><span class="pre">img_list</span></code>에 있는 파일의 id 순서와 <code class="docutils literal notranslate"><span class="pre">annot_list</span></code>에 있는 파일의 id 순서가 같도록 해줍니다</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">img_list</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">img_list</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">annot_list</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -506,7 +506,7 @@ Unpacking objects: 100% (12/12), done.
 각각의 폴더에 총 853개의 데이터를 불러왔습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">img_list</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">img_list</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">annot_list</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -522,7 +522,7 @@ Unpacking objects: 100% (12/12), done.
 <p>이제 바운딩 박스 시각화를 위한 함수를 정의해보도록 하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_box</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_box</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
     
     <span class="n">xmin</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;xmin&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
     <span class="n">ymin</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;ymin&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
@@ -591,7 +591,7 @@ Unpacking objects: 100% (12/12), done.
 <p><code class="docutils literal notranslate"><span class="pre">generate_target</span></code> 함수는 <code class="docutils literal notranslate"><span class="pre">generate_box</span></code>와 <code class="docutils literal notranslate"><span class="pre">generate_label</span></code>를 각각 호출하여 반환된 값을 딕셔너리에 저장해 반환하는 함수입니다. <code class="docutils literal notranslate"><span class="pre">html.parser</span></code>를 이용해 annotations 파일에 있는 내용들을 불러와 타겟의 바운딩 박스와 라벨을 추출합니다. <code class="docutils literal notranslate"><span class="pre">plot_image</span></code> 함수는 이미지와 바운딩 박스를 함께 시각화 하는 함수입니다. 마스크 착용시 초록색, 마스크를 올바르게 착용 안했을 시 주황색, 마스크를 착용 안했을 시 빨간색 바운딩 박스를 그립니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">img_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;images/maksssksksss307.png&#39;</span><span class="p">)</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_list</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;images/maksssksksss307.png&#39;</span><span class="p">)</span> 
 </pre></div>
 </div>
 </div>
@@ -604,7 +604,7 @@ Unpacking objects: 100% (12/12), done.
 <p>위의 코드는 maksssksksss307.png 파일의 인덱스 값을 찾기 위함입니다. <code class="docutils literal notranslate"><span class="pre">index</span></code> 함수를 이용하여 maksssksksss307.png 파일 위치의 인덱스 값을 확인할 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bbox</span> <span class="o">=</span> <span class="n">generate_target</span><span class="p">(</span><span class="n">annot_list</span><span class="p">[</span><span class="mi">232</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bbox</span> <span class="o">=</span> <span class="n">generate_target</span><span class="p">(</span><span class="n">annot_list</span><span class="p">[</span><span class="mi">232</span><span class="p">])</span>
 <span class="n">plot_image</span><span class="p">(</span><span class="n">img_list</span><span class="p">[</span><span class="mi">232</span><span class="p">],</span> <span class="n">bbox</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -631,7 +631,7 @@ Unpacking objects: 100% (12/12), done.
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./chapters\object_detection"
+            path: "./chapters\object-detection"
         },
         predefinedOutput: true
     }
