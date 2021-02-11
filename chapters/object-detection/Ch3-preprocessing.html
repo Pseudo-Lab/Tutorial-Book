@@ -370,7 +370,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>데이터셋이 부족하다고 새로운 이미지를 찾을 필요는 없습니다. 왜냐하면 데이터 augmentation을 이용해 다양한 상태의 이미지를 얻을 수 있기 때문입니다.</p>
 <p><img alt="" src="https://drive.google.com/uc?id=1ammM-EnG9aCvMsLvpm-P-6UvOz56M9P3" /></p>
 <ul class="simple">
-<li><p>그림 3-1 같아 보이지만 다른 테니스 공 (출처:https://nanonets.com/blog/data-augmentation-how-to-use-deep-learning-when-you-have-limited-data-part-2/)</p></li>
+<li><p>그림 3-1 같아 보이지만 다른 테니스 공 (출처:<a class="reference external" href="https://nanonets.com/blog/data-augmentation-how-to-use-deep-learning-when-you-have-limited-data-part-2/">https://nanonets.com/blog/data-augmentation-how-to-use-deep-learning-when-you-have-limited-data-part-2/</a>)</p></li>
 </ul>
 <p>그림 3-1은 사람이 보기엔 다 똑같은 테니스 공입니다. 하지만 딥러닝 모델은 3개의 테니스공을 다 다르게 봅니다. 이와 같은 원리로 우리는 하나의 사진을 변조 시켜 여러 개의 데이터를 추출할 수 있습니다.</p>
 <p>3.1절에서는 이미지 augmentation에 사용되는 <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>와 <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> 모듈을 알아보겠습니다. <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>는 파이토치에서 공식적으로 제공하는 모듈이며 <code class="docutils literal notranslate"><span class="pre">albumentations</span></code>는 <code class="docutils literal notranslate"><span class="pre">OpenCV</span></code>와 같은 오픈 소스 컴퓨터 비젼 라이브러리를 최적화 하였기에 다른 라이브러리보다 더 빠른 처리 속도 및 기타 기능을 제공하는 모듈입니다.</p>
@@ -389,11 +389,11 @@ commentsRunWhenDOMLoaded(addUtterances);
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cloning into &#39;Tutorial-Book-Utils&#39;...
-remote: Enumerating objects: 12, done.
-remote: Counting objects: 100% (12/12), done.
-remote: Compressing objects: 100% (11/11), done.
-remote: Total 12 (delta 1), reused 2 (delta 0), pack-reused 0
-Unpacking objects: 100% (12/12), done.
+remote: Enumerating objects: 27, done.
+remote: Counting objects: 100% (27/27), done.
+remote: Compressing objects: 100% (23/23), done.
+remote: Total 27 (delta 7), reused 13 (delta 3), pack-reused 0
+Unpacking objects: 100% (27/27), done.
 Face Mask Detection.zip is done!
 </pre></div>
 </div>
@@ -604,7 +604,7 @@ Face Mask Detection.zip is done!
 </div>
 </div>
 <p>변경 전에 비해 변경 후 이미지는 앞서 언급한 변화들이 적용된 것을 볼 수 있습니다. 또한 이미지 자체적인 변화는 이뤄졌지만 바운딩 박스는 변화된 이미지에서 위치가 어긋난 것을 확인할 수 있습니다. <code class="docutils literal notranslate"><span class="pre">torchvision.transform</span></code>에서 제공하는 augmentation은 이미지 값에 대한 augmentation만 진행이 되며, 바운딩 박스는 같이 변환되지 않는 것을 알 수 있습니다.</p>
-<p>이미지 분류 문제에서는 이미지가 변해도 라벨값이 고정이지만, 객체 검출 문제에서는 이미지가 변함에 따라 라벨 값 또한 함께 변해야 합니다. 3.2 절에서 이러한 문제를 해결하는 방법에 대해 알아보겠습니다. 우선 3.1 절에서는 torchvision과 albumentations 모듈 비교를 계속 진행하도록 하겠습니다. <code class="docutils literal notranslate"><span class="pre">torchvision_dataset</span></code>에서 이미지 변환에 소요된 시간을 계산하고 그것을 100번 반복한 시간을 아래 코드를 활용해 측정하겠습니다.</p>
+<p>이미지 분류 문제에서는 이미지가 변해도 라벨값이 고정이지만, 객체 검출 문제에서는 이미지가 변함에 따라 라벨 값 또한 함께 변해야 합니다. 3.2 절에서 이러한 문제를 해결하는 방법에 대해 알아보겠습니다. 우선 3.1 절에서는 <code class="docutils literal notranslate"><span class="pre">torchvision</span></code>과 <code class="docutils literal notranslate"><span class="pre">albumentations</span></code> 모듈 비교를 계속 진행하도록 하겠습니다. <code class="docutils literal notranslate"><span class="pre">torchvision_dataset</span></code>에서 이미지 변환에 소요된 시간을 계산하고 그것을 100번 반복한 시간을 아래 코드를 활용해 측정하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span>
@@ -617,7 +617,7 @@ Face Mask Detection.zip is done!
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torchvision time: 10.138509273529053 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torchvision time: 10.959246158599854 ms
 </pre></div>
 </div>
 </div>
@@ -711,7 +711,7 @@ Face Mask Detection.zip is done!
 <img alt="../../_images/Ch3-preprocessing_27_0.png" src="../../_images/Ch3-preprocessing_27_0.png" />
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">torchvision</span></code>과 마찬가지로 이미지 변환이 이루어 졌지만, 바운딩 박스는 변하지 않은 것을 알 수 있습니다. 속도 측정을 위해 <code class="docutils literal notranslate"><span class="pre">transform</span></code>을 100번 적용 시킨 뒤 시간을 측정하겠습니다</p>
+<p><code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>과 마찬가지로 이미지 변환이 이루어 졌지만, 바운딩 박스는 변하지 않은 것을 알 수 있습니다. 속도 측정을 위해 <code class="docutils literal notranslate"><span class="pre">albumentation</span></code>을 100번 적용 시킨 뒤 시간을 측정하겠습니다</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_time</span> <span class="o">=</span> <span class="mi">0</span>
@@ -724,12 +724,12 @@ Face Mask Detection.zip is done!
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>albumentations time/sample: 2.1135759353637695 ms
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>albumentations time/sample: 2.41302490234375 ms
 </pre></div>
 </div>
 </div>
 </div>
-<p>이미지 변환을 100번 수행하는데 약 2.0 ms ~ 2.5 ms가 소요된 것을 확인할 수 있습니다. torchvision.transforms와 비교했을 때 약 4배 정도 빠른 것을 알 수 있습니다.</p>
+<p>이미지 변환을 100번 수행하는데 약 2.0 ms ~ 2.5 ms가 소요된 것을 확인할 수 있습니다. <code class="docutils literal notranslate"><span class="pre">torchvision.transforms</span></code>와 비교했을 때 약 4배 정도 빠른 것을 알 수 있습니다.</p>
 </div>
 <div class="section" id="id2">
 <h3>3.1.3. 확률 기반 Augmentation 조합<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>

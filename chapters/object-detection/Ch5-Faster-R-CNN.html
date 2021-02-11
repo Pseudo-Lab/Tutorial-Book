@@ -1101,7 +1101,7 @@ epoch : 10, Loss : 23.59230613708496, time : 266.9004054069519
 </div>
 </div>
 </div>
-<p>그리고 Tutorial-Book-Utils 폴더 내에 있는 utils_ObjectDetection.py 파일을 통해서 mAP 값을 산출합니다. <code class="docutils literal notranslate"><span class="pre">get_batch_statistics</span></code> 함수를 통해 iou값이 0.5가 넘는 바운딩 박스로 매트릭스를 만들어주고 <code class="docutils literal notranslate"><span class="pre">ap_per_class</span></code> 함수를 통해 각 클래스에 대한 AP값을 계산해줍니다.</p>
+<p>그리고 Tutorial-Book-Utils 폴더 내에 있는 utils_ObjectDetection.py 파일을 통해서 mAP 값을 산출합니다. <code class="docutils literal notranslate"><span class="pre">get_batch_statistics</span></code> 함수를 통해 IoU(Intersection of Union) 조건을 만족하는 바운딩 박스간의 통곗값을 계산후 <code class="docutils literal notranslate"><span class="pre">ap_per_class</span></code> 함수를 통해 각 클래스에 대한 AP값을 계산해줍니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">cd</span> Tutorial-Book-Utils/
@@ -1137,7 +1137,7 @@ AP : tensor([0.8694, 0.9189, 0.3664], dtype=torch.float64)
 </div>
 </div>
 <p>AP값은 background 클래스를 제외한 실제 3개의 클래스에 대해서만 보여줍니다.  10번만 학습했음에도 불구하고 4장의 RetinaNet 결과보다 향상된 것을 확인할 수 있습니다. 특히나 1번 클래스인 마스크 착용 객체에 대해서는 0.9189 AP에 해당하는 정확도까지 보이고 2번 클래스인 마스크를 제대로 착용하고 있지 않는 객체에서도 0.3664 AP를 보이고 있습니다.
-RetinaNet이 FPN과 Focal loss로 one-stage method임에도 높은 성능을 보인다고 알려져 있지만, 이 데이터셋에는 적합하지 않았나봅니다. 또는 하이퍼파라미터 튜닝이 부족하여 최적화 작업이 더 필요해 보입니다.</p>
+RetinaNet이 FPN과 Focal loss로 one-stage method임에도 높은 성능을 보인다고 일반적으로 알려져 있습니다. 물론 하이퍼파라미터 튜닝을 통해 RetinaNet의 성능을 최적화 해도 되겠지만, 현재 실험 결과로 미뤄봤을 때 이 데이터셋에는 Faster-RCNN이 더 좋은 성능을 보이고 있습니다.</p>
 <p>이상으로 의료용 마스크 탐지 튜토리얼을 마치도록 하겠습니다. 이번 튜토리얼을 통해서 데이터셋을 전처리하는 것부터 모델을 학습하고 예측하는 것까지 진행해보았습니다. 더 좋은 성능을 내기 위해서는 학습 횟수를 늘리거나 하이퍼파라미터 튜닝을 해보는 방법도 있습니다. 자신이 원하는 데이터에 객체 탐지 모델을 자유롭게 활용해보시기 바랍니다.</p>
 </div>
 </div>

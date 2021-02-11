@@ -391,8 +391,8 @@ Unpacking objects: 100% (12/12), done.
 </div>
 </div>
 </div>
-<p>Colab 경로를 확인하시면 그림 2.2와 같이 “annotations” 폴더와 “images” 폴더가 생성된 것을 확인할 수 있습니다. “annotations” 폴더에는 이미지별 의료용 마스크 위치 좌표가 저장되어 있고, “images” 폴더에는 이미지가 저장되어 있습니다.</p>
-<p><img alt="dataset example" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/ch2img02.PNG?raw=true" /></p>
+<p>Colab 경로를 확인하시면 그림 2-1와 같이 “annotations” 폴더와 “images” 폴더가 생성된 것을 확인할 수 있습니다. “annotations” 폴더에는 이미지별 의료용 마스크 위치 좌표가 저장되어 있고, “images” 폴더에는 이미지가 저장되어 있습니다.</p>
+<p><img alt="dataset example" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch2img02.PNG?raw=true" /></p>
 <ul class="simple">
 <li><p>그림 2-1 실험을 위한 폴더 경로</p></li>
 </ul>
@@ -457,7 +457,7 @@ Unpacking objects: 100% (12/12), done.
 </div>
 </div>
 <p>파일 내용을 살펴보면, 처음에 폴더명과 파일명이 나오며, 이미지 크기 정보가 포함되어 있는 걸 확인할 수 있습니다. 이제 <code class="docutils literal notranslate"><span class="pre">object</span></code>안 코드를 살펴보면, <code class="docutils literal notranslate"><span class="pre">mask_weared_incorrect</span></code>, <code class="docutils literal notranslate"><span class="pre">with_mask</span></code>, <code class="docutils literal notranslate"><span class="pre">without_mask</span></code> 이렇게 세가지로 나눠지는걸 확인할 수 있습니다. <code class="docutils literal notranslate"><span class="pre">mask_weared_incorrect</span></code>의 경우 마스크를 제대로 쓰지 않은 객체의 정보, <code class="docutils literal notranslate"><span class="pre">with_mask</span></code>는 마스크를 착용하고 있는 객체 위치 정보, <code class="docutils literal notranslate"><span class="pre">without_mask</span></code>은 마스크를 쓰지 않은 객체의 정보를 담고 있습니다. 만약 한 이미지 파일 안에 마스크를 착용한 객체가 2명이라면, <code class="docutils literal notranslate"><span class="pre">with_mask</span></code> 정보를 포함한 <code class="docutils literal notranslate"><span class="pre">object</span></code>가 2개 인것을 볼 수 있을 것입니다. <code class="docutils literal notranslate"><span class="pre">bndbox</span></code>안에는 <code class="docutils literal notranslate"><span class="pre">xmin</span></code>, <code class="docutils literal notranslate"><span class="pre">ymin</span></code>, <code class="docutils literal notranslate"><span class="pre">xmax</span></code>, <code class="docutils literal notranslate"><span class="pre">ymax</span></code>가 순서대로 나오는 걸 볼 수 있습니다. 이는 바운딩 박스 영역을 지정하는 정보입니다.</p>
-<p><img alt="dataset example" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/ch2img01.png?raw=true" /></p>
+<p><img alt="dataset example" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch2img01.png?raw=true" /></p>
 <ul class="simple">
 <li><p>그림 2-2 maksssksksss307.png 파일 시각화</p></li>
 </ul>
