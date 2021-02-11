@@ -358,7 +358,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="retinanet">
 <h1>4. RetinaNet<a class="headerlink" href="#retinanet" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/drive/1hb5MB94nNjOvPKgq7p5-gXbz0Qi4BjZz?usp=sharing"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p><a class="reference external" href="https://colab.research.google.com/github/Pseudo-Lab/Tutorial-Book/blob/master/book/chapters/object-detection/Ch4-RetinaNet.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/rkHc_Tzn810" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
@@ -370,9 +370,9 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>모델링 실습을 위해 2.1절에 나온 코드를 활용하여 데이터를 불러오겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
-!python Tutorial-Book-Utils/PL_data_loader.py --data FaceMaskDetection
-!unzip -q Face\ Mask\ Detection.zip
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
+<span class="o">!</span>python Tutorial-Book-Utils/PL_data_loader.py --data FaceMaskDetection
+<span class="o">!</span>unzip -q Face<span class="se">\ </span>Mask<span class="se">\ </span>Detection.zip
 </pre></div>
 </div>
 </div>
@@ -394,31 +394,31 @@ Face Mask Detection.zip is done!
 <p>3.3절에서 확인한 데이터 분리 방법을 활용하여 데이터를 분리하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>import os
-import random
-import numpy as np
-import shutil
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
 
-print(len(os.listdir(&#39;annotations&#39;)))
-print(len(os.listdir(&#39;images&#39;)))
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;images&#39;</span><span class="p">)))</span>
 
-!mkdir test_images
-!mkdir test_annotations
+<span class="o">!</span>mkdir test_images
+<span class="o">!</span>mkdir test_annotations
 
 
-random.seed(1234)
-idx = random.sample(range(853), 170)
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">853</span><span class="p">),</span> <span class="mi">170</span><span class="p">)</span>
 
-for img in np.array(sorted(os.listdir(&#39;images&#39;)))[idx]:
-    shutil.move(&#39;images/&#39;+img, &#39;test_images/&#39;+img)
+<span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;images&#39;</span><span class="p">)))[</span><span class="n">idx</span><span class="p">]:</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="s1">&#39;images/&#39;</span><span class="o">+</span><span class="n">img</span><span class="p">,</span> <span class="s1">&#39;test_images/&#39;</span><span class="o">+</span><span class="n">img</span><span class="p">)</span>
 
-for annot in np.array(sorted(os.listdir(&#39;annotations&#39;)))[idx]:
-    shutil.move(&#39;annotations/&#39;+annot, &#39;test_annotations/&#39;+annot)
+<span class="k">for</span> <span class="n">annot</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span><span class="p">)))[</span><span class="n">idx</span><span class="p">]:</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="s1">&#39;annotations/&#39;</span><span class="o">+</span><span class="n">annot</span><span class="p">,</span> <span class="s1">&#39;test_annotations/&#39;</span><span class="o">+</span><span class="n">annot</span><span class="p">)</span>
 
-print(len(os.listdir(&#39;annotations&#39;)))
-print(len(os.listdir(&#39;images&#39;)))
-print(len(os.listdir(&#39;test_annotations&#39;)))
-print(len(os.listdir(&#39;test_images&#39;)))
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;images&#39;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;test_annotations&#39;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;test_images&#39;</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -439,7 +439,7 @@ print(len(os.listdir(&#39;test_images&#39;)))
 <p>파이토치 모델을 학습시키기 위해선 데이터셋 클래스를 정의해야 합니다. torchvision에서 제공하는 객체 탐지 모델을 학습시키기 위한 데이터셋 클래스의 <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> 메서드는 이미지 파일과 바운딩 박스 좌표를 반환 합니다. 데이터셋 클래스를 3장에서 활용한 코드를 응용해 아래와 같이 정의 하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">glob</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">matplotlib.image</span> <span class="k">as</span> <span class="nn">mpimg</span>
@@ -504,9 +504,8 @@ print(len(os.listdir(&#39;test_images&#39;)))
     
     <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
     
-    <span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-    
+    <span class="n">rects</span> <span class="o">=</span> <span class="p">[]</span>
+
     <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">annotation</span><span class="p">[</span><span class="s2">&quot;boxes&quot;</span><span class="p">])):</span>
         <span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">annotation</span><span class="p">[</span><span class="s2">&quot;boxes&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">]</span>
 
@@ -521,9 +520,9 @@ print(len(os.listdir(&#39;test_images&#39;)))
         
             <span class="n">rect</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">xmin</span><span class="p">,</span><span class="n">ymin</span><span class="p">),(</span><span class="n">xmax</span><span class="o">-</span><span class="n">xmin</span><span class="p">),(</span><span class="n">ymax</span><span class="o">-</span><span class="n">ymin</span><span class="p">),</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
 
-        <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+        <span class="n">rects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">img</span><span class="p">,</span> <span class="n">rects</span>
 
 <span class="k">class</span> <span class="nc">MaskDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -559,7 +558,6 @@ print(len(os.listdir(&#39;test_images&#39;)))
 
         <span class="k">return</span> <span class="n">img</span><span class="p">,</span> <span class="n">target</span>
 
-
 <span class="k">def</span> <span class="nf">collate_fn</span><span class="p">(</span><span class="n">batch</span><span class="p">):</span>
     <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">batch</span><span class="p">))</span>
 
@@ -579,7 +577,7 @@ print(len(os.listdir(&#39;test_images&#39;)))
 <p><code class="docutils literal notranslate"><span class="pre">torchvision</span></code>에서는 각종 컴퓨터 비전 문제를 해결하기 위한 딥러닝 모델을 쉽게 불러올 수 있는 API를 제공합니다. <code class="docutils literal notranslate"><span class="pre">torchvision.models</span></code> 모듈을 활용하여 RetinaNet 모델을 불러오도록 하겠습니다. RetinaNet은 <code class="docutils literal notranslate"><span class="pre">torchvision</span></code> 0.8.0 이상에서 제공되므로, 아래 코드를 활용하여 <code class="docutils literal notranslate"><span class="pre">torchvision</span></code> 버전을 맞춰줍니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!pip install torch==1.7.0+cu101 torchvision==0.8.1+cu101 torchaudio==0.7.0 -f https://download.pytorch.org/whl/torch_stable.html
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install <span class="nv">torch</span><span class="o">==</span><span class="m">1</span>.7.0+cu101 <span class="nv">torchvision</span><span class="o">==</span><span class="m">0</span>.8.1+cu101 <span class="nv">torchaudio</span><span class="o">==</span><span class="m">0</span>.7.0 -f https://download.pytorch.org/whl/torch_stable.html
 </pre></div>
 </div>
 </div>
@@ -603,7 +601,7 @@ Successfully installed torchaudio-0.7.0
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torchvision</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torchvision</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 </pre></div>
 </div>
@@ -611,7 +609,7 @@ Successfully installed torchaudio-0.7.0
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">torchvision</span><span class="o">.</span><span class="n">__version__</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torchvision</span><span class="o">.</span><span class="n">__version__</span>
 </pre></div>
 </div>
 </div>
@@ -621,10 +619,10 @@ Successfully installed torchaudio-0.7.0
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">torchvision.__version__</span></code> 명령어를 통해 현재 cuda 10.1 버전에서 작동하는 <code class="docutils literal notranslate"><span class="pre">torchvision</span></code> 0.8.1 버전이 설치 됐음을 확인할 수 있습니다. 다음으로는 아래 코드를 실행하여 RetinaNet 모델을 불러옵니다. Face Mask Detection 데이터셋에 3개의 클래스가 존재하므로 num_classes 매개변수를 3으로 정의하고, 전이 학습을 할 것이기 때문에 backbone 구조는 사전 학습 된 가중치를, 그 외 가중치는 초기화 상태로 가져옵니다. backbone은 객체 탐지 데이터셋으로 유명한 Coco 데이터셋에 사전 학습 됐습니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">torchvision.__version__</span></code> 명령어를 통해 현재 cuda 10.1 버전에서 작동하는 <code class="docutils literal notranslate"><span class="pre">torchvision</span></code> 0.8.1 버전이 설치 됐음을 확인할 수 있습니다. 다음으로는 아래 코드를 실행하여 RetinaNet 모델을 불러옵니다. Face Mask Detection 데이터셋에 3개의 클래스가 존재하므로 num_classes 매개변수를 3으로 정의하고, 전이 학습을 할 것이기 때문에 backbone 구조는 사전 학습 된 가중치를, 그 외 가중치는 초기화 상태로 가져옵니다. backbone은 객체 탐지 데이터셋으로 유명한 COCO 데이터셋에 사전 학습 됐습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">retina</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">detection</span><span class="o">.</span><span class="n">retinanet_resnet50_fpn</span><span class="p">(</span><span class="n">num_classes</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pretrained_backbone</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">retina</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">detection</span><span class="o">.</span><span class="n">retinanet_resnet50_fpn</span><span class="p">(</span><span class="n">num_classes</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pretrained_backbone</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -632,10 +630,10 @@ Successfully installed torchaudio-0.7.0
 </div>
 <div class="section" id="id5">
 <h2>4.5 전이 학습<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<p>모델을 불러왔으면 아래 코드를 활용하여 전이 학습을 진행합니다. (코드 셀 나눠서 설명 더 추가해야함)</p>
+<p>모델을 불러왔으면 아래 코드를 활용하여 전이 학습을 진행합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
 
 <span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">30</span>
 <span class="n">retina</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
@@ -647,6 +645,7 @@ Successfully installed torchaudio-0.7.0
 
 <span class="n">len_dataloader</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_loader</span><span class="p">)</span>
 
+<span class="c1"># epoch 당 약 4분 소요</span>
 <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_epochs</span><span class="p">):</span>
     <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="n">retina</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
@@ -714,14 +713,14 @@ tensor(28.5899, device=&#39;cuda:0&#39;, grad_fn=&lt;AddBackward0&gt;) time: 253
 <p>모델 재사용을 위해 아래 코드를 실행하여 학습된 가중치를 저장해줍니다. <code class="docutils literal notranslate"><span class="pre">torch.save</span></code> 함수를 활용해 지정한 위치에 학습된 가중치를 저장할 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">retina</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span><span class="sa">f</span><span class="s1">&#39;retina_</span><span class="si">{</span><span class="n">num_epochs</span><span class="si">}</span><span class="s1">.pt&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">retina</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span><span class="sa">f</span><span class="s1">&#39;retina_</span><span class="si">{</span><span class="n">num_epochs</span><span class="si">}</span><span class="s1">.pt&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">retina</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;retina_</span><span class="si">{</span><span class="n">num_epochs</span><span class="si">}</span><span class="s1">.pt&#39;</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">retina</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;retina_</span><span class="si">{</span><span class="n">num_epochs</span><span class="si">}</span><span class="s1">.pt&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -734,7 +733,7 @@ tensor(28.5899, device=&#39;cuda:0&#39;, grad_fn=&lt;AddBackward0&gt;) time: 253
 <p>학습된 가중치를 불러올 때는 <code class="docutils literal notranslate"><span class="pre">load_state_dict</span></code>과 <code class="docutils literal notranslate"><span class="pre">torch.load</span></code>함수를 사용하면 됩니다. 만약 retina 변수를 새롭게 지정했을 경우, 해당 모델을 GPU 메모리에 올려주어야 GPU 연산이 가능합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
 <span class="n">retina</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -746,7 +745,7 @@ tensor(28.5899, device=&#39;cuda:0&#39;, grad_fn=&lt;AddBackward0&gt;) time: 253
 <p>훈련이 마무리 되었으면, 예측 결과를 확인하도록 하겠습니다. test_data_loader에서 데이터를 불러와 모델에 넣어 학습 후, 예측된 결과와 실제 값을 각각 시각화 해보도록 하겠습니다. 우선 예측에 필요한 함수를 정의하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_prediction</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_prediction</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
     <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
     <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
     <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">preds</span><span class="p">))</span> <span class="p">:</span>
@@ -769,7 +768,7 @@ tensor(28.5899, device=&#39;cuda:0&#39;, grad_fn=&lt;AddBackward0&gt;) time: 253
 <p><code class="docutils literal notranslate"><span class="pre">make_prediction</span></code> 함수에는 학습된 딥러닝 모델을 활용해 예측하는 알고리즘이 저장돼 있습니다. <code class="docutils literal notranslate"><span class="pre">threshold</span></code> 파라미터를 조정해 신뢰도가 일정 수준 이상의 바운딩 박스만 선택합니다. 보통 0.5 이상인 값을 최종 선택합니다. 다음으로는 for문을 활용해 <code class="docutils literal notranslate"><span class="pre">test_data_loader</span></code>에 있는 모든 데이터에 대해 예측을 실시하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 
 <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">preds_adj_all</span> <span class="o">=</span> <span class="p">[]</span>
@@ -799,30 +798,55 @@ tensor(28.5899, device=&#39;cuda:0&#39;, grad_fn=&lt;AddBackward0&gt;) time: 253
 <p><code class="docutils literal notranslate"><span class="pre">tqdm</span></code> 함수를 활용해 진행 상황을 표츌하고 있습니다. 예측된 모든 값은 <code class="docutils literal notranslate"><span class="pre">preds_adj_all</span></code> 변수에 저장됐습니다. 다음으로는 실제 바운딩 박스와 예측한 바운딩 박스에 대한 시각화를 진행해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">batch_i</span> <span class="o">=</span> <span class="mi">0</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nrows</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">ncols</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="n">ncols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">ncols</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="n">nrows</span><span class="o">*</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">batch_i</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">for</span> <span class="n">im</span><span class="p">,</span> <span class="n">annot</span> <span class="ow">in</span> <span class="n">test_data_loader</span><span class="p">:</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="n">batch_i</span> <span class="o">*</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="k">for</span> <span class="n">sample_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">im</span><span class="p">))</span> <span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;true&#39;</span><span class="p">)</span>
-        <span class="n">plot_image_from_output</span><span class="p">(</span><span class="n">im</span><span class="p">[</span><span class="n">sample_i</span><span class="p">],</span> <span class="n">annot</span><span class="p">[</span><span class="n">sample_i</span><span class="p">])</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pred&#39;</span><span class="p">)</span>
-        <span class="n">plot_image_from_output</span><span class="p">(</span><span class="n">im</span><span class="p">[</span><span class="n">sample_i</span><span class="p">],</span> <span class="n">preds_adj_all</span><span class="p">[</span><span class="n">batch_i</span><span class="p">][</span><span class="n">sample_i</span><span class="p">])</span>
+        
+        <span class="n">img</span><span class="p">,</span> <span class="n">rects</span> <span class="o">=</span> <span class="n">plot_image_from_output</span><span class="p">(</span><span class="n">im</span><span class="p">[</span><span class="n">sample_i</span><span class="p">],</span> <span class="n">annot</span><span class="p">[</span><span class="n">sample_i</span><span class="p">])</span>
+        <span class="n">axes</span><span class="p">[(</span><span class="n">pos</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="p">((</span><span class="n">pos</span><span class="p">)</span><span class="o">%</span><span class="k">2</span>)].imshow(img)
+        <span class="k">for</span> <span class="n">rect</span> <span class="ow">in</span> <span class="n">rects</span><span class="p">:</span>
+            <span class="n">axes</span><span class="p">[(</span><span class="n">pos</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="p">((</span><span class="n">pos</span><span class="p">)</span><span class="o">%</span><span class="k">2</span>)].add_patch(rect)
+        
+        <span class="n">img</span><span class="p">,</span> <span class="n">rects</span> <span class="o">=</span> <span class="n">plot_image_from_output</span><span class="p">(</span><span class="n">im</span><span class="p">[</span><span class="n">sample_i</span><span class="p">],</span> <span class="n">preds_adj_all</span><span class="p">[</span><span class="n">batch_i</span><span class="p">][</span><span class="n">sample_i</span><span class="p">])</span>
+        <span class="n">axes</span><span class="p">[(</span><span class="n">pos</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="p">((</span><span class="n">pos</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="k">2</span>)].imshow(img)
+        <span class="k">for</span> <span class="n">rect</span> <span class="ow">in</span> <span class="n">rects</span><span class="p">:</span>
+            <span class="n">axes</span><span class="p">[(</span><span class="n">pos</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="p">((</span><span class="n">pos</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="k">2</span>)].add_patch(rect)
+
+        <span class="n">pos</span> <span class="o">+=</span> <span class="mi">2</span>
+
     <span class="n">batch_i</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">if</span> <span class="n">batch_i</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
         <span class="k">break</span>
+
+<span class="c1"># xtick, ytick 제거</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+
+<span class="n">colnames</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;True&#39;</span><span class="p">,</span> <span class="s1">&#39;Pred&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">colnames</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Output hidden; open in https://colab.research.google.com to view.
-</pre></div>
+<img alt="../../_images/Ch4-RetinaNet_35_0.png" src="../../_images/Ch4-RetinaNet_35_0.png" />
 </div>
 </div>
-</div>
-<p>for문을 활용해 4개의 batch, 총 8개의 이미지에 대한 실제 값과 예측 값을 시각해 보았습니다. 마스크 착용자는 잘 탐지하고 있는 것을 관측하고 있으며, 마스크 미착용자에 대해서는 가끔씩 마스크를 올바르게 착용하지 않는 것으로 탐지하는 것을 볼 수 있습니다. 전반적인 모델 성능을 평가하기 위해 mean Average Precision (mAP)를 산출해보겠습니다. mAP는 객체 탐지 모델을 평가할 때 사용하는 지표입니다. (추가 설명 입력)</p>
+<p>for문을 활용해 4개의 batch, 총 8개의 이미지에 대한 실제 값과 예측 값을 시각해 보았습니다. 왼쪽 열이 실제 바운딩 박스의 라벨과 위치이며 오른쪽 열이 모델의 예측 값입니다. 마스크 착용자(초록색)는 잘 탐지하고 있는 것을 관측하고 있으며, 마스크 미착용자(빨간색)에 대해서는 가끔씩 마스크를 올바르지 않게 착용한 것(주황색)으로 탐지한 것을 볼 수 있습니다. 전반적인 모델 성능을 평가하기 위해 mean Average Precision (mAP)를 산출해보겠습니다. mAP는 객체 탐지 모델을 평가할 때 사용하는 지표입니다.</p>
 <p>데이터 다운로드시 불러왔던 Tutorial-Book-Utils 폴더 내에는 utils_ObjectDetection.py 파일이 있습니다. 해당 모듈 내에 있는 함수를 활용해 mAP를 산출해보겠습니다. 우선 utils_ObjectDetection.py 모듈을 불러옵니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="n">Tutorial</span><span class="o">-</span><span class="n">Book</span><span class="o">-</span><span class="n">Utils</span><span class="o">/</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">cd</span> Tutorial-Book-Utils/
 <span class="kn">import</span> <span class="nn">utils_ObjectDetection</span> <span class="k">as</span> <span class="nn">utils</span>
 </pre></div>
 </div>
@@ -835,7 +859,7 @@ tensor(28.5899, device=&#39;cuda:0&#39;, grad_fn=&lt;AddBackward0&gt;) time: 253
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sample_metrics</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_metrics</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">batch_i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">preds_adj_all</span><span class="p">)):</span>
     <span class="n">sample_metrics</span> <span class="o">+=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_batch_statistics</span><span class="p">(</span><span class="n">preds_adj_all</span><span class="p">[</span><span class="n">batch_i</span><span class="p">],</span> <span class="n">annot_all</span><span class="p">[</span><span class="n">batch_i</span><span class="p">],</span> <span class="n">iou_threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span> 
 </pre></div>
@@ -845,7 +869,7 @@ tensor(28.5899, device=&#39;cuda:0&#39;, grad_fn=&lt;AddBackward0&gt;) time: 253
 <p>batch 별 mAP를 산출하는데 필요한 정보를 <code class="docutils literal notranslate"><span class="pre">sample_metrics</span></code>에 저장 후 <code class="docutils literal notranslate"><span class="pre">ap_per_class</span></code>함수를 활용해 mAP를 산출합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">true_positives</span><span class="p">,</span> <span class="n">pred_scores</span><span class="p">,</span> <span class="n">pred_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">sample_metrics</span><span class="p">))]</span>  <span class="c1"># 배치가 전부 합쳐짐</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">true_positives</span><span class="p">,</span> <span class="n">pred_scores</span><span class="p">,</span> <span class="n">pred_labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">sample_metrics</span><span class="p">))]</span>  <span class="c1"># 배치가 전부 합쳐짐</span>
 <span class="n">precision</span><span class="p">,</span> <span class="n">recall</span><span class="p">,</span> <span class="n">AP</span><span class="p">,</span> <span class="n">f1</span><span class="p">,</span> <span class="n">ap_class</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">ap_per_class</span><span class="p">(</span><span class="n">true_positives</span><span class="p">,</span> <span class="n">pred_scores</span><span class="p">,</span> <span class="n">pred_labels</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
 <span class="n">mAP</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">AP</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;mAP : </span><span class="si">{</span><span class="n">mAP</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -860,7 +884,7 @@ AP : tensor([0.7684, 0.9188, 0.0603], dtype=torch.float64)
 </div>
 </div>
 </div>
-<p>결과를 해석하면 0번 클래스인 마스크를 미착용한 객체에 대해서는 0.7684 AP를 보이며 1번 클래스인 마스크 착용 객체에 대해서는 0.9188 AP를 보이고, 2번 클래스인 마스크를 올바르게 착용하지 않은 객체에 대해서는 0.06 AP를 보입니다. (결과 해석 내용 보완하기)</p>
+<p>결과를 해석하면 0번 클래스인 마스크를 미착용한 객체에 대해서는 0.7684 AP를 보이며 1번 클래스인 마스크 착용 객체에 대해서는 0.9188 AP를 보이고, 2번 클래스인 마스크를 올바르게 착용하지 않은 객체에 대해서는 0.06 AP를 보입니다.</p>
 <p>지금까지 RetinaNet에 대한 전이 학습을 실시해 의료용 마스크 탐지 모델을 만들어 보았습니다. 다음 장에서는 Two-Stage Detector인 Faster R-CNN을 활용해 탐지 성능을 높여보겠습니다.</p>
 </div>
 </div>
