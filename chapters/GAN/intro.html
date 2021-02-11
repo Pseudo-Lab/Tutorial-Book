@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>코로나 확진자 수 예측 모델 구축 &#8212; PseudoLab Tutorial Book</title>
+    <title>색상 이미지 생성 모델 구축 &#8212; PseudoLab Tutorial Book</title>
     
   <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -91,8 +91,8 @@ commentsRunWhenDOMLoaded(addUtterances);
     <link rel="shortcut icon" href="../../_static/PseudoLab_logo.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="1. Time Series 소개" href="Ch1-Time-Series.html" />
-    <link rel="prev" title="6. 참고 문헌" href="../object-detection/References.html" />
+    <link rel="next" title="1. GAN 소개" href="Ch1-Introduction.html" />
+    <link rel="prev" title="6. 참고 문헌" href="../time-series/References.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -176,39 +176,39 @@ commentsRunWhenDOMLoaded(addUtterances);
   시계열 분석(Time Series)
  </span>
 </p>
-<ul class="current nav sidenav_l1">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/intro.html">
    코로나 확진자 수 예측 모델 구축
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Ch1-Time-Series.html">
+  <a class="reference internal" href="../time-series/Ch1-Time-Series.html">
    1. Time Series 소개
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Ch2-EDA.html">
+  <a class="reference internal" href="../time-series/Ch2-EDA.html">
    2. 데이터 탐색
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Ch3-preprocessing.html">
+  <a class="reference internal" href="../time-series/Ch3-preprocessing.html">
    3. 데이터 전처리
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Ch4-LSTM.html">
+  <a class="reference internal" href="../time-series/Ch4-LSTM.html">
    4. LSTM
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Ch5-CNN-LSTM.html">
+  <a class="reference internal" href="../time-series/Ch5-CNN-LSTM.html">
    5. CNN-LSTM
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="References.html">
+  <a class="reference internal" href="../time-series/References.html">
    6. 참고 문헌
   </a>
  </li>
@@ -218,29 +218,29 @@ commentsRunWhenDOMLoaded(addUtterances);
   생성 모델링(Generative Modeling)
  </span>
 </p>
-<ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../GAN/intro.html">
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    색상 이미지 생성 모델 구축
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../GAN/Ch1-Introduction.html">
+  <a class="reference internal" href="Ch1-Introduction.html">
    1. GAN 소개
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../GAN/Ch2-EDA.html">
+  <a class="reference internal" href="Ch2-EDA.html">
    2. 데이터 탐색
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../GAN/Ch3-GAN.html">
+  <a class="reference internal" href="Ch3-GAN.html">
    3. GAN
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../GAN/Ch4-pix2pix.html">
+  <a class="reference internal" href="Ch4-pix2pix.html">
    4. pix2pix
   </a>
  </li>
@@ -284,7 +284,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../../_sources/chapters/time-series/intro.md"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/chapters/GAN/intro.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -304,7 +304,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/time-series/intro.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/GAN/intro.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -333,24 +333,18 @@ commentsRunWhenDOMLoaded(addUtterances);
               <div>
                 
   <div class="section" id="id1">
-<h1>코로나 확진자 수 예측 모델 구축<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<p>코로나 확진자 수 예측 모델 구축 튜토리얼에 오신 것을 환영합니다.</p>
-<p>해당 교육용 튜토리얼은 <strong>PyTorch를 활용한 LSTM 모델 구축 실습에 목적</strong>이 있으며, 확진자 예측에 대한 <strong>전문적인 견해를 제시하는 용도는 아님</strong>을 밝힙니다.</p>
+<h1>색상 이미지 생성 모델 구축<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>색상 이미지 생성 모델 모델 구축 튜토리얼에 오신 것을 환영합니다.</p>
 <p>이번 튜토리얼의 개요는 다음과 같습니다.</p>
-<p><strong>사용 데이터셋</strong>:</p>
-<ol class="simple">
-<li><p>JHU CSSE COVID-19 Data (출처: <a class="reference external" href="https://github.com/CSSEGISandData/COVID-19">Github</a>)</p></li>
-<li><p>Novel Corona Virus 2019 Dataset (출처: <a class="reference external" href="https://www.kaggle.com/sudalairajkumar/novel-corona-virus-2019-dataset?select=covid_19_data.csv">Kaggle</a>)</p></li>
-</ol>
+<p><strong>사용 데이터셋</strong>: Victorian400 (출처: <a class="reference external" href="https://www.kaggle.com/elibooklover/victorian400">Kaggle</a>)</p>
 <p><strong>실습 환경</strong>: Google Colaboratory</p>
-<p><strong>모델 구조</strong>: LSTM, CNN-LSTM</p>
+<p><strong>모델 구조</strong>: GAN, conditional GAN</p>
 <p><strong>목차</strong>:</p>
 <ul class="simple">
-<li><p>Time Series 소개</p></li>
+<li><p>GAN 소개</p></li>
 <li><p>데이터 탐색</p></li>
-<li><p>데이터 전처리</p></li>
-<li><p>LSTM</p></li>
-<li><p>CNN-LSTM</p></li>
+<li><p>GAN</p></li>
+<li><p>pix2pix</p></li>
 <li><p>참고 문헌</p></li>
 </ul>
 <p>가짜연구소는 오픈(open)의 가치를 추구합니다. 피드백은 언제든지 환영하며 각 페이지별로 댓글을 달아주시면 되겠습니다.</p>
@@ -369,7 +363,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./chapters\time-series"
+            path: "./chapters\GAN"
         },
         predefinedOutput: true
     }
@@ -384,8 +378,8 @@ commentsRunWhenDOMLoaded(addUtterances);
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../object-detection/References.html" title="previous page">6. 참고 문헌</a>
-    <a class='right-next' id="next-link" href="Ch1-Time-Series.html" title="next page">1. Time Series 소개</a>
+    <a class='left-prev' id="prev-link" href="../time-series/References.html" title="previous page">6. 참고 문헌</a>
+    <a class='right-next' id="next-link" href="Ch1-Introduction.html" title="next page">1. GAN 소개</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

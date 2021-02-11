@@ -1,0 +1,1211 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2. 데이터 탐색 &#8212; PseudoLab Tutorial Book</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "Pseudo-Lab/Tutorial-Book");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../../_static/PseudoLab_logo.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3. GAN" href="Ch3-GAN.html" />
+    <link rel="prev" title="1. GAN 소개" href="Ch1-Introduction.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/PseudoLab_logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">PseudoLab Tutorial Book</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../index.html">
+   PyTorch를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch)
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  객체 탐지(Object Detection)
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/intro.html">
+   의료용 마스크 탐지 모델 구축
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch1-Object-Detection.html">
+   1. 객체 탐지 소개
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch2-EDA.html">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch3-preprocessing.html">
+   3. 데이터 전처리
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch4-RetinaNet.html">
+   4. RetinaNet
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch5-Faster-R-CNN.html">
+   5. Faster R-CNN
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/References.html">
+   6. 참고 문헌
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  시계열 분석(Time Series)
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/intro.html">
+   코로나 확진자 수 예측 모델 구축
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch1-Time-Series.html">
+   1. Time Series 소개
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch2-EDA.html">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch3-preprocessing.html">
+   3. 데이터 전처리
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch4-LSTM.html">
+   4. LSTM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch5-CNN-LSTM.html">
+   5. CNN-LSTM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/References.html">
+   6. 참고 문헌
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  생성 모델링(Generative Modeling)
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   색상 이미지 생성 모델 구축
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch1-Introduction.html">
+   1. GAN 소개
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch3-GAN.html">
+   3. GAN
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch4-pix2pix.html">
+   4. pix2pix
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/chapters/GAN/Ch2-EDA.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Pseudo-Lab/Tutorial-Book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/GAN/Ch2-EDA.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/chapters/GAN/Ch2-EDA.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   2.1 데이터셋 다운로드
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   2.2 데이터셋 확인
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#plt-subplots">
+   2.3 plt.subplots()를 활용한 시각화
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   2.4 이미지 전처리
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>2. 데이터 탐색<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/Pseudo-Lab/Tutorial-Book/blob/master/book/chapters/GAN/Ch2-EDA.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>이전 장에서는 GAN의 개념과 모델, 평가지표 등에 대해 알아보았습니다. 이번 장에서는 실습에 사용할 데이터셋을 확인해보도록 하겠습니다.</p>
+<p>GAN 튜토리얼에서는 흑백 이미지를 컬러 이미지로 변환하는 모델을 구축할 예정입니다. 해당 모델을 구축하기 위해 활용할 데이터셋은 <a class="reference external" href="https://www.kaggle.com/elibooklover/Victorian400">Victorian400</a>라는 데이터로, 19세기 그림들의 흑백 / 컬러 쌍으로 이뤄진 데이터 입니다. 해당 데이터를 활용해 컬러 이미지 생성 모델을 구축하고, 새로운 흑백 이미지를 입력해 컬러화 성능을 확인해 볼 것입니다.</p>
+<p>Victorian400 데이터는 흑백 및 컬러 그림 별 400개의 데이터로 이뤄집니다. 데이터 셋 개수가 적절해서 모델 훈련에 비교적 많은 시간이 소요되지 않아 GAN의 학습 과정을 경험해보기에 적합한 데이터입니다. 해당 데이터를 활용해 GAN 모델을 훈련시키는 전체 과정을 실습 후, 본인의 필요에 맞는 다른 데이터에 GAN을 응용해보시는 것을 권장 드립니다.</p>
+<p>2.1절에서는 데이터를 다운로드 받는 방법을 살펴보겠습니다. 2.2절에서는 데이터를 시각화 해볼 것이며, 2.3절에서는 <code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code> 에서 제공하는 <code class="docutils literal notranslate"><span class="pre">subplots</span></code> 함수를 활용해 여러 이미지를 하나의 출력 창에 시각화 하는 방법을 알아보겠습니다. 마지막으로 2.4절에서는 이미지 전처리를 통해 픽셀값에 정규화(normalization)을 진행해보겠습니다.</p>
+<div class="section" id="id2">
+<h2>2.1 데이터셋 다운로드<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cloning into &#39;Tutorial-Book-Utils&#39;...
+remote: Enumerating objects: 27, done.
+remote: Counting objects: 100% (27/27), done.
+remote: Compressing objects: 100% (23/23), done.
+remote: Total 27 (delta 7), reused 13 (delta 3), pack-reused 0
+Unpacking objects: 100% (27/27), done.
+</pre></div>
+</div>
+</div>
+</div>
+<p>먼저 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code> 명령어를 활용해 공개된 Github 저장소를 복사하여 Colab 환경에 저장합니다. 위 코드가 실행되면 그림 2-1 처럼 <code class="docutils literal notranslate"><span class="pre">Tutorial-Book-Utils</span></code> 폴더가 생성될 것입니다.</p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/GAN-ch2img01.PNG?raw=true" /></p>
+<ul class="simple">
+<li><p>그림 2-1 git clone 명령어 사용 후 폴더 구조</p></li>
+</ul>
+<p>저희는 해당 폴더 내에 존재하는 <code class="docutils literal notranslate"><span class="pre">PL_data_loader.py</span></code> 파일을 활용해 모델 구축에 활용할 데이터셋을 다운로드 받아 보겠습니다. 다운로드는 아래 명령어를 통해 실시하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>python Tutorial-Book-Utils/PL_data_loader.py --data GAN-Colorization
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Victorian400-GAN-colorization-data.zip is done!
+</pre></div>
+</div>
+</div>
+</div>
+<p>다운로드가 끝나면 그림 2-2와 같이 <code class="docutils literal notranslate"><span class="pre">Victorian400-GAN-colorization-data.zip</span></code>파일이 생성됐을 것입니다. <code class="docutils literal notranslate"><span class="pre">unzip</span></code>명령어를 활용해 압축파일을 해제하겠습니다.</p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/GAN-ch2img02.PNG?raw=true" /></p>
+<ul class="simple">
+<li><p>그림 2-2 PL_data_loader.py 실행 후 폴더 구조</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>unzip -q Victorian400-GAN-colorization-data.zip
+</pre></div>
+</div>
+</div>
+</div>
+<p>압축 해제 후에는 그림 2-3과 같이 <code class="docutils literal notranslate"><span class="pre">gray</span></code>, <code class="docutils literal notranslate"><span class="pre">original</span></code>, <code class="docutils literal notranslate"><span class="pre">resized</span></code>, <code class="docutils literal notranslate"><span class="pre">test</span></code> 폴더가 생성됩니다. <code class="docutils literal notranslate"><span class="pre">gray</span></code>폴더에는 256 x 256 크기의 흑백 이미지가 저장돼 있으며 <code class="docutils literal notranslate"><span class="pre">resized</span></code>폴더에는 256 x 256 크기의 컬러 이미지가 저장돼 있습니다. <code class="docutils literal notranslate"><span class="pre">original</span></code>폴더에는 원본 크기의 컬러 이미지가 저장돼 있습니다. <code class="docutils literal notranslate"><span class="pre">test</span></code>폴더에는 모델 성능 평가 시 활용할 흑백 이미지와 컬러 이미지 6쌍이 저장돼 있습니다. 모델 구축에는 <code class="docutils literal notranslate"><span class="pre">gray</span></code>와 <code class="docutils literal notranslate"><span class="pre">resized</span></code>폴더에 있는 이미지만 활용할 예정입니다.</p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/GAN-ch2img03.PNG?raw=true" /></p>
+<ul class="simple">
+<li><p>그림 2-3 unzip 실행 후 폴더 구조</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>2.2 데이터셋 확인<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>2.1절에서 다운로드 받은 데이터를 시각화 하여 어떤 이미지들이 저장돼 있는지 확인해보겠습니다. 먼저 필요한 라이브러리를 불러오겠습니다. <code class="docutils literal notranslate"><span class="pre">os</span></code>와 <code class="docutils literal notranslate"><span class="pre">glob</span></code>라이브러리는 폴더 경로를 다룰 때 사용하며, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>라이브러리는 시각화 시 사용하는 대표적인 라이브러리 입니다. <code class="docutils literal notranslate"><span class="pre">cv2</span></code>는 이미지 파일을 다룰 때 사용하는 라이브러리 입니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>다음으로는 <code class="docutils literal notranslate"><span class="pre">os.listdir()</span></code> 함수를 활용해 <code class="docutils literal notranslate"><span class="pre">original</span></code>, <code class="docutils literal notranslate"><span class="pre">resized</span></code>, 그리고 <code class="docutils literal notranslate"><span class="pre">gray</span></code>폴더에 각각 몇 개의 이미지가 저장돼 있는지 확인해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">origin_dir</span> <span class="o">=</span> <span class="s1">&#39;original/&#39;</span>
+<span class="n">resized_dir</span> <span class="o">=</span> <span class="s1">&#39;resized/&#39;</span>
+<span class="n">gray_dir</span> <span class="o">=</span> <span class="s1">&#39;gray/&#39;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;number of files in &quot;original&quot; folder:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">origin_dir</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;number of files in &quot;resized&quot; folder:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">resized_dir</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;number of files in &quot;gray&quot; folder:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">gray_dir</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>number of files in &quot;original&quot; folder: 400
+number of files in &quot;resized&quot; folder: 400
+number of files in &quot;gray&quot; folder: 400
+</pre></div>
+</div>
+</div>
+</div>
+<p>각각 400개의 이미지들이 저장돼 있는 것을 확인할 수 있습니다. 다음으로는 <code class="docutils literal notranslate"><span class="pre">test</span></code>폴더 구조와 해당 폴더 내 저장돼 있는 이미지 개수를 확인해 보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_dir</span> <span class="o">=</span> <span class="s1">&#39;test/&#39;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">test_dir</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;number of files in &quot;test/gray&quot; folder:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">test_dir</span> <span class="o">+</span> <span class="s1">&#39;gray&#39;</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;number of files in &quot;test/resized&quot; folder:&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">test_dir</span> <span class="o">+</span> <span class="s1">&#39;resized&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;resized&#39;, &#39;gray&#39;]
+number of files in &quot;test/gray&quot; folder: 6
+number of files in &quot;test/resized&quot; folder: 6
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">test</span></code>내부에는 <code class="docutils literal notranslate"><span class="pre">gray</span></code>폴더와 <code class="docutils literal notranslate"><span class="pre">resized</span></code>폴더가 존재합니다. 각각의 폴더에는 6개의 이미지가 저장돼있는 것을 확인할 수 있습니다.</p>
+<p>폴더별로 저장돼 있는 이미지 개수를 확인했으니, 각각의 이미지들을 시각화 하여 확인해보도록 하겠습니다. <code class="docutils literal notranslate"><span class="pre">test</span></code>폴더를 제외한 나머지 폴더에 존재하는 이미지를 먼저 시각화 해보겠습니다. 시각화를 하기 위해 각 파일들의 경로를 변수에 저장하도록 하겠습니다. <code class="docutils literal notranslate"><span class="pre">origin</span></code>폴더 내에 이미지 경로는 <code class="docutils literal notranslate"><span class="pre">origin_files</span></code>변수에, <code class="docutils literal notranslate"><span class="pre">resized</span></code>폴더 내의 이미지 경로는 <code class="docutils literal notranslate"><span class="pre">resized_files</span></code>변수에, 그리고 <code class="docutils literal notranslate"><span class="pre">gray</span></code>폴더 내의 이미지 경로는 <code class="docutils literal notranslate"><span class="pre">gray_files</span></code>변수에 저장하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">origin_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">origin_dir</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span><span class="p">))</span>
+<span class="n">resized_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">resized_dir</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span><span class="p">))</span>
+<span class="n">gray_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">gray_dir</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>각 변수별로 저장된 값을 2개씩 확인해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">origin_files</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">resized_files</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">gray_files</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;original/Victorian1.png&#39;, &#39;original/Victorian10.png&#39;]
+[&#39;resized/Victorian1.png&#39;, &#39;resized/Victorian10.png&#39;]
+[&#39;gray/Victorian1.png&#39;, &#39;gray/Victorian10.png&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">[폴더명]_files</span></code> 변수에 해당 폴더내에 위치하는 이미지 파일 경로가 저장된 것을 확인할 수 있습니다. <code class="docutils literal notranslate"><span class="pre">Victorian1.png</span></code> 이미지의 원본이 <code class="docutils literal notranslate"><span class="pre">original</span></code>폴더에 저장돼있으며 크기가 256 x 256으로 조절된 이미지가 <code class="docutils literal notranslate"><span class="pre">resized</span></code>에 저장돼있고, 흑백이미지가 <code class="docutils literal notranslate"><span class="pre">gray</span></code>폴더에 저장돼있습니다.</p>
+<p>다음으로는  <code class="docutils literal notranslate"><span class="pre">cv2.imread()</span></code>함수와 <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code> 함수를 활용해 각 폴더에 저장돼 있는 이미지를 하나씩 시각화 해보겠습니다. 먼저 이미지를 읽는 <code class="docutils literal notranslate"><span class="pre">read_img()</span></code>함수를 정의하겠습니다. 해당 함수는 <code class="docutils literal notranslate"><span class="pre">cv2.imread()</span></code>함수를 활용해 이미지의 <code class="docutils literal notranslate"><span class="pre">BGR</span></code>값을 배열 형태로 읽습니다. <code class="docutils literal notranslate"><span class="pre">cv2.imread()</span></code>로 읽은 배열을 <code class="docutils literal notranslate"><span class="pre">img_arr</span></code>에 저장후 <code class="docutils literal notranslate"><span class="pre">cv2.cvtColor</span></code>함수를 활용해 <code class="docutils literal notranslate"><span class="pre">BGR</span></code>값을 <code class="docutils literal notranslate"><span class="pre">RGB</span></code>값으로 변경해줍니다. 그리고 해당 값을 <code class="docutils literal notranslate"><span class="pre">plt.imshow()</span></code>함수를 활용해 이미지로 표출해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># cv2 모듈로 이미지 읽는 함수 정의</span>
+<span class="k">def</span> <span class="nf">read_img</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+    <span class="n">img_arr</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">img_arr</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_arr</span> <span class="o">=</span> <span class="n">read_img</span><span class="p">(</span><span class="n">origin_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># 파일 경로 출력</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">origin_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># 이미지 크기 출력</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">img_arr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># 이미지 시각화</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>original/Victorian1.png
+(714, 750, 3)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f1d7768ce10&gt;
+</pre></div>
+</div>
+<img alt="../../_images/Ch2-EDA_24_2.png" src="../../_images/Ch2-EDA_24_2.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">original</span></code>폴더에는 714 x 750 크기의 <code class="docutils literal notranslate"><span class="pre">Victorian1.png</span></code> 이미지가 저장돼있는 것을 확인할 수 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_arr</span> <span class="o">=</span> <span class="n">read_img</span><span class="p">(</span><span class="n">resized_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># 파일 경로 출력</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">resized_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># 이미지 크기 출력</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">img_arr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># 이미지 시각화</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>resized/Victorian1.png
+(256, 256, 3)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f1d7588f0b8&gt;
+</pre></div>
+</div>
+<img alt="../../_images/Ch2-EDA_26_2.png" src="../../_images/Ch2-EDA_26_2.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">resized</span></code>폴더에는 256 x 256 크기의 <code class="docutils literal notranslate"><span class="pre">Victorian1.png</span></code> 이미지가 저장돼있는 것을 확인할 수 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_arr</span> <span class="o">=</span> <span class="n">read_img</span><span class="p">(</span><span class="n">gray_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># 파일 경로 출력</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gray_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># 이미지 크기 출력</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">img_arr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># 이미지 시각화</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gray/Victorian1.png
+(256, 256, 3)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f1d75870710&gt;
+</pre></div>
+</div>
+<img alt="../../_images/Ch2-EDA_28_2.png" src="../../_images/Ch2-EDA_28_2.png" />
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">gray</span></code>폴더에는 256 x 256 크기의 흑백 <code class="docutils literal notranslate"><span class="pre">Victorian1.png</span></code> 이미지가 저장돼있는 것을 확인할 수 있습니다.</p>
+<p>각 폴더에 저장돼 있는 이미지를 비교해보았습니다. 하지만 하나의 출력 셀에 하나의 이미지를 시각화 하다보니 여러 이미지를 비교하기가 제한적입니다. 그러므로 다음 절에서는 <code class="docutils literal notranslate"><span class="pre">plt.subplots()</span></code> 함수를 활용해 여러 이미지를 하나의 출력창에 출력해 비교해보겠습니다.</p>
+</div>
+<div class="section" id="plt-subplots">
+<h2>2.3 plt.subplots()를 활용한 시각화<a class="headerlink" href="#plt-subplots" title="Permalink to this headline">¶</a></h2>
+<p>각 폴더에서 <code class="docutils literal notranslate"><span class="pre">img_num</span></code>개수 만큼에 이미지를 읽어서 <code class="docutils literal notranslate"><span class="pre">img_arrs</span></code>에 저장해 두겠습니다. 아래 코드를 활용해 <code class="docutils literal notranslate"><span class="pre">original</span></code>, <code class="docutils literal notranslate"><span class="pre">resized</span></code>, 그리고 <code class="docutils literal notranslate"><span class="pre">gray</span></code>폴더에서 각각 5개씩 이미지를 읽어 오도록 하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">img_arrs</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">img_num</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">img_num</span><span class="p">):</span>
+    
+    <span class="n">img_arrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">read_img</span><span class="p">(</span><span class="n">origin_files</span><span class="p">[</span><span class="n">idx</span><span class="p">]))</span>
+    <span class="n">img_arrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">read_img</span><span class="p">(</span><span class="n">resized_files</span><span class="p">[</span><span class="n">idx</span><span class="p">]))</span>
+    <span class="n">img_arrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">read_img</span><span class="p">(</span><span class="n">gray_files</span><span class="p">[</span><span class="n">idx</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">img_arrs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15
+</pre></div>
+</div>
+</div>
+</div>
+<p>3개의 폴더로 부터 각각 5개의 이미지를 읽었기 때문에 총 15개의 이미지가 <code class="docutils literal notranslate"><span class="pre">img_arrs</span></code>에 저장됐습니다.</p>
+<p>다음으로는 <code class="docutils literal notranslate"><span class="pre">plt.subplots()</span></code>함수를 활용해 15개의 이미지를 하나의 출력 창에 출력해보겠습니다. 해당 함수는 아래 3개의 파라미터를 입력값으로 받습니다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nrows</span></code>: 표출되는 이미지 판의 행 개수</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ncols</span></code>: 표출되는 이미지 판의 열 개수</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">figsize</span></code>: 각 이미지들의 (가로, 세로) 크기</p></li>
+</ul>
+<p>15개의 이미지가 <code class="docutils literal notranslate"><span class="pre">img_arrs</span></code>변수에 저장돼있으므로 5개의 행과 3개의 열을 가진 이미지 판 위에 이미지를 시각화해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rows</span> <span class="o">=</span> <span class="n">img_num</span>
+<span class="n">columns</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># 그림판 설정</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="n">rows</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="n">columns</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> <span class="n">rows</span><span class="o">*</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># 각 판에 이미지 출력</span>
+<span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rows</span><span class="o">*</span><span class="n">columns</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span> <span class="c1"># 1번 부터 15번 까지</span>
+    
+    <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">num</span><span class="p">)</span> <span class="c1"># 원하는 위치 번호(num)를 입력</span>
+    
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">num</span> <span class="o">-</span> <span class="mi">1</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img_arrs</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">img_arrs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span> <span class="c1"># 이미지 사이 간격 조정</span>
+
+<span class="k">for</span> <span class="n">file_idx</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]):</span> <span class="c1"># 첫번째 열에 있는 이미지들에 대해 반복</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">origin_dir</span><span class="p">))[</span><span class="n">file_idx</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>  <span class="c1"># 파일명을 y축 라벨로 사용</span>
+                <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+                <span class="n">labelpad</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># y축과 라벨사이의 간격 조정</span>
+
+<span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;origin&#39;</span><span class="p">,</span> <span class="s1">&#39;resized&#39;</span><span class="p">,</span> <span class="s1">&#39;gray&#39;</span><span class="p">]</span>
+
+<span class="c1"># 제목 설정</span>
+<span class="k">for</span> <span class="n">folder_idx</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">cols</span><span class="p">[</span><span class="n">folder_idx</span><span class="p">])</span>
+
+<span class="c1"># xtick, ytick 제거</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Ch2-EDA_35_0.png" src="../../_images/Ch2-EDA_35_0.png" />
+</div>
+</div>
+<p>코드를 하나씩 살펴보도록 하겠습니다. <code class="docutils literal notranslate"><span class="pre">plt.subplots()</span></code>함수는 격자로된 <code class="docutils literal notranslate"><span class="pre">nrows</span></code> x <code class="docutils literal notranslate"><span class="pre">ncols</span></code> 크기의 그림판을 생성합니다. 위 코드에서는 5개의 행과 3개의 열을 지닌 그림판을 생성했습니다. 각 격자에 속해있는 셀별로 고유 번호가 할당돼 있습니다. 해당 번호는 1번부터 15번(<code class="docutils literal notranslate"><span class="pre">nrows</span></code> x <code class="docutils literal notranslate"><span class="pre">ncols</span></code>)까지 존재합니다. 왼쪽부터 오른쪽, 그리고 위에서 아래로 번호가 할당 됩니다. 그림 2-4 처럼 첫번째 행의 왼쪽 셀부터 1번, 2번, 3번이 할당 되고 두번째 행의 왼쪽 셀부터 4번, 5번, 6번이 할당됩니다.</p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/GAN-ch2img04.PNG?raw=true" /></p>
+<ul class="simple">
+<li><p>그림 2.4 격자 셀별 부여된 번호</p></li>
+</ul>
+<p>각 셀에 이미지를 추가하기 위해서는 <code class="docutils literal notranslate"><span class="pre">add_subplot()</span></code> 함수를 활용해 셀을 선택합니다. 그리고 <code class="docutils literal notranslate"><span class="pre">plt.show()</span></code>함수를 활용해 선택한 셀 위에 이미지를 시각화 합니다. 이 때 <code class="docutils literal notranslate"><span class="pre">aspect</span></code>파라미터를 <code class="docutils literal notranslate"><span class="pre">auto</span></code>로 설정해 이미지의 가로 세로 비율을 자동으로 조정해줍니다. 이와 더불어 <code class="docutils literal notranslate"><span class="pre">plt.xlabel()</span></code>함수를 활용해 이미지의 크기를 각각 x축에 표시합니다.</p>
+<p>다음으로 <code class="docutils literal notranslate"><span class="pre">fig.tight_layout()</span></code>함수를 활용해 이미지간의 간격을 조정합니다.</p>
+<p>출력된 격자 그림판의 행에는 각 이미지들이 담겨 있으며 각 열은 이미지들이 저장된 폴더를 뜻합니다. 해당 내용을 직관적으로 볼 수 있게 파일명과 폴더 명을 이미지와 함께 출력해보겠습니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">axes</span></code>에는 15개 셀들의 이미지 정보가 담겨 있습니다. 첫번째 열에 저장된 이미지들만 선택해 y축 이름으로 해당 이미지의 파일 명을 기록하기 위해 <code class="docutils literal notranslate"><span class="pre">set_ylabel()</span></code>함수를 활용합니다. 또한 첫번째 행에 저장된 이미지만 선택해 이미지 제목으로 <code class="docutils literal notranslate"><span class="pre">original</span></code>, <code class="docutils literal notranslate"><span class="pre">resized</span></code>, 그리고 <code class="docutils literal notranslate"><span class="pre">gray</span></code>를 순서대로 입력합니다.</p>
+<p>마지막으로 각 이미지들의 <code class="docutils literal notranslate"><span class="pre">xticks</span></code>, <code class="docutils literal notranslate"><span class="pre">yticks</span></code>을 제거하여 최종적인 결과물을 출력합니다. 위 결과물을 통해 15개의 이미지를 하나의 출력창에서 비교할 수 있습니다. <code class="docutils literal notranslate"><span class="pre">original</span></code>폴더에는 컬러 이미지가 다양한 크기로 저장돼 있음을 알 수 있고 <code class="docutils literal notranslate"><span class="pre">resized</span></code>와 <code class="docutils literal notranslate"><span class="pre">gray</span></code>폴더에는 각각 256 x 256 크기의 이미지가 컬러와 흑백 형태로 저장돼 있음을 확인할 수 있습니다.</p>
+</div>
+<div class="section" id="id4">
+<h2>2.4 이미지 전처리<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>이번 절에서는 이미지 전처리를 실시해보겠습니다. 400개의 <code class="docutils literal notranslate"><span class="pre">resized</span></code> 이미지와 <code class="docutils literal notranslate"><span class="pre">gray</span></code> 이미지들의 채널별 평균값과 표준편차 값을 구한 후 각 이미지 픽셀에 대해 평균값을 빼준 후 표준편차로 나눠줌으로써 정규화를 진행하겠습니다. 이론적으로 이미지에 정규화를 진행해주면 신경망 모델이 보다 더 빨리 수렴하게 해주는 효과가 있습니다. 전체 이미지들로 부터 평균값과 표준편차를 구하는 함수 <code class="docutils literal notranslate"><span class="pre">get_mean_and_std()</span></code>를 아래와 같이 정의하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">get_mean_and_std</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+    <span class="c1"># global mean 구하기</span>
+    <span class="n">global_mean</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">global_var</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">img_arr</span> <span class="o">=</span> <span class="n">read_img</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+        <span class="n">global_mean</span> <span class="o">+=</span> <span class="n">img_arr</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">global_mean</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+
+    <span class="c1"># global std 구하기</span>
+    <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+        <span class="n">img_arr</span> <span class="o">=</span> <span class="n">read_img</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+        <span class="n">global_var</span> <span class="o">+=</span> <span class="p">((</span><span class="n">img_arr</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-</span> <span class="n">global_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="n">global_var</span> <span class="o">/=</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+    <span class="n">global_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">global_var</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">global_mean</span><span class="p">,</span> <span class="n">global_std</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>평균값과 표준편차값을 구하기 전에 픽셀값을 255로 나누어 픽셀값의 범위를 0부터 1사이로 변환시킨 후에 값을 구하도록 하겠습니다. 이렇게 하는 이유는 3장과 4장에서 <code class="docutils literal notranslate"><span class="pre">transforms.ToTensor()</span></code> 함수를 활용해 이미지들을 텐서 형태로 변환 시킬 예정인데, 이 때 <code class="docutils literal notranslate"><span class="pre">transforms.ToTensor()</span></code> 함수 특성 상 픽셀 값이 0과 1사이로 변환되기 때문입니다. 그러므로 픽셀값이 0과 1사이의 범위일 때의 평균값과 표준편차 값을 구해 추후 정규화에 사용할 수 있도록 하겠습니다.</p>
+<p>각 이미지별 평균값을 누적해서 더한 뒤 전체 이미지의 개수를 내포하는 <code class="docutils literal notranslate"><span class="pre">len(files)</span></code>로 나눠서 전체 이미지에 대한 평균값을 산출 합니다. 전체 이미지에 대한 표준편차를 구하기 위해 앞서 산출한 평균값을 픽셀값으로 부터 빼줌으로써 편차를 구하고, 해당 편차를 제곱한 값의 평균을 구해 전체 이미지 픽셀값에 대한 분산을 먼저 구합니다. 그리고 나서 분산에 루트를 씌워 표준편차를 구합니다.</p>
+<p>이렇게 정의한 <code class="docutils literal notranslate"><span class="pre">get_mean_and_std()</span></code>함수를 아래와 같이 활용해 컬러 이미지와 흑백 이미지에 대한 평균과 표준편차를 구할 수 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 컬러 이미지 평균, 표준편차</span>
+<span class="n">color_mean</span><span class="p">,</span> <span class="n">color_std</span> <span class="o">=</span> <span class="n">get_mean_and_std</span><span class="p">(</span><span class="n">resized_files</span><span class="p">)</span>
+<span class="n">color_mean</span><span class="p">,</span> <span class="n">color_std</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([0.58090717, 0.52688643, 0.45678478]),
+ array([0.25644188, 0.25482641, 0.24456465]))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 흑백 이미지 평균, 표준편차</span>
+<span class="n">gray_mean</span><span class="p">,</span> <span class="n">gray_std</span> <span class="o">=</span> <span class="n">get_mean_and_std</span><span class="p">(</span><span class="n">gray_files</span><span class="p">)</span>
+<span class="n">gray_mean</span><span class="p">,</span> <span class="n">gray_std</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([0.5350533, 0.5350533, 0.5350533]),
+ array([0.25051587, 0.25051587, 0.25051587]))
+</pre></div>
+</div>
+</div>
+</div>
+<p>정규화 전과 후의 차이를 비교해보도록 하겠습니다. 먼저 새로운 이미지를 읽어서 255으로 나눠 픽셀 값을 0과 1사이로 변환해줍니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color_img</span> <span class="o">=</span> <span class="n">read_img</span><span class="p">(</span><span class="n">resized_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">255</span>
+<span class="n">gray_img</span> <span class="o">=</span> <span class="n">read_img</span><span class="p">(</span><span class="n">gray_files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">255</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">RGB</span></code> 채널별 통곗값을 확인할 수 있게 <code class="docutils literal notranslate"><span class="pre">get_statistics</span></code> 함수를 정의하겠습니다. 해당 함수는 <code class="docutils literal notranslate"><span class="pre">RGB</span></code> 채널별 평균, 표준편차, 최솟값, 최댓값 등의 통곗값을 반환하는 함수입니다. <code class="docutils literal notranslate"><span class="pre">pandas</span></code> 라이브러리에서 제공하는 <code class="docutils literal notranslate"><span class="pre">pd.DataFrame.describe()</span></code> 함수를 활용해 간단하게 통곗값을 산출할 수 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="k">def</span> <span class="nf">get_statistics</span><span class="p">(</span><span class="n">arr</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">color_img</span></code>의 통곗값을 확인해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">get_statistics</span><span class="p">(</span><span class="n">color_img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>R</th>
+      <th>G</th>
+      <th>B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>65536.000000</td>
+      <td>65536.000000</td>
+      <td>65536.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>0.564941</td>
+      <td>0.537205</td>
+      <td>0.493146</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.208751</td>
+      <td>0.203116</td>
+      <td>0.198431</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.027451</td>
+      <td>0.039216</td>
+      <td>0.058824</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>0.411765</td>
+      <td>0.380392</td>
+      <td>0.333333</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.584314</td>
+      <td>0.533333</td>
+      <td>0.478431</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>0.745098</td>
+      <td>0.709804</td>
+      <td>0.650980</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>0.929412</td>
+      <td>0.913725</td>
+      <td>0.909804</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>최솟값, 최댓값이 0과 1사이에 분포해있는 것을 확인할 수 있습니다. 다음으로는 <code class="docutils literal notranslate"><span class="pre">gray_img</span></code>의 통곗값을 확인해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">get_statistics</span><span class="p">(</span><span class="n">gray_img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>R</th>
+      <th>G</th>
+      <th>B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>65536.000000</td>
+      <td>65536.000000</td>
+      <td>65536.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>0.540488</td>
+      <td>0.540488</td>
+      <td>0.540488</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.201794</td>
+      <td>0.201794</td>
+      <td>0.201794</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.047059</td>
+      <td>0.047059</td>
+      <td>0.047059</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>0.388235</td>
+      <td>0.388235</td>
+      <td>0.388235</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.541176</td>
+      <td>0.541176</td>
+      <td>0.541176</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>0.713725</td>
+      <td>0.713725</td>
+      <td>0.713725</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>0.917647</td>
+      <td>0.917647</td>
+      <td>0.917647</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>흑백 이미지이므로 모든 채널의 값이 같기 때문에 채널별 통곗값도 서로 같은 것을 확인할 수 있습니다. 다음으로는 <code class="docutils literal notranslate"><span class="pre">get_mean_and_std()</span></code> 함수를 통해 산출한 <code class="docutils literal notranslate"><span class="pre">color_mean</span></code>, <code class="docutils literal notranslate"><span class="pre">color_std</span></code>, <code class="docutils literal notranslate"><span class="pre">gray_mean</span></code>, <code class="docutils literal notranslate"><span class="pre">gray_std</span></code>로 정규화를 한 후 통곗값을 확인해보겠습니다. 정규화한 값을 <code class="docutils literal notranslate"><span class="pre">normalized_color_img</span></code>, <code class="docutils literal notranslate"><span class="pre">normalized_gray_img</span></code>에 각각 저장합니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normalized_color_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">color_img</span> <span class="o">-</span> <span class="n">color_mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">color_std</span>
+<span class="n">normalized_gray_img</span> <span class="o">=</span> <span class="p">(</span><span class="n">gray_img</span> <span class="o">-</span> <span class="n">gray_mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">gray_std</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">get_statistics()</span></code>함수를 활용해 <code class="docutils literal notranslate"><span class="pre">normalized_color_img</span></code>의 <code class="docutils literal notranslate"><span class="pre">RGB</span></code> 채널별 통곗값을 산출해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">get_statistics</span><span class="p">(</span><span class="n">normalized_color_img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>R</th>
+      <th>G</th>
+      <th>B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>65536.000000</td>
+      <td>65536.000000</td>
+      <td>65536.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>-0.062259</td>
+      <td>0.040491</td>
+      <td>0.148678</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.814030</td>
+      <td>0.797075</td>
+      <td>0.811364</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>-2.158213</td>
+      <td>-1.913737</td>
+      <td>-1.627223</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>-0.659574</td>
+      <td>-0.574879</td>
+      <td>-0.504780</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.013284</td>
+      <td>0.025299</td>
+      <td>0.088511</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>0.640265</td>
+      <td>0.717812</td>
+      <td>0.794046</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>1.359000</td>
+      <td>1.518049</td>
+      <td>1.852349</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>정규화가 이뤄진 후에는 평균이 0에 가깝게, 표준편차는 1에 가깝게 변환된 것을 확인할 수 있습니다. 정확히 0과 1이 아닌 이유는 정규화할 때 사용한 평균과 표준편차는 하나의 이미지로 구한 값이 아닌, 전체 데이터셋을 활용해서 구한 값이기 때문입니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">get_statistics</span><span class="p">(</span><span class="n">normalized_gray_img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>R</th>
+      <th>G</th>
+      <th>B</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>65536.000000</td>
+      <td>65536.000000</td>
+      <td>65536.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>0.021694</td>
+      <td>0.021694</td>
+      <td>0.021694</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.805516</td>
+      <td>0.805516</td>
+      <td>0.805516</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>-1.947958</td>
+      <td>-1.947958</td>
+      <td>-1.947958</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>-0.586063</td>
+      <td>-0.586063</td>
+      <td>-0.586063</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.024442</td>
+      <td>0.024442</td>
+      <td>0.024442</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>0.713217</td>
+      <td>0.713217</td>
+      <td>0.713217</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>1.527224</td>
+      <td>1.527224</td>
+      <td>1.527224</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>마찬가지로 <code class="docutils literal notranslate"><span class="pre">normalized_gray_img</span></code>도 평균은 0에, 표준편차는 1에 가깝게 변환이 됐습니다.</p>
+<p>지금까지 Victorian400 데이터셋에 저장된 이미지를 시각화 해보았습니다. 3장에서는 Victorian400 데이터셋을 활용해 흑백 이미지를 컬러 이미지로 변환하는 GAN 모델을 구축해보겠습니다.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapters\GAN"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Ch1-Introduction.html" title="previous page">1. GAN 소개</a>
+    <a class='right-next' id="next-link" href="Ch3-GAN.html" title="next page">3. GAN</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By PseudoLab Tutorial Team<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-185350287-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>
