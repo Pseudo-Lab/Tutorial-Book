@@ -26,3 +26,12 @@
   - file: chapters/time-series/Ch5-CNN-LSTM
   - file: chapters/time-series/References
         
+- part: 생성 모델링(Generative Modeling)
+  chapters:
+  - file: chapters/GAN/intro
+    title: 색상 이미지 생성 모델 구축
+  #  sections:
+  - file: chapters/GAN/Ch1-Introduction
+  - file: chapters/GAN/Ch2-EDA
+  - file: chapters/GAN/Ch3-GAN
+  - file: chapters/GAN/Ch4-pix2pix

@@ -213,6 +213,38 @@ commentsRunWhenDOMLoaded(addUtterances);
   </a>
  </li>
 </ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  생성 모델링(Generative Modeling)
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/intro.html">
+   색상 이미지 생성 모델 구축
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch1-Introduction.html">
+   1. GAN 소개
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch2-EDA.html">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch3-GAN.html">
+   3. GAN
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch4-pix2pix.html">
+   4. pix2pix
+  </a>
+ </li>
+</ul>
 
 </nav> <!-- To handle the deprecated key -->
 
@@ -382,7 +414,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 
   <div class="section" id="time-series">
 <h1>1. Time Series 소개<a class="headerlink" href="#time-series" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://colab.research.google.com/drive/1BqHW6UuKS5I5QykIlRPo1V8w9qeb82Y2?usp=sharing"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p><a class="reference external" href="https://colab.research.google.com/github/Pseudo-Lab/Tutorial-Book/blob/master/book/chapters/time-series/Ch1-Time-Series.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <div class="output text_html"><iframe width="560" height="315" src="https://www.youtube.com/embed/DRZFhCBsGQY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
@@ -500,7 +532,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <blockquote>
 <div><p><span class="math notranslate nohighlight">\(MAPE=\frac{1}{n}\displaystyle\sum_{i=1}^{n} |\frac{y_i-\hat{y}_i}{y_i}|\)</span></p>
 </div></blockquote>
-<p>(출처: https://en.wikipedia.org/wiki/Mean_absolute_percentage_error)</p>
+<p>(출처: <a class="reference external" href="https://en.wikipedia.org/wiki/Mean_absolute_percentage_error">https://en.wikipedia.org/wiki/Mean_absolute_percentage_error</a>)</p>
 <p>MAPE는 실제값과 예측값 사이의 차이를 실제값으로 나눠줌으로써 오차가 실제값에서 차지하는 상대적인 비율을 산출합니다. 그리고 해당 값을 절대값 취한 후 평균을 구합니다. 오차의 정도를 백분율 값으로 나타내기 때문에 모델의 성능을 직관적으로 이해하기 쉬우며, 타겟 변수가 여러개 일 때 각 변수별 모델의 성능을 평가하기 용이합니다.</p>
 <p>하지만 실제값에 0이 존재한다면 MAPE가 정의 되지 않는 문제점이 있습니다. 또한 절대적인 값의 오차가 같더라도 실제값과 예측값과의 대소 관계에 따라 과대 추정하는 예측값에 패널티를 더 부여하는 문제가 있습니다(<a class="reference external" href="https://doi.org/10.1016/0169-2070(93)90079-3">Makridakis, 1993</a>). 이는 아래 코드를 통해 확인해보겠습니다.</p>
 <div class="cell docutils container">
@@ -518,7 +550,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <span class="n">PRED_UNDER</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">])</span>
 
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;평균 오차가 2일 때 실제값과 예측값의 대소 관계에 따른 MAE, MAPE 비교 </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;평균 오차가 20일 때 실제값과 예측값의 대소 관계에 따른 MAE, MAPE 비교 </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;실제값이 예측값 보다 작을 때 (예측값이 과대추정)&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MAE:&#39;</span><span class="p">,</span> <span class="n">MAE</span><span class="p">(</span><span class="n">TRUE_UNDER</span><span class="p">,</span> <span class="n">PRED_OVER</span><span class="p">))</span>
@@ -532,7 +564,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>평균 오차가 2일 때 실제값과 예측값의 대소 관계에 따른 MAE, MAPE 비교 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>평균 오차가 20일 때 실제값과 예측값의 대소 관계에 따른 MAE, MAPE 비교 
 
 실제값이 예측값 보다 작을 때 (예측값이 과대추정)
 MAE: 20.0
@@ -553,7 +585,7 @@ MAPE: 0.4371428571428571
 <blockquote>
 <div><p><span class="math notranslate nohighlight">\(SMAPE=\frac{100}{n}\displaystyle\sum_{i=1}^{n} \frac{|y_i-\hat{y}_i|}{|y_i| + |\hat{y}_i|}\)</span></p>
 </div></blockquote>
-<p>(출처: https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error)</p>
+<p>(출처: <a class="reference external" href="https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error">https://en.wikipedia.org/wiki/Symmetric_mean_absolute_percentage_error</a>)</p>
 <p>SMAPE는 앞서 언급한 예시에 대해 MAPE가 지닌 한계점을 보완하기 위해 고완됐습니다(<a class="reference external" href="https://doi.org/10.1016/0169-2070(93)90079-3">Makridakis, 1993</a>). 아래 코드를 통해 확인해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -564,7 +596,7 @@ MAPE: 0.4371428571428571
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">true</span><span class="o">-</span><span class="n">pred</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">true</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pred</span><span class="p">)))</span> <span class="c1">#100은 상수이므로 이번 코드에서는 제외</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;평균 오차가 2일 때 실제값과 예측값의 대소 관계에 따른 MAE, SMAPE 비교 </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;평균 오차가 20일 때 실제값과 예측값의 대소 관계에 따른 MAE, SMAPE 비교 </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;실제값이 예측값 보다 작을 때 (예측값이 과대추정)&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MAE:&#39;</span><span class="p">,</span> <span class="n">MAE</span><span class="p">(</span><span class="n">TRUE_UNDER</span><span class="p">,</span> <span class="n">PRED_OVER</span><span class="p">))</span>
@@ -578,7 +610,7 @@ MAPE: 0.4371428571428571
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>평균 오차가 2일 때 실제값과 예측값의 대소 관계에 따른 MAE, SMAPE 비교 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>평균 오차가 20일 때 실제값과 예측값의 대소 관계에 따른 MAE, SMAPE 비교 
 
 실제값이 예측값 보다 작을 때 (예측값이 과대추정)
 MAE: 20.0
@@ -598,7 +630,7 @@ SMAPE: 0.29
 <span class="n">PRED2_UNDER</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">])</span>
 <span class="n">PRED2_OVER</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;평균 오차가 2일 때 과소추정, 과대추정에 따른 MAE, SMAPE 비교 </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;평균 오차가 20일 때 과소추정, 과대추정에 따른 MAE, SMAPE 비교 </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;과대추정 시&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;MAE:&#39;</span><span class="p">,</span> <span class="n">MAE</span><span class="p">(</span><span class="n">TRUE2</span><span class="p">,</span> <span class="n">PRED2_OVER</span><span class="p">))</span>
@@ -611,7 +643,7 @@ SMAPE: 0.29
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>평균 오차가 2일 때 과소추정, 과대추정에 따른 MAE, SMAPE 비교 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>평균 오차가 20일 때 과소추정, 과대추정에 따른 MAE, SMAPE 비교 
 
 과대추정 시
 MAE: 20.0
@@ -624,7 +656,7 @@ SMAPE: 0.21857142857142856
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">PRED2_UNDER</span></code>와 <code class="docutils literal notranslate"><span class="pre">PRED2_OVER</span></code>모두 <code class="docutils literal notranslate"><span class="pre">TRUE2</span></code>와 평균 2의 오차를 지니고 있지만, SMAPE는 과소추정한 <code class="docutils literal notranslate"><span class="pre">PRED2_UNDER</span></code>에 대해 0.218의 값을 계산하는 반면 과대추정한 <code class="docutils literal notranslate"><span class="pre">PRED2_OVER</span></code>에 대해서는 0.149의 값을 계산합니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">PRED2_UNDER</span></code>와 <code class="docutils literal notranslate"><span class="pre">PRED2_OVER</span></code>모두 <code class="docutils literal notranslate"><span class="pre">TRUE2</span></code>와 평균 20의 오차를 지니고 있지만, SMAPE는 과소추정한 <code class="docutils literal notranslate"><span class="pre">PRED2_UNDER</span></code>에 대해 0.218의 값을 계산하는 반면 과대추정한 <code class="docutils literal notranslate"><span class="pre">PRED2_OVER</span></code>에 대해서는 0.149의 값을 계산합니다.</p>
 </div>
 <div class="section" id="rmsse-root-mean-squared-scaled-error">
 <h3>1.2.5 RMSSE (Root Mean Squared Scaled Error)<a class="headerlink" href="#rmsse-root-mean-squared-scaled-error" title="Permalink to this headline">¶</a></h3>
