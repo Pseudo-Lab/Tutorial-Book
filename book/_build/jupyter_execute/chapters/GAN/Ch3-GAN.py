@@ -15,7 +15,7 @@
 !python Tutorial-Book-Utils/PL_data_loader.py --data GAN-Colorization
 !unzip -q Victorian400-GAN-colorization-data.zip
 
-이번에는 3장에서 사용할 패키지들을 불러오겠습니다. `os`와 `glob`는 파일 경로를 지정할 수 있는 패키지이며, `datetime`은 날짜, 시간을 계산할 수 있는 패키지입니다. 그리고 `numpy`는 수치 연산에 사용되는 선형 대수 패키지이며, `matplotlib`과 `PIL`의 `Image`는 이미지 파일 시각화하는데 사용하는 패키지입니다. 그 외의 `torch`와 `torchvision` 패키지는 데이터셋 정의와 모델 구축에 사용되는 Torch 기반의 패키지들입니다.
+이번에는 3장에서 사용할 패키지들을 불러오겠습니다. `os`와 `glob`는 파일 경로를 지정할 수 있는 패키지이며, `datetime`은 날짜, 시간을 계산할 수 있는 패키지입니다. 그리고 `numpy`는 수치 연산에 사용되는 선형 대수 패키지이며, `matplotlib`과 `PIL`의 `Image`는 이미지 파일을 시각화하는데 사용하는 패키지입니다. 그 외의 `torch`와 `torchvision` 패키지는 데이터셋 정의와 모델 구축에 사용되는 Torch 기반의 패키지들입니다.
 
 import os
 import glob
@@ -32,12 +32,13 @@ from torch.utils.data import Dataset, DataLoader
 
 ## 3.2 데이터셋 클래스 정의
 
-파이토치 모델에 데이터를 학습하기 위해서 데이터셋 클래스를 정의해보도록 하겠습니다. 이미지 변환(transforms)과 흑백, 컬러 이미지의 폴더 경로를 인자로 받아 `Image.open` 함수를 사용하여 해당 이미지를 불러옵니다. 흑백 이미지는 `.convert("L")`을 사용하여 단일 채널로, 컬러 이미지는 `.convert("RGB")`을 사용하여 3채널로 받아줍니다. 그리고 이미지 변환을 거쳐 딕셔너리 형태로 흑백 이미지와 컬러 이미지를 "A", "B"에 각각 반환시켜줍니다.
+파이토치 모델에 데이터를 학습하기 위해서 데이터셋 클래스를 정의해보도록 하겠습니다. 흑백, 컬러 이미지의 폴더 경로와 이미지 변환(transforms)을 인자로 받아 `Image.open` 함수를 사용하여 해당 이미지를 불러옵니다. 흑백 이미지는 `.convert("L")`을 사용하여 단일 채널로, 컬러 이미지는 `.convert("RGB")`을 사용하여 3채널로 받아줍니다. 그리고 이미지 변환을 거쳐 딕셔너리 형태로 흑백 이미지와 컬러 이미지를 "A", "B"에 각각 반환시켜줍니다.
 
 class VictorianDataset(Dataset):
-    def __init__(self, root, transforms_=None):
+    def __init__(self, root, color_transforms_=None, gray_transforms_=None):
 
-        self.transform = transforms.Compose(transforms_)
+        self.color_transforms = transforms.Compose(color_transforms_)
+        self.gray_transforms = transforms.Compose(gray_transforms_)
         self.gray_files = sorted(glob.glob(os.path.join(root, 'gray') + "/*.*"))
         self.color_files = sorted(glob.glob(os.path.join(root, 'resized') + "/*.*"))
      
@@ -46,8 +47,8 @@ class VictorianDataset(Dataset):
         gray_img = Image.open(self.gray_files[index % len(self.gray_files)]).convert("L")
         color_img = Image.open(self.color_files[index % len(self.color_files)]).convert("RGB")
     
-        gray_img = self.transform(gray_img)
-        color_img = self.transform(color_img)
+        gray_img = self.gray_transforms(gray_img)
+        color_img = self.color_transforms(color_img)
 
         return {"A": gray_img, "B": color_img}
 
@@ -68,23 +69,38 @@ test_batch_size = 6
 
 gpu = 0
 
-데이터셋 클래스의 인자로 넣을 이미지 변환(transform)을 지정합니다. 튜토리얼에서는 파이토치 모델에 넣기 위해 tensor 타입으로 바꿔주기만 하겠습니다. 이 외에도 모델 구조에 따라 `Resize`를 해줄 수도 있고, 도메인에 따라 `RandomCrop`(랜덤으로 자르기), `RandomVerticalFlip`(랜덤으로 수평 뒤집기) 등 다양한 이미지 변형을 할 수 있습니다. 또한 `normalize`를 통해 학습의 일반화 성능을 향상시킬 수도 있습니다.
+데이터셋 클래스의 인자로 넣을 이미지 변환(transform)을 지정합니다. 튜토리얼에서는 파이토치 모델에 넣기 위해 tensor 타입으로 바꿔주고 2.4절에서 구한 평균과 표준편차로 `normalize`를 해주도록 하겠습니다. 이 외에도 모델 구조에 따라 `Resize`를 해주거나, 도메인에 따라 `RandomCrop`(랜덤으로 자르기), `RandomVerticalFlip`(랜덤으로 수평 뒤집기) 등 다양한 이미지 변형을 할 수 있습니다. 
 
-transforms_ = [
-    # transforms.Resize((img_height, img_width), Image.BICUBIC),
+color_mean = [0.58090717, 0.52688643, 0.45678478]
+color_std = [0.25644188, 0.25482641, 0.24456465]
+gray_mean = [0.5350533]
+gray_std = [0.25051587]
+
+color_transforms_ = [
     transforms.ToTensor(),
-    # transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    transforms.Normalize(mean=color_mean, std=color_std),
+]
+
+gray_transforms_ = [
+    transforms.ToTensor(),
+    transforms.Normalize(mean=gray_mean, std=gray_std),
 ]
 
 위에서 정의한 데이터셋 클래스와 이미지 변환(transform)을 `DataLoader`함수에 넣어줍니다.
 
 train_loader = DataLoader(
-    VictorianDataset(root, transforms_=transforms_),
+    VictorianDataset(root, color_transforms_=color_transforms_, gray_transforms_=gray_transforms_),
     batch_size=batch_size,
     shuffle=True
 )
 
-데이터 로더가 제대로 구성되어 있는지 시각화를 통해 알아보겠습니다. "A"에 해당하는 흑백 이미지는 단일 채널이기 때문에 `.reshape()`을 통해 2차원으로 바꿔주고 `cmap=gray`를 설정해주어야 이미지를 제대로 출력할 수 있습니다.
+데이터 로더가 제대로 구성되어 있는지 알아보기 위해 시각화해보겠습니다. 데이터 로더에는 정규화된 이미지가 저장되어 있기 때문에 정규화를 복원시키고 시각화해주어야 합니다. 따라서 `reNormalize`함수를 만들어 다시 표준편차를 곱하고 평균을 더해줍니다. 이때 `.transpose()`는 축의 순서를 바꿔주고 `.clip(min, max)`은 min보다 작으면 min으로, max보다 크면 max로 바꿔주는 역할을 합니다. 또한, "A"에 해당하는 흑백 이미지는 단일 채널이기 때문에 `.reshape()`을 통해 2차원으로 바꿔주고 `cmap=gray`를 설정해주어야 이미지를 제대로 출력할 수 있습니다.
+
+def reNormalize(img, mean, std):
+    img = img.numpy().transpose(1, 2, 0)
+    img = img * std + mean
+    img = img.clip(0, 1)
+    return img  
 
 fig = plt.figure(figsize=(10,5))
 rows = 1 
@@ -94,24 +110,22 @@ for X in train_loader:
     
     print(X['A'].shape, X['B'].shape)
     ax1 = fig.add_subplot(rows, cols, 1)
-    ax1.imshow(np.clip(np.transpose(X["A"][0], (1,2,0)).reshape(img_height, img_width), 0, 1), cmap='gray')
+    ax1.imshow(reNormalize(X["A"][0], gray_mean, gray_std).reshape(img_height, img_width), cmap='gray') 
     ax1.set_title('gray img')
 
     ax2 = fig.add_subplot(rows, cols, 2)
-    ax2.imshow(np.clip(np.transpose(X["B"][0], (1,2,0)), 0, 1))
+    ax2.imshow(reNormalize(X["B"][0], color_mean, color_std))
     ax2.set_title('color img')    
 
     plt.show()
     break
 
-데이터 로더가 제대로 구성되어 흑백 이미지와 컬러 이미지가 잘 출력되고 있습니다. 단, 이미지 사이즈가 너무 작으면 해상도가 낮을 수 있으니 적절한 이미지 사이즈를 설정해주어야 합니다.
-
-마찬가지로 테스트 데이터 로더도 정의하고 시각화해보겠습니다.
+데이터 로더가 제대로 구성되어 흑백 이미지와 컬러 이미지가 잘 출력되고 있습니다. 마찬가지로 테스트 데이터 로더도 정의하고 시각화해보겠습니다.
 
 test_loader = DataLoader(
-    VictorianDataset(test_root, transforms_=transforms_),
+    VictorianDataset(test_root, color_transforms_=color_transforms_, gray_transforms_=gray_transforms_),
     batch_size=test_batch_size,
-    shuffle=True
+    shuffle=False
 )
 
 fig = plt.figure(figsize=(10,5))
@@ -120,12 +134,13 @@ cols = 2
 
 for X in test_loader:
     
+    print(X['A'].shape, X['B'].shape)
     ax1 = fig.add_subplot(rows, cols, 1)
-    ax1.imshow(np.clip(np.transpose(X["A"][0], (1,2,0)).reshape(img_height, img_width), 0, 1), cmap='gray')
+    ax1.imshow(reNormalize(X["A"][0], gray_mean, gray_std).reshape(img_height, img_width), cmap='gray')
     ax1.set_title('gray img')
 
     ax2 = fig.add_subplot(rows, cols, 2)
-    ax2.imshow(np.clip(np.transpose(X["B"][0], (1,2,0)), 0, 1))
+    ax2.imshow(reNormalize(X["B"][0], color_mean, color_std))
     ax2.set_title('color img')    
 
     plt.show()
@@ -286,7 +301,7 @@ for epoch in range(max_epoch):
         ######## Train Discriminator ########
         color = Variable(color.cuda(gpu))
         noise = torch.randn(b_size, 1, img_height, img_width).uniform_(0,1)   
-        gray_noise2 = Variable(torch.cat([grays,noise],dim=1).cuda(gpu))   
+        gray_noise = Variable(torch.cat([grays,noise],dim=1).cuda(gpu))   
 
 
         ######## 판별모델이 컬러 이미지를 진짜(real)로 인식하도록 학습 ########
@@ -297,7 +312,7 @@ for epoch in range(max_epoch):
 
         ######## 판별모델이 흑백 이미지를 가짜(fake)로 인식하도록 학습 ########
         ######## Train d to recognize fake image as fake ########        
-        fake_img = Gener(gray_noise2)   
+        fake_img = Gener(gray_noise)   
         output = Discri(fake_img,b_size)
         fake_loss = torch.mean(output**2)
         
@@ -319,7 +334,7 @@ for epoch in range(max_epoch):
         torch.save(Discri.state_dict(), "discriminator_%d.pth" % (epoch+1))
 
         print("[Epoch %d/%d] [Batch %d/%d] [D loss: %f] [G loss: %f] ETA: %s" % (epoch+1, max_epoch, i+1, len(train_loader), d_loss.item(), g_loss.item(), epoch_time))
-        plt.imshow(np.clip(fake_img.cpu().numpy().transpose((1,2,0)), 0, 1))
+        plt.imshow(reNormalize(fake_img.cpu(), color_mean, color_std))
         plt.show()      
 
 5에폭마다 생성모델과 판별모델의 가중치를 저장하여 나중에 학습된 모델을 재구현할 수 있도록 합니다. 그리고 각 모델의 로스값과 생성모델에서 생성한 이미지를 출력하여 어떻게 학습되고 있는지 확인합니다. 
@@ -328,10 +343,10 @@ for epoch in range(max_epoch):
 
 ## 3.5 예측 및 성능 평가
 
-학습이 끝났으니 새로운 흑백 이미지에 적용하여 컬러 이미지로 예측(채색)해보도록 하겠습니다. 위에서 학습한 모델의 가중치를 불러오고 테스트 데이터 로더의 이미지를 넣어 예측하게 됩니다. 튜토리얼에서는 마지막 50에폭의 가중치를 불러오도록 하겠습니다. 중간에 오버피팅된 경향이 보인다면 원하시는 에폭의 가중치를 불러와도 됩니다.
+학습이 끝났으니 새로운 흑백 이미지에 적용하여 컬러 이미지로 예측(채색)해보도록 하겠습니다. 위에서 학습한 모델의 가중치를 불러오고 테스트 데이터 로더의 이미지를 넣어 예측하게 됩니다. 튜토리얼에서는 35에폭의 가중치를 불러오도록 하겠습니다. 이처럼 출력되는 이미지를 보면서 원하시는 에폭의 가중치를 불러와도 됩니다.
 
-Gener.load_state_dict(torch.load("generator_50.pth" ))
-Discri.load_state_dict(torch.load("discriminator_50.pth" ))
+Gener.load_state_dict(torch.load("generator_35.pth" ))
+Discri.load_state_dict(torch.load("discriminator_35.pth" ))
 
 Discri.eval()
 Gener.eval()
@@ -354,13 +369,13 @@ for i, data in enumerate(test_loader,0) :
     out = torchvision.utils.make_grid(output.data)
 
     print('==================input==================')
-    plt.imshow(np.clip(inputs.cpu().numpy().transpose((1,2,0)), 0, 1))
+    plt.imshow(reNormalize(inputs.cpu(), gray_mean, gray_std))
     plt.show()
     print('==================target==================')
-    plt.imshow(np.clip(labels.cpu().numpy().transpose((1,2,0)), 0, 1))
+    plt.imshow(reNormalize(labels.cpu(), color_mean, color_std))
     plt.show()
     print('==================output==================')
-    plt.imshow(np.clip(out.cpu().numpy().transpose((1,2,0)), 0, 1))
+    plt.imshow(reNormalize(out.cpu(), color_mean, color_std))
     plt.show()
 
 결과는 흑백(input), 컬러(target), 생성된 이미지(output)순으로 출력되어집니다. 선명하진 않지만 비슷한 색감이 어느 정도 채색된 것을 볼 수 있습니다.
