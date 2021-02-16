@@ -221,7 +221,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <ul class="current nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   색상 이미지 생성 모델 구축
+   컬러 이미지 생성 모델 구축
   </a>
  </li>
  <li class="toctree-l1">
@@ -400,7 +400,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 </div>
 </div>
 </div>
-<p>이번에는 3장에서 사용할 패키지들을 불러오겠습니다. <code class="docutils literal notranslate"><span class="pre">os</span></code>와 <code class="docutils literal notranslate"><span class="pre">glob</span></code>는 파일 경로를 지정할 수 있는 패키지이며, <code class="docutils literal notranslate"><span class="pre">datetime</span></code>은 날짜, 시간을 계산할 수 있는 패키지입니다. 그리고 <code class="docutils literal notranslate"><span class="pre">numpy</span></code>는 수치 연산에 사용되는 선형 대수 패키지이며, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>과 <code class="docutils literal notranslate"><span class="pre">PIL</span></code>의 <code class="docutils literal notranslate"><span class="pre">Image</span></code>는 이미지 파일 시각화하는데 사용하는 패키지입니다. 그 외의 <code class="docutils literal notranslate"><span class="pre">torch</span></code>와 <code class="docutils literal notranslate"><span class="pre">torchvision</span></code> 패키지는 데이터셋 정의와 모델 구축에 사용되는 Torch 기반의 패키지들입니다.</p>
+<p>이번에는 3장에서 사용할 패키지들을 불러오겠습니다. <code class="docutils literal notranslate"><span class="pre">os</span></code>와 <code class="docutils literal notranslate"><span class="pre">glob</span></code>는 파일 경로를 지정할 수 있는 패키지이며, <code class="docutils literal notranslate"><span class="pre">datetime</span></code>은 날짜, 시간을 계산할 수 있는 패키지입니다. 그리고 <code class="docutils literal notranslate"><span class="pre">numpy</span></code>는 수치 연산에 사용되는 선형 대수 패키지이며, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>과 <code class="docutils literal notranslate"><span class="pre">PIL</span></code>의 <code class="docutils literal notranslate"><span class="pre">Image</span></code>는 이미지 파일을 시각화하는데 사용하는 패키지입니다. 그 외의 <code class="docutils literal notranslate"><span class="pre">torch</span></code>와 <code class="docutils literal notranslate"><span class="pre">torchvision</span></code> 패키지는 데이터셋 정의와 모델 구축에 사용되는 Torch 기반의 패키지들입니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -422,13 +422,14 @@ commentsRunWhenDOMLoaded(addUtterances);
 </div>
 <div class="section" id="id2">
 <h2>3.2 데이터셋 클래스 정의<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>파이토치 모델에 데이터를 학습하기 위해서 데이터셋 클래스를 정의해보도록 하겠습니다. 이미지 변환(transforms)과 흑백, 컬러 이미지의 폴더 경로를 인자로 받아 <code class="docutils literal notranslate"><span class="pre">Image.open</span></code> 함수를 사용하여 해당 이미지를 불러옵니다. 흑백 이미지는 <code class="docutils literal notranslate"><span class="pre">.convert(&quot;L&quot;)</span></code>을 사용하여 단일 채널로, 컬러 이미지는 <code class="docutils literal notranslate"><span class="pre">.convert(&quot;RGB&quot;)</span></code>을 사용하여 3채널로 받아줍니다. 그리고 이미지 변환을 거쳐 딕셔너리 형태로 흑백 이미지와 컬러 이미지를 “A”, “B”에 각각 반환시켜줍니다.</p>
+<p>파이토치 모델에 데이터를 학습하기 위해서 데이터셋 클래스를 정의해보도록 하겠습니다. 흑백, 컬러 이미지의 폴더 경로와 이미지 변환(transforms)을 인자로 받아 <code class="docutils literal notranslate"><span class="pre">Image.open</span></code> 함수를 사용하여 해당 이미지를 불러옵니다. 흑백 이미지는 <code class="docutils literal notranslate"><span class="pre">.convert(&quot;L&quot;)</span></code>을 사용하여 단일 채널로, 컬러 이미지는 <code class="docutils literal notranslate"><span class="pre">.convert(&quot;RGB&quot;)</span></code>을 사용하여 3채널로 받아줍니다. 그리고 이미지 변환을 거쳐 딕셔너리 형태로 흑백 이미지와 컬러 이미지를 “A”, “B”에 각각 반환시켜줍니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">VictorianDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">transforms_</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">color_transforms_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gray_transforms_</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span><span class="n">transforms_</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_transforms</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span><span class="n">color_transforms_</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gray_transforms</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span><span class="n">gray_transforms_</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gray_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;gray&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/*.*&quot;</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">color_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;resized&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/*.*&quot;</span><span class="p">))</span>
      
@@ -437,8 +438,8 @@ commentsRunWhenDOMLoaded(addUtterances);
         <span class="n">gray_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gray_files</span><span class="p">[</span><span class="n">index</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gray_files</span><span class="p">)])</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>
         <span class="n">color_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_files</span><span class="p">[</span><span class="n">index</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_files</span><span class="p">)])</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">)</span>
     
-        <span class="n">gray_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">gray_img</span><span class="p">)</span>
-        <span class="n">color_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">color_img</span><span class="p">)</span>
+        <span class="n">gray_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gray_transforms</span><span class="p">(</span><span class="n">gray_img</span><span class="p">)</span>
+        <span class="n">color_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_transforms</span><span class="p">(</span><span class="n">color_img</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">gray_img</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="n">color_img</span><span class="p">}</span>
 
@@ -465,13 +466,22 @@ commentsRunWhenDOMLoaded(addUtterances);
 </div>
 </div>
 </div>
-<p>데이터셋 클래스의 인자로 넣을 이미지 변환(transform)을 지정합니다. 튜토리얼에서는 파이토치 모델에 넣기 위해 tensor 타입으로 바꿔주기만 하겠습니다. 이 외에도 모델 구조에 따라 <code class="docutils literal notranslate"><span class="pre">Resize</span></code>를 해줄 수도 있고, 도메인에 따라 <code class="docutils literal notranslate"><span class="pre">RandomCrop</span></code>(랜덤으로 자르기), <code class="docutils literal notranslate"><span class="pre">RandomVerticalFlip</span></code>(랜덤으로 수평 뒤집기) 등 다양한 이미지 변형을 할 수 있습니다. 또한 <code class="docutils literal notranslate"><span class="pre">normalize</span></code>를 통해 학습의 일반화 성능을 향상시킬 수도 있습니다.</p>
+<p>데이터셋 클래스의 인자로 넣을 이미지 변환(transform)을 지정합니다. 튜토리얼에서는 파이토치 모델에 넣기 위해 tensor 타입으로 바꿔주고 2.4절에서 구한 평균과 표준편차로 <code class="docutils literal notranslate"><span class="pre">normalize</span></code>를 해주도록 하겠습니다. 이 외에도 모델 구조에 따라 <code class="docutils literal notranslate"><span class="pre">Resize</span></code>를 해주거나, 도메인에 따라 <code class="docutils literal notranslate"><span class="pre">RandomCrop</span></code>(랜덤으로 자르기), <code class="docutils literal notranslate"><span class="pre">RandomVerticalFlip</span></code>(랜덤으로 수평 뒤집기) 등 다양한 이미지 변형을 할 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transforms_</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="c1"># transforms.Resize((img_height, img_width), Image.BICUBIC),</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color_mean</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.58090717</span><span class="p">,</span> <span class="mf">0.52688643</span><span class="p">,</span> <span class="mf">0.45678478</span><span class="p">]</span>
+<span class="n">color_std</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.25644188</span><span class="p">,</span> <span class="mf">0.25482641</span><span class="p">,</span> <span class="mf">0.24456465</span><span class="p">]</span>
+<span class="n">gray_mean</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5350533</span><span class="p">]</span>
+<span class="n">gray_std</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.25051587</span><span class="p">]</span>
+
+<span class="n">color_transforms_</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
-    <span class="c1"># transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">color_mean</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">color_std</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">gray_transforms_</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">gray_mean</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">gray_std</span><span class="p">),</span>
 <span class="p">]</span>
 </pre></div>
 </div>
@@ -481,7 +491,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
-    <span class="n">VictorianDataset</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">transforms_</span><span class="o">=</span><span class="n">transforms_</span><span class="p">),</span>
+    <span class="n">VictorianDataset</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">color_transforms_</span><span class="o">=</span><span class="n">color_transforms_</span><span class="p">,</span> <span class="n">gray_transforms_</span><span class="o">=</span><span class="n">gray_transforms_</span><span class="p">),</span>
     <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
     <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
@@ -489,7 +499,18 @@ commentsRunWhenDOMLoaded(addUtterances);
 </div>
 </div>
 </div>
-<p>데이터 로더가 제대로 구성되어 있는지 시각화를 통해 알아보겠습니다. “A”에 해당하는 흑백 이미지는 단일 채널이기 때문에 <code class="docutils literal notranslate"><span class="pre">.reshape()</span></code>을 통해 2차원으로 바꿔주고 <code class="docutils literal notranslate"><span class="pre">cmap=gray</span></code>를 설정해주어야 이미지를 제대로 출력할 수 있습니다.</p>
+<p>데이터 로더가 제대로 구성되어 있는지 알아보기 위해 시각화해보겠습니다. 데이터 로더에는 정규화된 이미지가 저장되어 있기 때문에 정규화를 복원시키고 시각화해주어야 합니다. 따라서 <code class="docutils literal notranslate"><span class="pre">reNormalize</span></code>함수를 만들어 다시 표준편차를 곱하고 평균을 더해줍니다. 이때 <code class="docutils literal notranslate"><span class="pre">.transpose()</span></code>는 축의 순서를 바꿔주고 <code class="docutils literal notranslate"><span class="pre">.clip(min,</span> <span class="pre">max)</span></code>은 min보다 작으면 min으로, max보다 크면 max로 바꿔주는 역할을 합니다. 또한, “A”에 해당하는 흑백 이미지는 단일 채널이기 때문에 <code class="docutils literal notranslate"><span class="pre">.reshape()</span></code>을 통해 2차원으로 바꿔주고 <code class="docutils literal notranslate"><span class="pre">cmap=gray</span></code>를 설정해주어야 이미지를 제대로 출력할 수 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reNormalize</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span> <span class="o">*</span> <span class="n">std</span> <span class="o">+</span> <span class="n">mean</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">img</span>  
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
@@ -500,11 +521,11 @@ commentsRunWhenDOMLoaded(addUtterances);
     
     <span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">img_height</span><span class="p">,</span> <span class="n">img_width</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reNormalize</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">gray_mean</span><span class="p">,</span> <span class="n">gray_std</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">img_height</span><span class="p">,</span> <span class="n">img_width</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span> 
     <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;gray img&#39;</span><span class="p">)</span>
 
     <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reNormalize</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">color_mean</span><span class="p">,</span> <span class="n">color_std</span><span class="p">))</span>
     <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;color img&#39;</span><span class="p">)</span>    
 
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -516,16 +537,15 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([12, 1, 256, 256]) torch.Size([12, 3, 256, 256])
 </pre></div>
 </div>
-<img alt="../../_images/Ch3-GAN_19_1.svg" src="../../_images/Ch3-GAN_19_1.svg" /></div>
+<img alt="../../_images/Ch3-GAN_20_1.svg" src="../../_images/Ch3-GAN_20_1.svg" /></div>
 </div>
-<p>데이터 로더가 제대로 구성되어 흑백 이미지와 컬러 이미지가 잘 출력되고 있습니다. 단, 이미지 사이즈가 너무 작으면 해상도가 낮을 수 있으니 적절한 이미지 사이즈를 설정해주어야 합니다.</p>
-<p>마찬가지로 테스트 데이터 로더도 정의하고 시각화해보겠습니다.</p>
+<p>데이터 로더가 제대로 구성되어 흑백 이미지와 컬러 이미지가 잘 출력되고 있습니다. 마찬가지로 테스트 데이터 로더도 정의하고 시각화해보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
-    <span class="n">VictorianDataset</span><span class="p">(</span><span class="n">test_root</span><span class="p">,</span> <span class="n">transforms_</span><span class="o">=</span><span class="n">transforms_</span><span class="p">),</span>
+    <span class="n">VictorianDataset</span><span class="p">(</span><span class="n">test_root</span><span class="p">,</span> <span class="n">color_transforms_</span><span class="o">=</span><span class="n">color_transforms_</span><span class="p">,</span> <span class="n">gray_transforms_</span><span class="o">=</span><span class="n">gray_transforms_</span><span class="p">),</span>
     <span class="n">batch_size</span><span class="o">=</span><span class="n">test_batch_size</span><span class="p">,</span>
-    <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -539,12 +559,13 @@ commentsRunWhenDOMLoaded(addUtterances);
 
 <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
     
+    <span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">img_height</span><span class="p">,</span> <span class="n">img_width</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reNormalize</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">gray_mean</span><span class="p">,</span> <span class="n">gray_std</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">img_height</span><span class="p">,</span> <span class="n">img_width</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
     <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;gray img&#39;</span><span class="p">)</span>
 
     <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reNormalize</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">color_mean</span><span class="p">,</span> <span class="n">color_std</span><span class="p">))</span>
     <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;color img&#39;</span><span class="p">)</span>    
 
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -553,7 +574,10 @@ commentsRunWhenDOMLoaded(addUtterances);
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Ch3-GAN_22_0.svg" src="../../_images/Ch3-GAN_22_0.svg" /></div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([6, 1, 256, 256]) torch.Size([6, 3, 256, 256])
+</pre></div>
+</div>
+<img alt="../../_images/Ch3-GAN_23_1.svg" src="../../_images/Ch3-GAN_23_1.svg" /></div>
 </div>
 <p>테스트 데이터 로더도 잘 구성된 것을 확인할 수 있습니다.</p>
 </div>
@@ -802,7 +826,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <span class="c1">######## Train Discriminator ########</span>
         <span class="n">color</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">color</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="n">gpu</span><span class="p">))</span>
         <span class="n">noise</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">b_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">img_height</span><span class="p">,</span> <span class="n">img_width</span><span class="p">)</span><span class="o">.</span><span class="n">uniform_</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>   
-        <span class="n">gray_noise2</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">grays</span><span class="p">,</span><span class="n">noise</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="n">gpu</span><span class="p">))</span>   
+        <span class="n">gray_noise</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">grays</span><span class="p">,</span><span class="n">noise</span><span class="p">],</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">cuda</span><span class="p">(</span><span class="n">gpu</span><span class="p">))</span>   
 
 
         <span class="c1">######## 판별모델이 컬러 이미지를 진짜(real)로 인식하도록 학습 ########</span>
@@ -813,7 +837,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 
         <span class="c1">######## 판별모델이 흑백 이미지를 가짜(fake)로 인식하도록 학습 ########</span>
         <span class="c1">######## Train d to recognize fake image as fake ########        </span>
-        <span class="n">fake_img</span> <span class="o">=</span> <span class="n">Gener</span><span class="p">(</span><span class="n">gray_noise2</span><span class="p">)</span>   
+        <span class="n">fake_img</span> <span class="o">=</span> <span class="n">Gener</span><span class="p">(</span><span class="n">gray_noise</span><span class="p">)</span>   
         <span class="n">output</span> <span class="o">=</span> <span class="n">Discri</span><span class="p">(</span><span class="n">fake_img</span><span class="p">,</span><span class="n">b_size</span><span class="p">)</span>
         <span class="n">fake_loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">output</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
         
@@ -835,54 +859,54 @@ commentsRunWhenDOMLoaded(addUtterances);
         <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">Discri</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="s2">&quot;discriminator_</span><span class="si">%d</span><span class="s2">.pth&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Epoch </span><span class="si">%d</span><span class="s2">/</span><span class="si">%d</span><span class="s2">] [Batch </span><span class="si">%d</span><span class="s2">/</span><span class="si">%d</span><span class="s2">] [D loss: </span><span class="si">%f</span><span class="s2">] [G loss: </span><span class="si">%f</span><span class="s2">] ETA: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_epoch</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">),</span> <span class="n">d_loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">g_loss</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">epoch_time</span><span class="p">))</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">fake_img</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reNormalize</span><span class="p">(</span><span class="n">fake_img</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span> <span class="n">color_mean</span><span class="p">,</span> <span class="n">color_std</span><span class="p">))</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>      
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 5/50] [Batch 34/34] [D loss: 0.629986] [G loss: 0.219832] ETA: 0:00:15.401804
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 5/50] [Batch 34/34] [D loss: 0.335707] [G loss: 0.952135] ETA: 0:00:15.254198
 </pre></div>
 </div>
-<img alt="../../_images/Ch3-GAN_36_1.svg" src="../../_images/Ch3-GAN_36_1.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 10/50] [Batch 34/34] [D loss: 0.172324] [G loss: 0.913297] ETA: 0:00:15.415766
+<img alt="../../_images/Ch3-GAN_37_1.svg" src="../../_images/Ch3-GAN_37_1.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 10/50] [Batch 34/34] [D loss: 0.232681] [G loss: 0.925357] ETA: 0:00:16.087967
 </pre></div>
 </div>
-<img alt="../../_images/Ch3-GAN_36_3.svg" src="../../_images/Ch3-GAN_36_3.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 15/50] [Batch 34/34] [D loss: 0.061855] [G loss: 0.892983] ETA: 0:00:15.377866
+<img alt="../../_images/Ch3-GAN_37_3.svg" src="../../_images/Ch3-GAN_37_3.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 15/50] [Batch 34/34] [D loss: 0.222960] [G loss: 0.742795] ETA: 0:00:14.794427
 </pre></div>
 </div>
-<img alt="../../_images/Ch3-GAN_36_5.svg" src="../../_images/Ch3-GAN_36_5.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 20/50] [Batch 34/34] [D loss: 0.003120] [G loss: 0.976844] ETA: 0:00:15.398811
+<img alt="../../_images/Ch3-GAN_37_5.svg" src="../../_images/Ch3-GAN_37_5.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 20/50] [Batch 34/34] [D loss: 0.002736] [G loss: 0.968330] ETA: 0:00:15.417760
 </pre></div>
 </div>
-<img alt="../../_images/Ch3-GAN_36_7.svg" src="../../_images/Ch3-GAN_36_7.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 25/50] [Batch 34/34] [D loss: 0.020883] [G loss: 0.989808] ETA: 0:00:15.404794
+<img alt="../../_images/Ch3-GAN_37_7.svg" src="../../_images/Ch3-GAN_37_7.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 25/50] [Batch 34/34] [D loss: 0.000585] [G loss: 0.999990] ETA: 0:00:15.662105
 </pre></div>
 </div>
-<img alt="../../_images/Ch3-GAN_36_9.svg" src="../../_images/Ch3-GAN_36_9.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 30/50] [Batch 34/34] [D loss: 0.009227] [G loss: 0.963132] ETA: 0:00:15.456656
+<img alt="../../_images/Ch3-GAN_37_9.svg" src="../../_images/Ch3-GAN_37_9.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 30/50] [Batch 34/34] [D loss: 0.008619] [G loss: 0.997328] ETA: 0:00:15.388837
 </pre></div>
 </div>
-<img alt="../../_images/Ch3-GAN_36_11.svg" src="../../_images/Ch3-GAN_36_11.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 35/50] [Batch 34/34] [D loss: 0.075800] [G loss: 0.942878] ETA: 0:00:15.410779
+<img alt="../../_images/Ch3-GAN_37_11.svg" src="../../_images/Ch3-GAN_37_11.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 35/50] [Batch 34/34] [D loss: 0.201541] [G loss: 0.998293] ETA: 0:00:15.455658
 </pre></div>
 </div>
-<img alt="../../_images/Ch3-GAN_36_13.svg" src="../../_images/Ch3-GAN_36_13.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 40/50] [Batch 34/34] [D loss: 0.000064] [G loss: 0.999627] ETA: 0:00:15.538437
+<img alt="../../_images/Ch3-GAN_37_13.svg" src="../../_images/Ch3-GAN_37_13.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 40/50] [Batch 34/34] [D loss: 0.011544] [G loss: 0.999389] ETA: 0:00:15.419755
 </pre></div>
 </div>
-<img alt="../../_images/Ch3-GAN_36_15.svg" src="../../_images/Ch3-GAN_36_15.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 45/50] [Batch 34/34] [D loss: 0.110793] [G loss: 0.999985] ETA: 0:00:15.647146
+<img alt="../../_images/Ch3-GAN_37_15.svg" src="../../_images/Ch3-GAN_37_15.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 45/50] [Batch 34/34] [D loss: 0.000001] [G loss: 0.999999] ETA: 0:00:15.365898
 </pre></div>
 </div>
-<img alt="../../_images/Ch3-GAN_36_17.svg" src="../../_images/Ch3-GAN_36_17.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 50/50] [Batch 34/34] [D loss: 0.001532] [G loss: 0.999124] ETA: 0:00:15.509515
+<img alt="../../_images/Ch3-GAN_37_17.svg" src="../../_images/Ch3-GAN_37_17.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 50/50] [Batch 34/34] [D loss: 0.158762] [G loss: 0.997427] ETA: 0:00:15.460645
 </pre></div>
 </div>
-<img alt="../../_images/Ch3-GAN_36_19.svg" src="../../_images/Ch3-GAN_36_19.svg" /></div>
+<img alt="../../_images/Ch3-GAN_37_19.svg" src="../../_images/Ch3-GAN_37_19.svg" /></div>
 </div>
 <p>5에폭마다 생성모델과 판별모델의 가중치를 저장하여 나중에 학습된 모델을 재구현할 수 있도록 합니다. 그리고 각 모델의 로스값과 생성모델에서 생성한 이미지를 출력하여 어떻게 학습되고 있는지 확인합니다.</p>
 <p>생성모델의 로스와 판별모델의 로스의 관계를 확인하여 적절한 에폭 수를 결정하는 것이 중요합니다. 그렇지 못할 경우, 한 모델에 오버피팅되어 더 이상의 학습이 무의미해지게 됩니다.</p>
 </div>
 <div class="section" id="id5">
 <h2>3.5 예측 및 성능 평가<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<p>학습이 끝났으니 새로운 흑백 이미지에 적용하여 컬러 이미지로 예측(채색)해보도록 하겠습니다. 위에서 학습한 모델의 가중치를 불러오고 테스트 데이터 로더의 이미지를 넣어 예측하게 됩니다. 튜토리얼에서는 마지막 50에폭의 가중치를 불러오도록 하겠습니다. 중간에 오버피팅된 경향이 보인다면 원하시는 에폭의 가중치를 불러와도 됩니다.</p>
+<p>학습이 끝났으니 새로운 흑백 이미지에 적용하여 컬러 이미지로 예측(채색)해보도록 하겠습니다. 위에서 학습한 모델의 가중치를 불러오고 테스트 데이터 로더의 이미지를 넣어 예측하게 됩니다. 튜토리얼에서는 35에폭의 가중치를 불러오도록 하겠습니다. 이처럼 출력되는 이미지를 보면서 원하시는 에폭의 가중치를 불러와도 됩니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Gener</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;generator_50.pth&quot;</span> <span class="p">))</span>
-<span class="n">Discri</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;discriminator_50.pth&quot;</span> <span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Gener</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;generator_35.pth&quot;</span> <span class="p">))</span>
+<span class="n">Discri</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;discriminator_35.pth&quot;</span> <span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -915,13 +939,13 @@ commentsRunWhenDOMLoaded(addUtterances);
     <span class="n">out</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">make_grid</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;==================input==================&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reNormalize</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span> <span class="n">gray_mean</span><span class="p">,</span> <span class="n">gray_std</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;==================target==================&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reNormalize</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span> <span class="n">color_mean</span><span class="p">,</span> <span class="n">color_std</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;==================output==================&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reNormalize</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span> <span class="n">color_mean</span><span class="p">,</span> <span class="n">color_std</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -930,13 +954,13 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==================input==================
 </pre></div>
 </div>
-<img alt="../../_images/Ch3-GAN_41_1.svg" src="../../_images/Ch3-GAN_41_1.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==================target==================
+<img alt="../../_images/Ch3-GAN_42_1.svg" src="../../_images/Ch3-GAN_42_1.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==================target==================
 </pre></div>
 </div>
-<img alt="../../_images/Ch3-GAN_41_3.svg" src="../../_images/Ch3-GAN_41_3.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==================output==================
+<img alt="../../_images/Ch3-GAN_42_3.svg" src="../../_images/Ch3-GAN_42_3.svg" /><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==================output==================
 </pre></div>
 </div>
-<img alt="../../_images/Ch3-GAN_41_5.svg" src="../../_images/Ch3-GAN_41_5.svg" /></div>
+<img alt="../../_images/Ch3-GAN_42_5.svg" src="../../_images/Ch3-GAN_42_5.svg" /></div>
 </div>
 <p>결과는 흑백(input), 컬러(target), 생성된 이미지(output)순으로 출력되어집니다. 선명하진 않지만 비슷한 색감이 어느 정도 채색된 것을 볼 수 있습니다.</p>
 <p>지금까지 3장에서 흑백 이미지를 컬러 이미지로 바꾸는 생성모델 GAN을 구축해보았습니다. 다음 장에서는 채색에 더 특화되어있는 pix2pix모델을 사용하여 비교해보도록 하겠습니다.</p>
