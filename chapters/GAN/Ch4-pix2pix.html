@@ -91,6 +91,7 @@ commentsRunWhenDOMLoaded(addUtterances);
     <link rel="shortcut icon" href="../../_static/PseudoLab_logo.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5. 참고 문헌" href="References.html" />
     <link rel="prev" title="3. GAN" href="Ch3-GAN.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -241,6 +242,11 @@ commentsRunWhenDOMLoaded(addUtterances);
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    4. pix2pix
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="References.html">
+   5. 참고 문헌
   </a>
  </li>
 </ul>
@@ -415,14 +421,19 @@ Victorian400-GAN-colorization-data.zip is done!
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">glob</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">cv2</span>
-<span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
 <span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">DataLoader</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
+<span class="kn">from</span> <span class="nn">torchvision.utils</span> <span class="kn">import</span> <span class="n">save_image</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torchvision</span>
+<span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="kn">import</span> <span class="n">Variable</span>
 </pre></div>
 </div>
 </div>
@@ -434,19 +445,19 @@ Victorian400-GAN-colorization-data.zip is done!
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">VictorianDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">transforms_</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span><span class="n">transforms_</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">color_transforms_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gray_transforms_</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_transforms</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span><span class="n">color_transforms_</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gray_transforms</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span><span class="n">gray_transforms_</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gray_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;gray&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/*.*&quot;</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">color_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s1">&#39;resized&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/*.*&quot;</span><span class="p">))</span>
      
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-
         <span class="n">gray_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gray_files</span><span class="p">[</span><span class="n">index</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gray_files</span><span class="p">)])</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">)</span>
         <span class="n">color_img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_files</span><span class="p">[</span><span class="n">index</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_files</span><span class="p">)])</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;RGB&quot;</span><span class="p">)</span>
     
-        <span class="n">gray_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">gray_img</span><span class="p">)</span>
-        <span class="n">color_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">color_img</span><span class="p">)</span>
+        <span class="n">gray_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gray_transforms</span><span class="p">(</span><span class="n">gray_img</span><span class="p">)</span>
+        <span class="n">color_img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_transforms</span><span class="p">(</span><span class="n">color_img</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="n">gray_img</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="n">color_img</span><span class="p">}</span>
 
@@ -461,20 +472,29 @@ Victorian400-GAN-colorization-data.zip is done!
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">root</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">12</span>
 <span class="n">img_height</span> <span class="o">=</span> <span class="mi">256</span>
 <span class="n">img_width</span> <span class="o">=</span> <span class="mi">256</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">transform.Normalize</span></code>에서 <code class="docutils literal notranslate"><span class="pre">Normalize</span></code> 크기를 지정해줍니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">transform.Normalize</span></code>에서 <code class="docutils literal notranslate"><span class="pre">Normalize</span></code> 크기를 지정해줍니다. 2.4절에서 구한 평균과 표준편차로 normalize를 해주도록 하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">transforms_</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="c1">#transforms.Resize((img_height, img_width), Image.BICUBIC),</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">color_mean</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.58090717</span><span class="p">,</span> <span class="mf">0.52688643</span><span class="p">,</span> <span class="mf">0.45678478</span><span class="p">]</span>
+<span class="n">color_std</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.25644188</span><span class="p">,</span> <span class="mf">0.25482641</span><span class="p">,</span> <span class="mf">0.24456465</span><span class="p">]</span>
+<span class="n">gray_mean</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5350533</span><span class="p">,</span> <span class="mf">0.5350533</span><span class="p">,</span> <span class="mf">0.5350533</span><span class="p">]</span>
+<span class="n">gray_std</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.25051587</span><span class="p">,</span> <span class="mf">0.25051587</span><span class="p">,</span> <span class="mf">0.25051587</span><span class="p">]</span>
+
+<span class="n">color_transforms_</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
-    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">color_mean</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">color_std</span><span class="p">),</span>
+<span class="p">]</span>
+
+<span class="n">gray_transforms_</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">gray_mean</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">gray_std</span><span class="p">),</span>
 <span class="p">]</span>
 </pre></div>
 </div>
@@ -482,11 +502,22 @@ Victorian400-GAN-colorization-data.zip is done!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
-    <span class="n">VictorianDataset</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">transforms_</span><span class="o">=</span><span class="n">transforms_</span><span class="p">),</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_loader</span>  <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
+    <span class="n">VictorianDataset</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">color_transforms_</span><span class="o">=</span><span class="n">color_transforms_</span><span class="p">,</span> <span class="n">gray_transforms_</span><span class="o">=</span><span class="n">gray_transforms_</span><span class="p">),</span>
     <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
     <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reNormalize</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span> <span class="o">*</span> <span class="n">std</span> <span class="o">+</span> <span class="n">mean</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">img</span>
 </pre></div>
 </div>
 </div>
@@ -498,14 +529,15 @@ Victorian400-GAN-colorization-data.zip is done!
 <span class="n">rows</span> <span class="o">=</span> <span class="mi">1</span> 
 <span class="n">cols</span> <span class="o">=</span> <span class="mi">2</span>
 
-<span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
-    
+<span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">train_loader</span> <span class="p">:</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reNormalize</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">gray_mean</span><span class="p">,</span> <span class="n">gray_std</span><span class="p">))</span> 
     <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;gray img&#39;</span><span class="p">)</span>
 
     <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reNormalize</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">color_mean</span><span class="p">,</span> <span class="n">color_std</span><span class="p">))</span>
     <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;color img&#39;</span><span class="p">)</span>    
 
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -514,7 +546,10 @@ Victorian400-GAN-colorization-data.zip is done!
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Ch4-pix2pix_17_0.png" src="../../_images/Ch4-pix2pix_17_0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([12, 3, 256, 256]) torch.Size([12, 3, 256, 256])
+</pre></div>
+</div>
+<img alt="../../_images/Ch4-pix2pix_18_1.png" src="../../_images/Ch4-pix2pix_18_1.png" />
 </div>
 </div>
 </div>
@@ -524,12 +559,7 @@ Victorian400-GAN-colorization-data.zip is done!
 <p>이제 스킵 커넥션이 내장된 U-NET 생성자(Generator)를 설계해보도록 하겠습니다. 앞장에서 설명했듯이, GAN 모델에는 U-NET 생성자(Generator)가 있으며, 스킵 커넥션을 통해 인코더-디코더 레이어 간의 로컬라이징을 해줍니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-
-
-<span class="k">def</span> <span class="nf">weights_init_normal</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">weights_init_normal</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
     <span class="n">classname</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
     <span class="k">if</span> <span class="n">classname</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;Conv&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
         <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">normal_</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
@@ -657,25 +687,10 @@ Victorian400-GAN-colorization-data.zip is done!
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpu</span> <span class="o">=</span> <span class="mi">0</span>
-
-<span class="k">def</span> <span class="nf">weights_init</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-    <span class="n">classname</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
-    <span class="k">if</span> <span class="n">classname</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;Conv&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>         <span class="c1"># Conv weight init</span>
-        <span class="n">m</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">normal_</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">classname</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;BatchNorm&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>  <span class="c1"># BatchNorm weight init</span>
-        <span class="n">m</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">normal_</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
-        <span class="n">m</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <p>이제 생성자(Generator)와 분별자(Discriminator)의 구조를 살펴보도록 하겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">GeneratorUNet</span><span class="p">()</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">weights_init</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">GeneratorUNet</span><span class="p">()</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">weights_init_normal</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -806,7 +821,7 @@ Victorian400-GAN-colorization-data.zip is done!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Discriminator</span><span class="p">()</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">weights_init</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Discriminator</span><span class="p">()</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">weights_init_normal</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -832,60 +847,27 @@ Victorian400-GAN-colorization-data.zip is done!
 </div>
 </div>
 </div>
-<p>이제 파라미터를 지정하고 pix2pix 모델을 학습해보도록 하겠습니다. 학습에 필요한 기본적인 모듈들을 불러옵니다.</p>
+<p>이제 파라미터를 지정하고 pix2pix 모델을 학습해보도록 하겠습니다. 여기서 <code class="docutils literal notranslate"><span class="pre">n_epoch</span></code>은 총 학습할 에폭 횟수이고, <code class="docutils literal notranslate"><span class="pre">lr</span></code>는 학습 손실값(Learning Loss)을 의미합니다. <code class="docutils literal notranslate"><span class="pre">checkpoint_interval</span></code>은 학습중 모델의 가중치가 저장되는 간격입니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-
-<span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="nn">transforms</span>
-<span class="kn">from</span> <span class="nn">torchvision.utils</span> <span class="kn">import</span> <span class="n">save_image</span>
-
-<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
-<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">datasets</span>
-<span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="kn">import</span> <span class="n">Variable</span>
-
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
-<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
-<span class="kn">import</span> <span class="nn">torch</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>이제 세부적인 파라미터를 지정하도록 하겠습니다. 여기서 <code class="docutils literal notranslate"><span class="pre">epoch</span></code>은 0에서 시작하며 <code class="docutils literal notranslate"><span class="pre">n_epoch</span></code>은 에폭 횟수를 의미합니다. <code class="docutils literal notranslate"><span class="pre">batch_size</span></code>는 메모리 용량에 따라 배수로 조정을 하고, <code class="docutils literal notranslate"><span class="pre">lr</span></code>는 학습 손실값(Learning Loss)을 의미합니다. <code class="docutils literal notranslate"><span class="pre">sample_interval</span></code>은 학습중 샘플 파일을 출력하는 간격값입니다.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epoch</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">100</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">dataset_name</span> <span class="o">=</span> <span class="s2">&quot;Victorian400&quot;</span>
-<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">12</span>
 <span class="n">lr</span> <span class="o">=</span> <span class="mf">0.0002</span>
 <span class="n">b1</span> <span class="o">=</span> <span class="mf">0.5</span>                    <span class="c1"># adam: decay of first order momentum of gradient</span>
 <span class="n">b2</span> <span class="o">=</span> <span class="mf">0.999</span>                  <span class="c1"># adam: decay of first order momentum of gradient</span>
 <span class="n">decay_epoch</span> <span class="o">=</span> <span class="mi">100</span>           <span class="c1"># epoch from which to start lr decay</span>
 <span class="c1">#n_cpu = 8                   # number of cpu threads to use during batch generation</span>
-<span class="n">img_height</span> <span class="o">=</span> <span class="mi">256</span>
-<span class="n">img_width</span> <span class="o">=</span> <span class="mi">256</span>
 <span class="n">channels</span> <span class="o">=</span> <span class="mi">3</span>                <span class="c1"># number of image channels</span>
-<span class="n">sample_interval</span> <span class="o">=</span> <span class="mi">500</span>       <span class="c1"># interval between sampling of images from generators</span>
-<span class="n">checkpoint_interval</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>    <span class="c1"># interval between model checkpoints</span>
+<span class="n">checkpoint_interval</span> <span class="o">=</span> <span class="mi">20</span>    <span class="c1"># interval between model checkpoints</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">sample_images</span></code> 함수 정의 부분을 보시면, <code class="docutils literal notranslate"><span class="pre">gray</span></code>, <code class="docutils literal notranslate"><span class="pre">color</span></code>, <code class="docutils literal notranslate"><span class="pre">output</span></code>가 있는데, 저는 <code class="docutils literal notranslate"><span class="pre">gray</span></code>를 흑백사진, <code class="docutils literal notranslate"><span class="pre">color</span></code>를 컬러사진, <code class="docutils literal notranslate"><span class="pre">output</span></code>를 흑백을 컬러화한 사진으로 정의하였습니다. <code class="docutils literal notranslate"><span class="pre">gray</span></code>가 <code class="docutils literal notranslate"><span class="pre">color</span></code>와 비교되면서 학습이 되고, 이를 바탕으로 <code class="docutils literal notranslate"><span class="pre">output</span></code>를 생성하게 됩니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;images/</span><span class="si">%s</span><span class="s2">/val&quot;</span> <span class="o">%</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;images/</span><span class="si">%s</span><span class="s2">/test&quot;</span> <span class="o">%</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;saved_models/</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">dataset_name</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="n">cuda</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="kc">False</span>
 
 <span class="c1"># Loss functions</span>
 <span class="n">criterion_GAN</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
@@ -901,50 +883,54 @@ Victorian400-GAN-colorization-data.zip is done!
 <span class="n">generator</span> <span class="o">=</span> <span class="n">GeneratorUNet</span><span class="p">()</span>
 <span class="n">discriminator</span> <span class="o">=</span> <span class="n">Discriminator</span><span class="p">()</span>
 
+<span class="n">cuda</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="kc">False</span>
+
 <span class="k">if</span> <span class="n">cuda</span><span class="p">:</span>
     <span class="n">generator</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
     <span class="n">discriminator</span> <span class="o">=</span> <span class="n">discriminator</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
     <span class="n">criterion_GAN</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
     <span class="n">criterion_pixelwise</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
 
-<span class="k">if</span> <span class="n">epoch</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="c1"># Load pretrained models</span>
-    <span class="n">generator</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;saved_models/</span><span class="si">%s</span><span class="s2">/generator_</span><span class="si">%d</span><span class="s2">.pth&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)))</span>
-    <span class="n">discriminator</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;saved_models/</span><span class="si">%s</span><span class="s2">/discriminator_</span><span class="si">%d</span><span class="s2">.pth&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)))</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="c1"># Initialize weights</span>
-    <span class="n">generator</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">weights_init_normal</span><span class="p">)</span>
-    <span class="n">discriminator</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">weights_init_normal</span><span class="p">)</span>
-
 <span class="c1"># Optimizers</span>
 <span class="n">optimizer_G</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">generator</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">))</span>
 <span class="n">optimizer_D</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">discriminator</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">betas</span><span class="o">=</span><span class="p">(</span><span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">))</span>
 
-<span class="c1"># Configure dataloaders</span>
-<span class="n">transforms_</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">transforms</span><span class="o">.</span><span class="n">Resize</span><span class="p">((</span><span class="n">img_height</span><span class="p">,</span> <span class="n">img_width</span><span class="p">),</span> <span class="n">Image</span><span class="o">.</span><span class="n">BICUBIC</span><span class="p">),</span>
-    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
-    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)),</span>
-<span class="p">]</span>
-
-<span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
-    <span class="n">VictorianDataset</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">transforms_</span><span class="o">=</span><span class="n">transforms_</span><span class="p">),</span>
-    <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
-    <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span>
-<span class="c1">#    num_workers=n_cpu,</span>
-<span class="p">)</span>
-
 <span class="c1"># Tensor type</span>
 <span class="n">Tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">FloatTensor</span> <span class="k">if</span> <span class="n">cuda</span> <span class="k">else</span> <span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span>
-
-
-<span class="k">def</span> <span class="nf">sample_images</span><span class="p">(</span><span class="n">batches_done</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">sample_images</span></code> 함수 정의 부분을 보시면, <code class="docutils literal notranslate"><span class="pre">gray</span></code>, <code class="docutils literal notranslate"><span class="pre">color</span></code>, <code class="docutils literal notranslate"><span class="pre">output</span></code>가 있는데, 저는 <code class="docutils literal notranslate"><span class="pre">gray</span></code>를 흑백사진, <code class="docutils literal notranslate"><span class="pre">color</span></code>를 컬러사진, <code class="docutils literal notranslate"><span class="pre">output</span></code>를 흑백을 컬러화한 사진으로 정의하였습니다. <code class="docutils literal notranslate"><span class="pre">gray</span></code>가 <code class="docutils literal notranslate"><span class="pre">color</span></code>와 비교되면서 학습이 되고, 이를 바탕으로 <code class="docutils literal notranslate"><span class="pre">output</span></code>를 생성하게 됩니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sample_images</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">loader</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
     <span class="n">imgs</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">loader</span><span class="p">))</span>
     <span class="n">gray</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">imgs</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">Tensor</span><span class="p">))</span>
     <span class="n">color</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">imgs</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">Tensor</span><span class="p">))</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">generator</span><span class="p">(</span><span class="n">gray</span><span class="p">)</span>
-    <span class="n">img_sample</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">gray</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">color</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">save_image</span><span class="p">(</span><span class="n">img_sample</span><span class="p">,</span> <span class="s2">&quot;images/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">.png&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">batches_done</span><span class="p">),</span> <span class="n">nrow</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">generator</span><span class="p">(</span><span class="n">gray</span><span class="p">)</span>    
+    
+    <span class="n">gray_img</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">make_grid</span><span class="p">(</span><span class="n">gray</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">nrow</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span> 
+    <span class="n">color_img</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">make_grid</span><span class="p">(</span><span class="n">color</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">nrow</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>  
+    <span class="n">output_img</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">make_grid</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">nrow</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+    <span class="n">rows</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reNormalize</span><span class="p">(</span><span class="n">gray_img</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span> <span class="n">gray_mean</span><span class="p">,</span> <span class="n">gray_std</span><span class="p">))</span> 
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+
+    <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reNormalize</span><span class="p">(</span><span class="n">color_img</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span> <span class="n">color_mean</span><span class="p">,</span> <span class="n">color_std</span><span class="p">))</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">)</span>  
+
+    <span class="n">ax3</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">ax3</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reNormalize</span><span class="p">(</span><span class="n">output_img</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span> <span class="n">color_mean</span><span class="p">,</span> <span class="n">color_std</span><span class="p">))</span>
+    <span class="n">ax3</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">)</span>  
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;images/</span><span class="si">%s</span><span class="s2">/</span><span class="si">%s</span><span class="s2">/epoch_</span><span class="si">%s</span><span class="s2">.png&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">epoch</span><span class="p">),</span> <span class="n">pad_inches</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -959,10 +945,9 @@ Victorian400-GAN-colorization-data.zip is done!
 <span class="c1">#  Training</span>
 <span class="c1"># ----------</span>
 
-<span class="n">prev_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-
-<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">n_epochs</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataloader</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_epochs</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_loader</span><span class="p">):</span>
 
         <span class="c1"># Model inputs</span>
         <span class="n">gray</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="n">batch</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">type</span><span class="p">(</span><span class="n">Tensor</span><span class="p">))</span>
@@ -1012,88 +997,52 @@ Victorian400-GAN-colorization-data.zip is done!
         <span class="n">loss_D</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
         <span class="n">optimizer_D</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 
-        <span class="c1"># --------------</span>
-        <span class="c1">#  Log Progress</span>
-        <span class="c1"># --------------</span>
+        <span class="n">epoch_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
 
-        <span class="c1"># Determine approximate time left</span>
-        <span class="n">batches_done</span> <span class="o">=</span> <span class="n">epoch</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataloader</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span>
-        <span class="n">batches_left</span> <span class="o">=</span> <span class="n">n_epochs</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataloader</span><span class="p">)</span> <span class="o">-</span> <span class="n">batches_done</span>
-        <span class="n">time_left</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">batches_left</span> <span class="o">*</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">prev_time</span><span class="p">))</span>
-        <span class="n">prev_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">epoch</span><span class="p">)</span> <span class="o">%</span> <span class="n">checkpoint_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">18</span><span class="p">))</span>
+        <span class="n">sample_images</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">)</span>
 
-        <span class="c1"># Print log</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-            <span class="s2">&quot;</span><span class="se">\r</span><span class="s2">[Epoch </span><span class="si">%d</span><span class="s2">/</span><span class="si">%d</span><span class="s2">] [Batch </span><span class="si">%d</span><span class="s2">/</span><span class="si">%d</span><span class="s2">] [D loss: </span><span class="si">%f</span><span class="s2">] [G loss: </span><span class="si">%f</span><span class="s2">, pixel: </span><span class="si">%f</span><span class="s2">, adv: </span><span class="si">%f</span><span class="s2">] ETA: </span><span class="si">%s</span><span class="s2">&quot;</span>
-            <span class="o">%</span> <span class="p">(</span>
-                <span class="n">epoch</span><span class="p">,</span>
-                <span class="n">n_epochs</span><span class="p">,</span>
-                <span class="n">i</span><span class="p">,</span>
-                <span class="nb">len</span><span class="p">(</span><span class="n">dataloader</span><span class="p">),</span>
-                <span class="n">loss_D</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
-                <span class="n">loss_G</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
-                <span class="n">loss_pixel</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
-                <span class="n">loss_GAN</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span>
-                <span class="n">time_left</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="p">)</span>
-
-        <span class="c1"># If at sample interval save image</span>
-        <span class="k">if</span> <span class="n">batches_done</span> <span class="o">%</span> <span class="n">sample_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">sample_images</span><span class="p">(</span><span class="n">batches_done</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">,</span> <span class="s1">&#39;val&#39;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">checkpoint_interval</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">epoch</span> <span class="o">%</span> <span class="n">checkpoint_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="c1"># Save model checkpoints</span>
         <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">generator</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="s2">&quot;saved_models/</span><span class="si">%s</span><span class="s2">/generator_</span><span class="si">%d</span><span class="s2">.pth&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">epoch</span><span class="p">))</span>
         <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">discriminator</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="s2">&quot;saved_models/</span><span class="si">%s</span><span class="s2">/discriminator_</span><span class="si">%d</span><span class="s2">.pth&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">epoch</span><span class="p">))</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Epoch </span><span class="si">%d</span><span class="s2">/</span><span class="si">%d</span><span class="s2">] [Batch </span><span class="si">%d</span><span class="s2">/</span><span class="si">%d</span><span class="s2">] [D loss: </span><span class="si">%f</span><span class="s2">] [G loss: </span><span class="si">%f</span><span class="s2">, pixel: </span><span class="si">%f</span><span class="s2">, adv: </span><span class="si">%f</span><span class="s2">] ETA: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">epoch</span><span class="p">,</span> 
+                                                                                                    <span class="n">n_epochs</span><span class="p">,</span> 
+                                                                                                    <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> 
+                                                                                                    <span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">),</span> 
+                                                                                                    <span class="n">loss_D</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> 
+                                                                                                    <span class="n">loss_G</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> 
+                                                                                                    <span class="n">loss_pixel</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> 
+                                                                                                    <span class="n">loss_GAN</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> 
+                                                                                                    <span class="n">epoch_time</span><span class="p">))</span>
+     
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 99/100] [Batch 33/34] [D loss: 0.170797] [G loss: 6.816781, pixel: 0.058293, adv: 0.987505] ETA: 0:00:00.499183
+<img alt="../../_images/Ch4-pix2pix_34_0.png" src="../../_images/Ch4-pix2pix_34_0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 20/100] [Batch 34/34] [D loss: 0.003363] [G loss: 36.174591, pixel: 0.351734, adv: 1.001226] ETA: 0:00:15.931600
+</pre></div>
+</div>
+<img alt="../../_images/Ch4-pix2pix_34_2.png" src="../../_images/Ch4-pix2pix_34_2.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 40/100] [Batch 34/34] [D loss: 0.010069] [G loss: 22.281427, pixel: 0.212988, adv: 0.982629] ETA: 0:00:15.914369
+</pre></div>
+</div>
+<img alt="../../_images/Ch4-pix2pix_34_4.png" src="../../_images/Ch4-pix2pix_34_4.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 60/100] [Batch 34/34] [D loss: 0.001813] [G loss: 29.513786, pixel: 0.284740, adv: 1.039806] ETA: 0:00:15.915187
+</pre></div>
+</div>
+<img alt="../../_images/Ch4-pix2pix_34_6.png" src="../../_images/Ch4-pix2pix_34_6.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 80/100] [Batch 34/34] [D loss: 0.001550] [G loss: 18.294107, pixel: 0.172993, adv: 0.994772] ETA: 0:00:15.893250
+</pre></div>
+</div>
+<img alt="../../_images/Ch4-pix2pix_34_8.png" src="../../_images/Ch4-pix2pix_34_8.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 100/100] [Batch 34/34] [D loss: 0.399534] [G loss: 22.823000, pixel: 0.224467, adv: 0.376251] ETA: 0:00:15.921102
 </pre></div>
 </div>
 </div>
 </div>
-<p>학습이 잘 되었는지 샘플 파일을 열어보도록 하겠습니다. 배치가 500회 돌 때 마다 샘플 파일을 <code class="docutils literal notranslate"><span class="pre">images/Victorian400/</span></code> 경로에 저장하였습니다. 각각 1회, 1000회, 2000회 샘플 파일을 확인해보도록 하겠습니다.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="n">Image</span><span class="p">(</span><span class="s1">&#39;images/Victorian400/val/0.png&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Output hidden; open in https://colab.research.google.com to view.
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;images/Victorian400/val/1500.png&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Output hidden; open in https://colab.research.google.com to view.
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Image</span><span class="p">(</span><span class="s1">&#39;images/Victorian400/val/3000.png&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Output hidden; open in https://colab.research.google.com to view.
-</pre></div>
-</div>
-</div>
-</div>
-<p>위의 샘플 사진들을 보시면, 위에서 아래 순서대로 흑백-아웃풋-타켓 이미지입니다. 확실히 에폭수가 늘어남으로써 학습 효과가 나타나고 있는 걸 확인 할 수 있습니다. 이렇게 샘플링 된 이미지를 확인하면서 적절한 배치사이즈와 에폭수를 찾을 수 있습니다.</p>
+<p>위의 샘플 사진들을 보시면, 위에서 아래 순서대로 흑백-타켓-아웃풋 이미지입니다. 확실히 에폭수가 늘어남으로써 학습 효과가 나타나고 있는 걸 확인 할 수 있습니다. 이렇게 샘플링 된 이미지를 확인하면서 적절한 배치사이즈와 에폭수를 찾을 수 있습니다.</p>
 </div>
 <div class="section" id="id5">
 <h2>4.5 예측 및 성능 평가<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
@@ -1104,9 +1053,9 @@ Victorian400-GAN-colorization-data.zip is done!
 <span class="n">test_batch_size</span> <span class="o">=</span> <span class="mi">6</span>
 
 <span class="n">test_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span>
-    <span class="n">VictorianDataset</span><span class="p">(</span><span class="n">test_root</span><span class="p">,</span> <span class="n">transforms_</span><span class="o">=</span><span class="n">transforms_</span><span class="p">),</span>
+    <span class="n">VictorianDataset</span><span class="p">(</span><span class="n">test_root</span><span class="p">,</span> <span class="n">color_transforms_</span><span class="o">=</span><span class="n">color_transforms_</span><span class="p">,</span> <span class="n">gray_transforms_</span><span class="o">=</span><span class="n">gray_transforms_</span><span class="p">),</span>
     <span class="n">batch_size</span><span class="o">=</span><span class="n">test_batch_size</span><span class="p">,</span>
-    <span class="c1"># shuffle=True</span>
+    <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1118,16 +1067,16 @@ Victorian400-GAN-colorization-data.zip is done!
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 <span class="n">rows</span> <span class="o">=</span> <span class="mi">1</span> 
 <span class="n">cols</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
 <span class="k">for</span> <span class="n">X</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">:</span>
-    
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
     <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reNormalize</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">gray_mean</span><span class="p">,</span> <span class="n">gray_std</span><span class="p">))</span> 
     <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;gray img&#39;</span><span class="p">)</span>
 
     <span class="n">ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-    <span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reNormalize</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">color_mean</span><span class="p">,</span> <span class="n">color_std</span><span class="p">))</span>
     <span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;color img&#39;</span><span class="p">)</span>    
 
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1136,33 +1085,41 @@ Victorian400-GAN-colorization-data.zip is done!
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Ch4-pix2pix_45_0.png" src="../../_images/Ch4-pix2pix_45_0.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">discriminator</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-<span class="n">generator</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
-
-<span class="n">sample_images</span><span class="p">(</span><span class="n">batches_done</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([6, 3, 256, 256]) torch.Size([6, 3, 256, 256])
 </pre></div>
 </div>
+<img alt="../../_images/Ch4-pix2pix_40_1.png" src="../../_images/Ch4-pix2pix_40_1.png" />
 </div>
 </div>
+<p>이제 학습된 모델을 불러와 테스트셋 이미지 파일들을 예측해보도록 하겠습니다. 아래 코드는 최대 에폭수로 학습된 모델을 적용합니다. 원하는 에폭수를 <code class="docutils literal notranslate"><span class="pre">n_epochs</span></code>에 지정하면, 해당 에폭수의 학습된 모델을 불러올 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
-<span class="n">Image</span><span class="p">(</span><span class="s1">&#39;images/Victorian400/test/3399.png&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">generator</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;saved_models/</span><span class="si">%s</span><span class="s2">/generator_</span><span class="si">%d</span><span class="s2">.pth&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">n_epochs</span><span class="p">)))</span>
+<span class="n">discriminator</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;saved_models/</span><span class="si">%s</span><span class="s2">/discriminator_</span><span class="si">%d</span><span class="s2">.pth&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">dataset_name</span><span class="p">,</span> <span class="n">n_epochs</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Output hidden; open in https://colab.research.google.com to view.
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;All keys matched successfully&gt;
 </pre></div>
 </div>
 </div>
 </div>
-<p>위에서 아래 순서대로 흑백-아웃풋-타켓 테스트 이미지입니다. 어떤 사진은 원본보다 출력이 더 잘 되는 것을 확인 할 수 있습니다. 생성자(Generator)에 U-NET이 추가된 cGAN 모델이 GAN 모델보다 색채를 예측하는 점에 있어서, 보다 나은 결과물을 생성하는 것을 확인해 볼 수 있었습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">generator</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">discriminator</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">sample_images</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">,</span> <span class="n">test_loader</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/Ch4-pix2pix_43_0.png" src="../../_images/Ch4-pix2pix_43_0.png" />
+</div>
+</div>
+<p>위에서 아래 순서대로 흑백-타켓-아웃풋 테스트 이미지입니다. 어떤 사진은 원본보다 출력이 더 잘 되는 것을 확인 할 수 있습니다. 생성자(Generator)에 U-NET이 추가된 cGAN 모델이 GAN 모델보다 색채를 예측하는 점에 있어서, 보다 나은 결과물을 생성하는 것을 확인해 볼 수 있었습니다.</p>
 <p>모델 구조가 구체적인 목표에 맞춰 잘 짜여져 있다면, 이렇게 작은 데이터셋으로도 좋은 결과물을 만들 수 있습니다. 물론 많은 양의 질 좋은 데이터가 추가된다면, 향상 된 결과를 얻을 수 있습니다. 이제 학습된 모델을 바탕으로 여러분의 흑백 그림을 채색해보는게 어떨까요?</p>
 </div>
 </div>
@@ -1196,6 +1153,7 @@ Victorian400-GAN-colorization-data.zip is done!
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="Ch3-GAN.html" title="previous page">3. GAN</a>
+    <a class='right-next' id="next-link" href="References.html" title="next page">5. 참고 문헌</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
