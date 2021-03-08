@@ -1,6 +1,6 @@
 # PyTorch를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch) 
 
-PyTorch를 활용한 딥러닝 튜토리얼 홈페이지에 오신 것을 환영합니다!
+PyTorch를 활용한 딥러닝 튜토리얼 홈페이지에 오신 것을 환영합니다! <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="License: CC BY-NC-SA 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg" align='right'></a> <a href="https://pseudo-lab.github.io/Tutorial-Book-en/"><img alt="English" src="https://img.shields.io/badge/Translate%20To%20English-blue" align='right' style="padding-right: 5px;"></a>
 
 PyTorch를 활용해 여러 딥러닝 모델을 구축하는 과정을 정리한 저장소입니다. 
 
@@ -12,13 +12,11 @@ PyTorch를 활용해 여러 딥러닝 모델을 구축하는 과정을 정리한
 
 ---
 
-**제작**
-
-| 챕터명                            | 모델                                                         | 참여 인원                                                    |
-| --------------------------------- | ------------------------------------------------------------ | :----------------------------------------------------------- |
-| 객체 탐지 (Object Detection)      | [의료용 마스크 탐지](https://pseudo-lab.github.io/Tutorial-Book/chapters/object-detection/intro.html) | [강민지](https://github.com/mmminji), [김호열](https://github.com/elibooklover), [박준형](https://github.com/oopsys6), [안성진](https://www.linkedin.com/in/sungjin-ahn/) |
-| 시계열 분석 (Time Series)         | [코로나 확진자 수 예측](https://pseudo-lab.github.io/Tutorial-Book/chapters/time-series/intro.html) | [강민지](https://github.com/mmminji), [김호열](https://github.com/elibooklover), [박준형](https://github.com/oopsys6), [안성진](https://www.linkedin.com/in/sungjin-ahn/) |
-| 생성 모델링 (Generative Modeling) | [색상 이미지 생성](https://pseudo-lab.github.io/Tutorial-Book/chapters/GAN/intro.html) | [김동환](https://github.com/hwaneest), [강민지](https://github.com/mmminji), [김호열](https://github.com/elibooklover), [안성진](https://www.linkedin.com/in/sungjin-ahn/) |
+| 챕터명                                  | 모델                                                         | 참여 인원                                                    | 날짜    |
+| --------------------------------------- | ------------------------------------------------------------ | :----------------------------------------------------------- | ------- |
+| 객체 탐지 <br />(Object Detection)      | [의료용 마스크 탐지](https://pseudo-lab.github.io/Tutorial-Book/chapters/object-detection/intro.html) | [강민지](https://github.com/mmminji), [김호열](https://github.com/elibooklover), [박준형](https://github.com/oopsys6), [안성진](https://www.linkedin.com/in/sungjin-ahn/) | 2020.10 |
+| 시계열 분석 <br />(Time Series)         | [코로나 확진자 수 예측](https://pseudo-lab.github.io/Tutorial-Book/chapters/time-series/intro.html) | [강민지](https://github.com/mmminji), [김호열](https://github.com/elibooklover), [박준형](https://github.com/oopsys6), [안성진](https://www.linkedin.com/in/sungjin-ahn/) | 2020.12 |
+| 생성 모델링 <br />(Generative Modeling) | [컬러 이미지 생성](https://pseudo-lab.github.io/Tutorial-Book/chapters/GAN/intro.html) | [김동환](https://www.linkedin.com/in/da-devangelist/), [강민지](https://github.com/mmminji), [김호열](https://github.com/elibooklover), [안성진](https://www.linkedin.com/in/sungjin-ahn/) | 2021.02 |
 
 
 
