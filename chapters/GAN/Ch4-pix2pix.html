@@ -847,6 +847,13 @@ Victorian400-GAN-colorization-data.zip is done!
 </div>
 </div>
 </div>
+<p>생성자와 분별자 작동원리를 시각화 한 그림 4-1를 보시면, 생성자에 의해 생성된 이미지는 아웃풋으로 인풋 이미지와 쌍으로 이루어져 분별자에 의해 얼마나 비슷한 지 판단하게 됩니다. 또한 인풋 이미지와 타겟 이미지도 동시에 입력이 되어 분별자에 의해 비교되게 됩니다. 이 두 쌍을 비교한 결과 값을 분별자 값(Discriminator weights)인데, 이 과정을 거치면서 업데이트 되게 됩니다.</p>
+<p>분별자 값이 갱신되면, 생성자 값(Generator weights)도 아래의 과정을 통해 갱신되면서 새로운 이미지를 생성하게 됩니다. 모델 학습은 이러한 과정을 계속 반복하게 됩니다.</p>
+<p><img alt="" src="https://github.com/elibooklover/Tutorial-Book/blob/master/book/pics/GAN-ch4img01.jpg?raw=true" />
+<img alt="" src="https://github.com/elibooklover/Tutorial-Book/blob/master/book/pics/GAN-ch4img02.jpg?raw=true" /></p>
+<ul class="simple">
+<li><p>그림 4-1 생성자와 분별자 작동원리 시각화 (출처: <a class="reference external" href="https://neurohive.io/en/popular-networks/pix2pix-image-to-image-translation/">https://neurohive.io/en/popular-networks/pix2pix-image-to-image-translation/</a>)</p></li>
+</ul>
 <p>이제 파라미터를 지정하고 pix2pix 모델을 학습해보도록 하겠습니다. 여기서 <code class="docutils literal notranslate"><span class="pre">n_epoch</span></code>은 총 학습할 에폭 횟수이고, <code class="docutils literal notranslate"><span class="pre">lr</span></code>는 학습 손실값(Learning Loss)을 의미합니다. <code class="docutils literal notranslate"><span class="pre">checkpoint_interval</span></code>은 학습중 모델의 가중치가 저장되는 간격입니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1020,23 +1027,23 @@ Victorian400-GAN-colorization-data.zip is done!
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Ch4-pix2pix_34_0.png" src="../../_images/Ch4-pix2pix_34_0.png" />
+<img alt="../../_images/Ch4-pix2pix_35_0.png" src="../../_images/Ch4-pix2pix_35_0.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 20/100] [Batch 34/34] [D loss: 0.003363] [G loss: 36.174591, pixel: 0.351734, adv: 1.001226] ETA: 0:00:15.931600
 </pre></div>
 </div>
-<img alt="../../_images/Ch4-pix2pix_34_2.png" src="../../_images/Ch4-pix2pix_34_2.png" />
+<img alt="../../_images/Ch4-pix2pix_35_2.png" src="../../_images/Ch4-pix2pix_35_2.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 40/100] [Batch 34/34] [D loss: 0.010069] [G loss: 22.281427, pixel: 0.212988, adv: 0.982629] ETA: 0:00:15.914369
 </pre></div>
 </div>
-<img alt="../../_images/Ch4-pix2pix_34_4.png" src="../../_images/Ch4-pix2pix_34_4.png" />
+<img alt="../../_images/Ch4-pix2pix_35_4.png" src="../../_images/Ch4-pix2pix_35_4.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 60/100] [Batch 34/34] [D loss: 0.001813] [G loss: 29.513786, pixel: 0.284740, adv: 1.039806] ETA: 0:00:15.915187
 </pre></div>
 </div>
-<img alt="../../_images/Ch4-pix2pix_34_6.png" src="../../_images/Ch4-pix2pix_34_6.png" />
+<img alt="../../_images/Ch4-pix2pix_35_6.png" src="../../_images/Ch4-pix2pix_35_6.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 80/100] [Batch 34/34] [D loss: 0.001550] [G loss: 18.294107, pixel: 0.172993, adv: 0.994772] ETA: 0:00:15.893250
 </pre></div>
 </div>
-<img alt="../../_images/Ch4-pix2pix_34_8.png" src="../../_images/Ch4-pix2pix_34_8.png" />
+<img alt="../../_images/Ch4-pix2pix_35_8.png" src="../../_images/Ch4-pix2pix_35_8.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[Epoch 100/100] [Batch 34/34] [D loss: 0.399534] [G loss: 22.823000, pixel: 0.224467, adv: 0.376251] ETA: 0:00:15.921102
 </pre></div>
 </div>
@@ -1088,7 +1095,7 @@ Victorian400-GAN-colorization-data.zip is done!
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([6, 3, 256, 256]) torch.Size([6, 3, 256, 256])
 </pre></div>
 </div>
-<img alt="../../_images/Ch4-pix2pix_40_1.png" src="../../_images/Ch4-pix2pix_40_1.png" />
+<img alt="../../_images/Ch4-pix2pix_41_1.png" src="../../_images/Ch4-pix2pix_41_1.png" />
 </div>
 </div>
 <p>이제 학습된 모델을 불러와 테스트셋 이미지 파일들을 예측해보도록 하겠습니다. 아래 코드는 최대 에폭수로 학습된 모델을 적용합니다. 원하는 에폭수를 <code class="docutils literal notranslate"><span class="pre">n_epochs</span></code>에 지정하면, 해당 에폭수의 학습된 모델을 불러올 수 있습니다.</p>
@@ -1116,7 +1123,7 @@ Victorian400-GAN-colorization-data.zip is done!
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/Ch4-pix2pix_43_0.png" src="../../_images/Ch4-pix2pix_43_0.png" />
+<img alt="../../_images/Ch4-pix2pix_44_0.png" src="../../_images/Ch4-pix2pix_44_0.png" />
 </div>
 </div>
 <p>위에서 아래 순서대로 흑백-타켓-아웃풋 테스트 이미지입니다. 어떤 사진은 원본보다 출력이 더 잘 되는 것을 확인 할 수 있습니다. 생성자(Generator)에 U-NET이 추가된 cGAN 모델이 GAN 모델보다 색채를 예측하는 점에 있어서, 보다 나은 결과물을 생성하는 것을 확인해 볼 수 있었습니다.</p>

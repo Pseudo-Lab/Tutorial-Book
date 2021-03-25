@@ -431,7 +431,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 </div>
 <p>객체 탐지(Object Detection)는 컴퓨터 비전 기술의 세부 분야중 하나로써 주어진 이미지내 사용자가 관심 있는 객체를 탐지하는 기술입니다.</p>
 <p>인공지능 모델이 그림 1-1 좌측에 있는 강아지 사진을  강아지라고 판별한다면 해당 모델은 이미지 분류 모델 입니다. 하지만 우측 사진 처럼 물체가 있는 위치를 탐지함과 동시에 해당 물체가 강아지라고 분류 한다면 해당 모델은 객체 탐지 모델입니다.</p>
-<p><img alt="" src="https://drive.google.com/uc?id=1qFN7jJpM-VsR7SIMvbxDO4fGrvqCZvrz" /></p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img01.JPG?raw=true" /></p>
 <ul class="simple">
 <li><p>그림 1-1 이미지 분류 모델과 객체 탐지 모델 비교 (출처: <a class="reference external" href="https://www.pexels.com/search/dog/">https://www.pexels.com/search/dog/</a>)</p></li>
 </ul>
@@ -466,7 +466,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div class="section" id="one-stage-detector">
 <h3>1.2.1. One-Stage Detector<a class="headerlink" href="#one-stage-detector" title="Permalink to this headline">¶</a></h3>
 <p>One-stage Detector는 Classification, Regional Proposal을 동시에 수행하여 결과를 얻는 방법입니다. 그림 1-5와 같이 이미지를 모델에 입력 후, Conv Layer를 사용하여 이미지 특징을 추출합니다.</p>
-<p><img alt="" src="https://drive.google.com/uc?id=1850eKsb59NtgQEcM0fXji7cD13TEsDo3" /></p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img05.png?raw=true" /></p>
 <ul class="simple">
 <li><p>그림 1-5 One-Stage Detector 구조(출처:<a class="reference external" href="https://jdselectron.tistory.com/101">https://jdselectron.tistory.com/101</a>)</p></li>
 </ul>
@@ -474,7 +474,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div class="section" id="two-stage-detector">
 <h3>1.2.2. Two-Stage Detector<a class="headerlink" href="#two-stage-detector" title="Permalink to this headline">¶</a></h3>
 <p>Two-stage Detector는 Classification, Regional Proposal을 순차적으로 수행하여 결과를 얻는 방법입니다. 그림 1-6과 같이 Region Proposal과 Classification을 순차적으로 실행하는 것을 알 수 있습니다.</p>
-<p><img alt="" src="https://drive.google.com/uc?id=1qACO-vEahSiz2Zb5jmAW1jbw94g1ThZO" /></p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img06.png?raw=true" /></p>
 <ul class="simple">
 <li><p>그림 1-6 Two-Stage Detector 구조(출처:<a class="reference external" href="https://jdselectron.tistory.com/101">https://jdselectron.tistory.com/101</a>)</p></li>
 </ul>
@@ -486,7 +486,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p>One-Stage Detector와 Two-stage Detector 별로 여러 구조가 존재합니다. R-CNN, Fast R-CNN, Faster R-CNN은 Two-Stage Detector이며 YOLO, SSD, RetinaNet은 One-Stage Detector입니다. 각각의 모델 구조 특성에 대해 알아보도록 하겠습니다.</p>
 <div class="section" id="r-cnn">
 <h3>1.3.1. R-CNN<a class="headerlink" href="#r-cnn" title="Permalink to this headline">¶</a></h3>
-<p><img alt="" src="https://drive.google.com/uc?id=1qCmgiqH45lkpzADBk3zh29RFPPrRVKC4" /></p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img08.png?raw=true" /></p>
 <ul class="simple">
 <li><p>그림 1-8 R-CNN 구조 (출처: Girshick et al. 2014. Rich feature gierarchies for accurate object detection and semantic segmentation)</p></li>
 </ul>
@@ -494,7 +494,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 </div>
 <div class="section" id="fast-r-cnn">
 <h3>1.3.2. Fast R-CNN<a class="headerlink" href="#fast-r-cnn" title="Permalink to this headline">¶</a></h3>
-<p><img alt="" src="https://drive.google.com/uc?export=view&amp;id=1zKLOeKylk2SjRMQmfJ3ZJdaJSs0q1fIw" /></p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img09.png?raw=true" /></p>
 <ul class="simple">
 <li><p>그림 1-9 Fast R-CNN 구조 (출처: Girshick. ICCV 2015. Fast R-CNN)</p></li>
 </ul>
@@ -502,8 +502,8 @@ commentsRunWhenDOMLoaded(addUtterances);
 </div>
 <div class="section" id="faster-r-cnn">
 <h3>1.3.3. Faster R-CNN<a class="headerlink" href="#faster-r-cnn" title="Permalink to this headline">¶</a></h3>
-<p><img alt="" src="https://drive.google.com/uc?export=view&amp;id=1O5sRVhjcVR8J8zFDhVNwWHmEo069j876" />
-<img alt="" src="https://drive.google.com/uc?export=view&amp;id=18PW63VbzIdODeCRGSW0G9UF78Zmd5QY0" /></p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img10.png?raw=true" />
+<img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img10-2.png?raw=true" /></p>
 <ul class="simple">
 <li><p>그림 1-10 Faster R-CNN 구조 (출처: Ren et al. 2016. Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks)</p></li>
 </ul>
@@ -511,7 +511,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 </div>
 <div class="section" id="yolo">
 <h3>1.3.4. YOLO<a class="headerlink" href="#yolo" title="Permalink to this headline">¶</a></h3>
-<p><img alt="" src="https://drive.google.com/uc?export=view&amp;id=1mVIx26ewRcNab82TGkFj1ODnvPSoQjoD" /></p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img11.png?raw=true" /></p>
 <ul class="simple">
 <li><p>그림 1-11 YOLO 구조 (출처: Redmon et al. 2016. You Only Look Once: Unified, Real-Time Object Detection)</p></li>
 </ul>
@@ -519,7 +519,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 </div>
 <div class="section" id="ssd">
 <h3>1.3.5. SSD<a class="headerlink" href="#ssd" title="Permalink to this headline">¶</a></h3>
-<p><img alt="" src="https://drive.google.com/uc?export=view&amp;id=11kZDrVy5qi4VIAPXfGLmaGV5l_5h68rO" /></p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/OD-ch1img12.PNG?raw=true" /></p>
 <ul class="simple">
 <li><p>그림 1-12 SSD 구조 (출처: Liu et al. 2016. SSD: Single Shot MultiBox Detector)</p></li>
 </ul>
