@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+#### Release: Tutorial-Book 0.3.1 | Release Date: March. 26, 2021 (FIX GAN, OD)
+
+- Transferred gdrive OD imgs to github
+
+- Fix file path on OD ch1, ch3 to github path
+
+- Add pix2pix model figures to Ch4 GAN
+
+  <br/><br/><br/>
+
 #### Release: Tutorial-Book 0.3.0 | Release Date: March. 8, 2021 (FIX Ch. GAN | ADD TRANSLATE BUTTON)
 
 - Reversioning to 0.3.0 for semantic versioning, MINOR version stands for number of chapters
