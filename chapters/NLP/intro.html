@@ -5,44 +5,44 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PyTorch를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch) &#8212; PseudoLab Tutorial Book</title>
+    <title>T/F 문제 및 Wh-문제 생성 시스템 구축 &#8212; PseudoLab Tutorial Book</title>
     
-  <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
     
   <link rel="stylesheet"
-    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
   <link rel="preload" as="font" type="font/woff2" crossorigin
-    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     
       
   <link rel="stylesheet"
-    href="_static/vendor/open-sans_all/1.44.1/index.css">
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
   <link rel="stylesheet"
-    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
 
     
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="_static/js/index.3da636dd464baa7582d2.js">
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
 
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/togglebutton.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
     <script kind="utterances">
 
     var commentsRunWhenDOMLoaded = cb => {
@@ -78,7 +78,7 @@ var addUtterances = () => {
 commentsRunWhenDOMLoaded(addUtterances);
 </script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
@@ -87,11 +87,12 @@ commentsRunWhenDOMLoaded(addUtterances);
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
     </script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
-    <link rel="shortcut icon" href="_static/PseudoLab_logo.png"/>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="의료용 마스크 탐지 모델 구축" href="chapters/object-detection/intro.html" />
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../../_static/PseudoLab_logo.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1. 자연어 처리 모델 소개 (Introduction to NLP Model)" href="Ch1-Introduction.html" />
+    <link rel="prev" title="5. 참고 문헌" href="../GAN/References.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -108,22 +109,22 @@ commentsRunWhenDOMLoaded(addUtterances);
 <div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
     
         <div class="navbar-brand-box">
-<a class="navbar-brand text-wrap" href="#">
+<a class="navbar-brand text-wrap" href="../../index.html">
   
-  <img src="_static/PseudoLab_logo.png" class="logo" alt="logo">
+  <img src="../../_static/PseudoLab_logo.png" class="logo" alt="logo">
   
   
   <h1 class="site-logo" id="site-title">PseudoLab Tutorial Book</h1>
   
 </a>
-</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
   <i class="icon fas fa-search"></i>
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form>
 <nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
     <ul class="nav sidenav_l1">
- <li class="toctree-l1 current active">
-  <a class="reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../index.html">
    PyTorch를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch)
   </a>
  </li>
@@ -135,37 +136,37 @@ commentsRunWhenDOMLoaded(addUtterances);
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/object-detection/intro.html">
+  <a class="reference internal" href="../object-detection/intro.html">
    의료용 마스크 탐지 모델 구축
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/object-detection/Ch1-Object-Detection.html">
+  <a class="reference internal" href="../object-detection/Ch1-Object-Detection.html">
    1. 객체 탐지 소개
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/object-detection/Ch2-EDA.html">
+  <a class="reference internal" href="../object-detection/Ch2-EDA.html">
    2. 데이터 탐색
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/object-detection/Ch3-preprocessing.html">
+  <a class="reference internal" href="../object-detection/Ch3-preprocessing.html">
    3. 데이터 전처리
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/object-detection/Ch4-RetinaNet.html">
+  <a class="reference internal" href="../object-detection/Ch4-RetinaNet.html">
    4. RetinaNet
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/object-detection/Ch5-Faster-R-CNN.html">
+  <a class="reference internal" href="../object-detection/Ch5-Faster-R-CNN.html">
    5. Faster R-CNN
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/object-detection/References.html">
+  <a class="reference internal" href="../object-detection/References.html">
    6. 참고 문헌
   </a>
  </li>
@@ -177,37 +178,37 @@ commentsRunWhenDOMLoaded(addUtterances);
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/time-series/intro.html">
+  <a class="reference internal" href="../time-series/intro.html">
    코로나 확진자 수 예측 모델 구축
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/time-series/Ch1-Time-Series.html">
+  <a class="reference internal" href="../time-series/Ch1-Time-Series.html">
    1. Time Series 소개
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/time-series/Ch2-EDA.html">
+  <a class="reference internal" href="../time-series/Ch2-EDA.html">
    2. 데이터 탐색
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/time-series/Ch3-preprocessing.html">
+  <a class="reference internal" href="../time-series/Ch3-preprocessing.html">
    3. 데이터 전처리
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/time-series/Ch4-LSTM.html">
+  <a class="reference internal" href="../time-series/Ch4-LSTM.html">
    4. LSTM
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/time-series/Ch5-CNN-LSTM.html">
+  <a class="reference internal" href="../time-series/Ch5-CNN-LSTM.html">
    5. CNN-LSTM
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/time-series/References.html">
+  <a class="reference internal" href="../time-series/References.html">
    6. 참고 문헌
   </a>
  </li>
@@ -219,32 +220,32 @@ commentsRunWhenDOMLoaded(addUtterances);
 </p>
 <ul class="nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/GAN/intro.html">
+  <a class="reference internal" href="../GAN/intro.html">
    컬러 이미지 생성 모델 구축
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/GAN/Ch1-Introduction.html">
+  <a class="reference internal" href="../GAN/Ch1-Introduction.html">
    1. GAN 소개
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/GAN/Ch2-EDA.html">
+  <a class="reference internal" href="../GAN/Ch2-EDA.html">
    2. 데이터 탐색
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/GAN/Ch3-GAN.html">
+  <a class="reference internal" href="../GAN/Ch3-GAN.html">
    3. GAN
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/GAN/Ch4-pix2pix.html">
+  <a class="reference internal" href="../GAN/Ch4-pix2pix.html">
    4. pix2pix
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/GAN/References.html">
+  <a class="reference internal" href="../GAN/References.html">
    5. 참고 문헌
   </a>
  </li>
@@ -254,24 +255,24 @@ commentsRunWhenDOMLoaded(addUtterances);
   문제 생성(Question Generation)
  </span>
 </p>
-<ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="chapters/NLP/intro.html">
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    TF 및 Wh 문제 생성
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/NLP/Ch1-Introduction.html">
+  <a class="reference internal" href="Ch1-Introduction.html">
    1. 자연어 처리 모델 소개 (Introduction to NLP Model)
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/NLP/Ch2-EDA.html">
+  <a class="reference internal" href="Ch2-EDA.html">
    2. 데이터 탐색과 전처리
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="chapters/NLP/Ch4-Wh-Question.html">
+  <a class="reference internal" href="Ch4-Wh-Question.html">
    4. Wh- Question
   </a>
  </li>
@@ -315,7 +316,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/index.md"><button type="button"
+        <a class="dropdown-buttons" href="../../_sources/chapters/NLP/intro.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -335,7 +336,7 @@ commentsRunWhenDOMLoaded(addUtterances);
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Findex.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/NLP/intro.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
         
@@ -363,54 +364,21 @@ commentsRunWhenDOMLoaded(addUtterances);
         
               <div>
                 
-  <div class="section" id="pytorch-deep-learning-tutorials-with-pytorch">
-<h1>PyTorch를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch)<a class="headerlink" href="#pytorch-deep-learning-tutorials-with-pytorch" title="Permalink to this headline">¶</a></h1>
-<p>PyTorch를 활용한 딥러닝 튜토리얼 홈페이지에 오신 것을 환영합니다! <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="License: CC BY-NC-SA 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg" align='right'></a> <a href="https://pseudo-lab.github.io/Tutorial-Book-en/"><img alt="English" src="https://img.shields.io/badge/Translate%20To%20English-blue" align='right' style="padding-right: 5px;"></a></p>
-<p>PyTorch를 활용해 여러 딥러닝 모델을 구축하는 과정을 정리한 저장소입니다.</p>
-<p>해당 자료는 가짜연구소(<a class="reference external" href="https://pseudo-lab.com/">Pseudo Lab</a>) 튜토리얼 팀에 의해 제작 되었습니다.</p>
-<p>가짜연구소는 진짜 연구소는 아니지만 <strong>머신러닝 연구를 중심</strong>으로 모인 커뮤니티입니다. 오픈(open)의 가치를 추구하는 좋은 영향력을 끼칠 수 있는 그룹을 만들고자 합니다!</p>
-<p><strong>비영리적</strong>으로 <strong>머신러닝/딥러닝</strong>, <strong>캐글(Kaggle)</strong> 관련한 <strong>밋업</strong>, <strong>스터디</strong>, <strong>코드 공유</strong>, <strong>유튜브</strong>, <strong>해커톤</strong> 및 <strong>각종 이벤트</strong>를 통해 공유의 가치를 형성하고자 합니다.</p>
-<hr class="docutils" />
-<table class="colwidths-auto table">
-<thead>
-<tr class="row-odd"><th class="head"><p>챕터명</p></th>
-<th class="head"><p>모델</p></th>
-<th class="text-align:left head"><p>참여 인원</p></th>
-<th class="head"><p>날짜</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>객체 탐지 <br />(Object Detection)</p></td>
-<td><p><a class="reference external" href="https://pseudo-lab.github.io/Tutorial-Book/chapters/object-detection/intro.html">의료용 마스크 탐지</a></p></td>
-<td class="text-align:left"><p><a class="reference external" href="https://www.linkedin.com/in/mmminji/">강민지</a>, <a class="reference external" href="https://github.com/elibooklover">김호열</a>, <a class="reference external" href="https://github.com/oopsys6">박준형</a>, <a class="reference external" href="https://www.linkedin.com/in/sungjin-ahn/">안성진</a></p></td>
-<td><p>2020.10</p></td>
-</tr>
-<tr class="row-odd"><td><p>시계열 분석 <br />(Time Series)</p></td>
-<td><p><a class="reference external" href="https://pseudo-lab.github.io/Tutorial-Book/chapters/time-series/intro.html">코로나 확진자 수 예측</a></p></td>
-<td class="text-align:left"><p><a class="reference external" href="https://www.linkedin.com/in/mmminji/">강민지</a>, <a class="reference external" href="https://github.com/elibooklover">김호열</a>, <a class="reference external" href="https://github.com/oopsys6">박준형</a>, <a class="reference external" href="https://www.linkedin.com/in/sungjin-ahn/">안성진</a></p></td>
-<td><p>2020.12</p></td>
-</tr>
-<tr class="row-even"><td><p>생성 모델링 <br />(Generative Modeling)</p></td>
-<td><p><a class="reference external" href="https://pseudo-lab.github.io/Tutorial-Book/chapters/GAN/intro.html">컬러 이미지 생성</a></p></td>
-<td class="text-align:left"><p><a class="reference external" href="https://www.linkedin.com/in/da-devangelist/">김동환</a>, <a class="reference external" href="https://www.linkedin.com/in/mmminji/">강민지</a>, <a class="reference external" href="https://github.com/elibooklover">김호열</a>, <a class="reference external" href="https://www.linkedin.com/in/sungjin-ahn/">안성진</a></p></td>
-<td><p>2021.02</p></td>
-</tr>
-</tbody>
-</table>
-<hr class="docutils" />
-<p><strong>가짜연구소</strong></p>
+  <div class="section" id="t-f-wh">
+<h1>T/F 문제 및 Wh-문제 생성 시스템 구축<a class="headerlink" href="#t-f-wh" title="Permalink to this headline">¶</a></h1>
+<p>T/F 문제 및 WH-문제 생성 시스템 구축 튜토리얼에 오신 것을 환영합니다.</p>
+<p>이번 튜토리얼의 개요는 다음과 같습니다.</p>
+<p><strong>사용 데이터셋</strong>: <a class="reference external" href="https://www.comp.nus.edu.sg/~nlp/conll14st.html">CoNLL-2014</a>, <a class="reference external" href="https://www.cl.cam.ac.uk/research/nl/bea2019st/">BEA-2019</a></p>
+<p><strong>실습 환경</strong>: Google Colaboratory</p>
+<p><strong>모델 구조</strong>: BERT, GPT-2, T5</p>
+<p><strong>목차</strong>:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://pseudo-lab.com/">홈페이지</a>, <a class="reference external" href="https://github.com/Pseudo-Lab">Github</a>, <a class="reference external" href="https://www.facebook.com/groups/pseudolab/">Facebook</a>, <a class="reference external" href="https://www.linkedin.com/company/pseudolab/?originalSubdomain=kr">Linkedin</a></p></li>
-<li><p>문의: <a class="reference external" href="mailto:pseudolab&#46;operator&#37;&#52;&#48;gmail&#46;com">pseudolab<span>&#46;</span>operator<span>&#64;</span>gmail<span>&#46;</span>com</a></p></li>
+<li><p>자연어 처리 모델 소개</p></li>
+<li><p>데이터 탐색</p></li>
+<li><p>T/F 문제 생성</p></li>
+<li><p>Wh 문제 생성</p></li>
 </ul>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
-<div class="toctree-wrapper compound">
-</div>
+<p>가짜연구소는 오픈(open)의 가치를 추구합니다. 피드백은 언제든지 환영하며 각 페이지별로 댓글을 달아주시면 되겠습니다.</p>
 </div>
 
     <script type="text/x-thebe-config">
@@ -426,7 +394,7 @@ commentsRunWhenDOMLoaded(addUtterances);
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./."
+            path: "./chapters\NLP"
         },
         predefinedOutput: true
     }
@@ -441,7 +409,8 @@ commentsRunWhenDOMLoaded(addUtterances);
     
     <div class='prev-next-bottom'>
         
-    <a class='right-next' id="next-link" href="chapters/object-detection/intro.html" title="next page">의료용 마스크 탐지 모델 구축</a>
+    <a class='left-prev' id="prev-link" href="../GAN/References.html" title="previous page">5. 참고 문헌</a>
+    <a class='right-next' id="next-link" href="Ch1-Introduction.html" title="next page">1. 자연어 처리 모델 소개 (Introduction to NLP Model)</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
@@ -461,7 +430,7 @@ commentsRunWhenDOMLoaded(addUtterances);
     </div>
 
     
-  <script src="_static/js/index.3da636dd464baa7582d2.js"></script>
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
 
 
     

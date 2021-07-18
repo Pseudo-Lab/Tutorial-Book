@@ -1,0 +1,1657 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2. 데이터 탐색과 전처리 &#8212; PseudoLab Tutorial Book</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "Pseudo-Lab/Tutorial-Book");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../../_static/PseudoLab_logo.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4. Wh- Question" href="Ch4-Wh-Question.html" />
+    <link rel="prev" title="1. 자연어 처리 모델 소개 (Introduction to NLP Model)" href="Ch1-Introduction.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/PseudoLab_logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">PseudoLab Tutorial Book</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../index.html">
+   PyTorch를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch)
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  객체 탐지(Object Detection)
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/intro.html">
+   의료용 마스크 탐지 모델 구축
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch1-Object-Detection.html">
+   1. 객체 탐지 소개
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch2-EDA.html">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch3-preprocessing.html">
+   3. 데이터 전처리
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch4-RetinaNet.html">
+   4. RetinaNet
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch5-Faster-R-CNN.html">
+   5. Faster R-CNN
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/References.html">
+   6. 참고 문헌
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  시계열 분석(Time Series)
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/intro.html">
+   코로나 확진자 수 예측 모델 구축
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch1-Time-Series.html">
+   1. Time Series 소개
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch2-EDA.html">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch3-preprocessing.html">
+   3. 데이터 전처리
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch4-LSTM.html">
+   4. LSTM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch5-CNN-LSTM.html">
+   5. CNN-LSTM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/References.html">
+   6. 참고 문헌
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  생성 모델링(Generative Modeling)
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/intro.html">
+   컬러 이미지 생성 모델 구축
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch1-Introduction.html">
+   1. GAN 소개
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch2-EDA.html">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch3-GAN.html">
+   3. GAN
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch4-pix2pix.html">
+   4. pix2pix
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/References.html">
+   5. 참고 문헌
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  문제 생성(Question Generation)
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   TF 및 Wh 문제 생성
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch1-Introduction.html">
+   1. 자연어 처리 모델 소개 (Introduction to NLP Model)
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   2. 데이터 탐색과 전처리
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch4-Wh-Question.html">
+   4. Wh- Question
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/chapters/NLP/Ch2-EDA.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Pseudo-Lab/Tutorial-Book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/NLP/Ch2-EDA.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/chapters/NLP/Ch2-EDA.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conll-shared-task-dataset">
+   2.1 2014 CoNLL Shared Task Dataset
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conll">
+     2.1.1 CoNLL 데이터 탐색
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     2.1.2 CoNLL 데이터 전처리
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bea-2019-shared-task-dataset">
+   2.2 BEA-2019 Shared Task Dataset
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#w-i-locness">
+     2.2.1 W&amp;I + LOCNESS 데이터 탐색
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     2.2.2 W&amp;I + LOCNESS 데이터 전처리
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   참고문헌
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="id1">
+<h1>2. 데이터 탐색과 전처리<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/Pseudo-Lab/Tutorial-Book/blob/master/book/chapters/NLP/Ch2-EDA.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>이전 장에서는 Question Generation Task의 개념과 모델, 평가지표 등에 대해 알아보았습니다. 이번 장에서는 실습에 사용할 데이터셋을 확인해보도록 하겠습니다.</p>
+<p>NLP 튜토리얼에서는 에세이 데이터를 활용해 학습자들을 위한 영어 문제를 생성하는 모델을 만들어 볼 것입니다. 첫번째로는 여러개의 선택지 중에서 지문 내용에 기반해 진실인 선택지 하나를 선택하는 문제이며, 두번재로는 지문 내용에 기반해 When, What, Why, Who, Where, 그리고 How를 묻는 문제입니다.</p>
+<p>문제 생성에 기반이 되는 지문으로는 2014 CoNLL Shared Task 데이터와 BEA-2019 Shared Task 데이터를 사용할 것입니다. 각각에 대한 내용은 2.1절과 2.2절에서 세부적으로 다뤄보겠습니다.</p>
+<p>위 데이터를 통해 생성할 문제형식은 모두 4지선다형입니다. 4지선다형은 채점자 입장에서 평가하기가 용이하며, 시험자는 반복적으로 4지선다형 문제를 풀어가면서 원본 지문에 대한 개념을 체득할 수 있습니다.</p>
+<p>2.1절에서는 2014 CoNLL Shared Task 데이터에 대한 탐색과 전처리를 진행할 것이며 2.2절에서는 BEA-2019 Shared Task 데이터에 대한 탐색과 전처리를 진행해보겠습니다.</p>
+<div class="section" id="conll-shared-task-dataset">
+<h2>2.1 2014 CoNLL Shared Task Dataset<a class="headerlink" href="#conll-shared-task-dataset" title="Permalink to this headline">¶</a></h2>
+<p>Conference on Computational Natural Language Learning (CoNLL)은 매년 자연어처리 관련 기술에 대해 논하는 학회입니다. 논문 발표와 더불어 매년 자연어 처리와 관련된 Shared Task를 운영하고 있습니다. Shared Task는 특정 기간 동안 여러 팀이 참가해서 주최측에서 제시한 문제를 해결하는 과제로써, 데이터 경진대회와 유사합니다. CoNLL에서 운영한 모든 Shared Task는 <a class="reference external" href="https://conll.org/previous-tasks">https://conll.org/previous-tasks</a>에서 확인 가능합니다.</p>
+<p>2013년, 2014년에는 Grammer Error Correction(GEC) 과제를 Shared Task로 운영했습니다. GEC는 에세이내의 문법 오류 위치를 탐지한 후 올바른 단어로 수정하는 알고리즘을 구축하는 과제였습니다.</p>
+<p>이번 튜토리얼에서 사용할 데이터는 CoNLL Shared Task가 종료된 후 주최측에서 공개한 라벨링된 시험 데이터셋 입니다. Shared Task에서 공식적으로 사용된 훈련 데이터인 NUCLE corpus는 <a class="reference external" href="https://www.comp.nus.edu.sg/~nlp/corpora.html">NUS Natural Language Processing Group</a>에 신청서를 보내야 얻을 수 있지만, 시험 데이터셋은 누구나 열람할 수 있게 공개가 되어 있기 때문입니다.</p>
+<p>2014년도 GEC의 시험 데이터셋은 총 50개의 에세이로 이뤄져 있습니다. 25명의 비영어권 NUS 학생(Non-native speaker of English)이 표 2.1에 있는 2개의 주제에 대해 각각 하나의 에세이를 제출해서 총 50개 입니다. 해당 에세이에 대해 2명의 영어 원어민이 문법 교정, 즉 데이터 라벨링을 실시했습니다.</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>ID</p></th>
+<th class="head"><p>Prompt</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>“The decision to undergo genetic testing can only be made by the individual at risk for a disorder. <br/> Once a test has been conducted and the results are known, however, a new, family-related ethical dilemma is born: <br/> Should a carrier of a known genetic risk be obligated to tell his or her relatives?” <br/> Respond to the question above, supporting your argument with concrete examples.</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>While social media sites such as Twitter and Facebook can connect us closely to people in many parts of the world, <br/> some argue that the reduction in face-to-face human contact affects interpersonal skills. <br/> Explain the advantages and disadvantages of using social media in your daily life/society</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>표 2.1 시험 데이터셋 구축에 사용한 에세이 주제</p></li>
+</ul>
+<div class="section" id="conll">
+<h3>2.1.1 CoNLL 데이터 탐색<a class="headerlink" href="#conll" title="Permalink to this headline">¶</a></h3>
+<p>먼저 아래 코드를 활용해 <a class="reference external" href="https://www.comp.nus.edu.sg/~nlp/conll14st.html">https://www.comp.nus.edu.sg/~nlp/conll14st.html</a> 에 공개된 시험 데이터셋을 Colab환경에 다운로드 받습니다. 리눅스의 <code class="docutils literal notranslate"><span class="pre">wget</span></code>명령어를 활용해 제공된 다운로드 링크로 부터 <code class="docutils literal notranslate"><span class="pre">tar.gz</span></code>파일을 받을 수 있습니다. 이때 <code class="docutils literal notranslate"><span class="pre">-O</span></code> 옵션을 통해 파일명을 <code class="docutils literal notranslate"><span class="pre">conll2014.tar.gz</span></code>로 변경해서 다운로드 받아보도록 하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!wget -O &#39;conll2014.tar.gz&#39; https://www.comp.nus.edu.sg/~nlp/conll14st/conll14st-test-data.tar.gz
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--2021-04-18 12:37:53--  https://www.comp.nus.edu.sg/~nlp/conll14st/conll14st-test-data.tar.gz
+Resolving www.comp.nus.edu.sg (www.comp.nus.edu.sg)... 45.60.31.225
+Connecting to www.comp.nus.edu.sg (www.comp.nus.edu.sg)|45.60.31.225|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 643482 (628K) [application/x-gzip]
+Saving to: ‘conll2014.tar.gz’
+
+conll2014.tar.gz    100%[===================&gt;] 628.40K   334KB/s    in 1.9s    
+
+2021-04-18 12:37:57 (334 KB/s) - ‘conll2014.tar.gz’ saved [643482/643482]
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/NLP-ch2img01.JPG?raw=true" /></p>
+<ul class="simple">
+<li><p>그림 2.1 다운로드 된 tar.gz 파일</p></li>
+</ul>
+<p>Colab 파일 경로에 그림 2.1과 같이 <code class="docutils literal notranslate"><span class="pre">conll2014.tar.gz</span></code>파일이 다운로드 된것을 확인할 수 있습니다. 다음으로는 해당 파일을 리눅스의 <code class="docutils literal notranslate"><span class="pre">tar</span></code>명령어를 활용해 압축 해제 하겠습니다. 아래 코드에서 사용한 <code class="docutils literal notranslate"><span class="pre">tar</span></code>명령어의 옵션은 다음과 같습니다. [4]</p>
+<ul class="simple">
+<li><p>x – tar 파일 압축 해제</p></li>
+<li><p>v – 압축하는 과정 표시</p></li>
+<li><p>f – tar 파일명 입력</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!tar -xvf conll2014.tar.gz
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>conll14st-test-data/
+conll14st-test-data/scripts/
+conll14st-test-data/scripts/parser_feature.py
+conll14st-test-data/scripts/preprocess.py
+conll14st-test-data/scripts/nuclesgmlparser.py
+conll14st-test-data/scripts/README
+conll14st-test-data/scripts/nucle_doc.py
+conll14st-test-data/scripts/preprocesscombine.py
+conll14st-test-data/scripts/preprocesswithalt.py
+conll14st-test-data/scripts/iparser.py
+conll14st-test-data/noalt/
+conll14st-test-data/noalt/official-2014.1.conll.ann
+conll14st-test-data/noalt/official-2014.0.sgml
+conll14st-test-data/noalt/official-2014.combined.m2
+conll14st-test-data/noalt/official-2014.1.sgml
+conll14st-test-data/noalt/official-2014.1.m2
+conll14st-test-data/noalt/official-2014.0.conll.ann
+conll14st-test-data/noalt/official-2014.0.m2
+conll14st-test-data/README
+conll14st-test-data/alt/
+conll14st-test-data/alt/alternative-teama.sgml
+conll14st-test-data/alt/alternative-teamc.sgml
+conll14st-test-data/alt/alternative-teamb.sgml
+conll14st-test-data/alt/official-2014.combined-withalt.m2
+</pre></div>
+</div>
+</div>
+</div>
+<p>압축이 해제되면 <code class="docutils literal notranslate"><span class="pre">conll14st-test-data</span></code>폴더가 생성된 것을 확인할 수 있습니다. 해당 폴더는 그림 2.2와 같이 구성돼 있습니다.</p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/NLP-ch2img02.JPG?raw=true" /></p>
+<ul class="simple">
+<li><p>그림 2.2 <code class="docutils literal notranslate"><span class="pre">conll14st-test-data</span></code> 폴더 구조</p></li>
+</ul>
+<p>각 폴더가 의미하는 내용은 다음과 같습니다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">alt</span></code>: 참가팀에서 제출한 대체 답안이 저장된 폴더</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">noalt</span></code>: 주최측의 답안이 저장된 폴더</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scripts</span></code>: 주최측에서 제공한 데이터 전처리 스크립트</p></li>
+</ul>
+<p>2014 CoNLL Shared Task에서 참가자는 올바른 문법 용어를 예측해야 합니다. 하지만 올바른 문법 용어는 여러개가 존재할 수 있기 때문에, 주최측의 Annotator들이 모두 다룰 수가 없을 수 있습니다. 이러한 점을 고려해 대회 종료 후 참가팀으로 부터 Alternative Answer를 제출 받았고, 총 3팀이 제출해서 해당 팀들의 답안이 <code class="docutils literal notranslate"><span class="pre">alt</span></code> 폴더에 저장돼 있습니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">scripts</span></code>폴더 내 파일들은 파이썬 2.6.4에서 원할히 작동합니다. 하지만 최근에는 대부분 파이썬 3를 사용하기 때문에 본 튜토리얼에서는 <code class="docutils literal notranslate"><span class="pre">scripts</span></code>폴더에서 제공되는 함수를 사용하지 않았습니다. 또한, <code class="docutils literal notranslate"><span class="pre">scripts</span></code>에 있는 코드를 사용해 CoNLL Shared Task 데이터 양식에 한정된 코드를 배우는 것 보다는, 일반적으로 사용되는 BeautifulSoup, Numpy 등의 패키지로 전처리 하는 과정을 연습해보면 다른 데이터셋을 전처리 할 때도 도움이 되기 때문에 본 튜토리얼에서는 자체적으로 전처리 과정을 구성해보겠습니다. 전처리 하는 과정을 익혀봄으로써 다른 데이터셋이 주어졌을 때 유동적으로 대처하는 능력이 배양되길 바랍니다.</p>
+<p>전처리를 하기 위해 먼저 <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code> 함수를 불러옵니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">noalt</span></code>폴더 내에 있는 <code class="docutils literal notranslate"><span class="pre">official-2014.0.sgml</span></code>파일을 <code class="docutils literal notranslate"><span class="pre">open()</span></code> 함수를 활용해 엽니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># annotator id 0에 의해 라벨링된 파일</span>
+<span class="n">sgml_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;conll14st-test-data/noalt/official-2014.0.sgml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>그 후 <code class="docutils literal notranslate"><span class="pre">read()</span></code> 함수를 활용해 <code class="docutils literal notranslate"><span class="pre">official-2014.0.sgml</span></code> 파일의 내용물을 읽어서 <code class="docutils literal notranslate"><span class="pre">conll</span></code> 변수에 저장합니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conll</span> <span class="o">=</span> <span class="n">sgml_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">sgml_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">conll</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>str
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">conll</span></code> 변수 타입을 확인해보니 문자열로 저장된 것을 확인할 수 있습니다. <code class="docutils literal notranslate"><span class="pre">conll</span></code> 변수에 어떤 문자열이 저장됐는지 확인해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conll</span><span class="p">[:</span><span class="mi">2500</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;&lt;DOC nid=&quot;1&quot;&gt;\n&lt;TEXT&gt;\n&lt;TITLE&gt;\nKeeping the Secret of Genetic Testing\n&lt;/TITLE&gt;\n&lt;P&gt;\nWhat is genetic risk? Genetic risk refers more to your chance of inheriting a disorder or disease. People get certain disease because of genetic changes. How much a genetic change tells us about your chance of developing a disorder is not always clear. If your genetic results indicate that you have gene changes associated with an increased risk of heart disease, it does not mean that you definitely will develop heart disease. The opposite is also true. If your genetic results show that you do not have changes associated with an increased risk of heart disease, it is still possible that you develop heart disease. However for some rare diseases, people who have certain gene changes are guaranteed to develop the disease. When we are diagonosed out with certain genetic disease, are we suppose to disclose this result to our relatives? My answer is no.\n&lt;/P&gt;\n&lt;P&gt;\nOn one hand, we do not want this potential danger causing firghtenning affects in our families\&#39; later lives. When people around us know that we got certain disease, their altitudes will be easily changed, whether caring us too much or keeping away from us. And both are not what we want since most of us just want to live as normal people. Surrounded by such concerns, it is very likely that we are distracted to worry about these problems. It is a concern that will be with us during our whole life, because we will never know when the \&#39;\&#39;potential bomb\&#39;\&#39; will explode.\n&lt;/P&gt;\n&lt;P&gt;\nOn the other hand, if there are ways can help us to control or cure the disease, we can going through thses process from the scope of the whole family. For an example, if exercising is helpful for family potential disease, we can always look for more chances for the family to go exercise. And we keep track of all family members health conditions. At the same time, we are prepared to know when there are other members got this disease.\n&lt;/P&gt;\n&lt;P&gt;\nHere I want to share Forest\&#39;view on this issue. Although some people feel that an individual who is found to carry a dominant gene for Huntington\&#39;s disease has an ethical obligation to disclose that fact to his or her siblings, there currently is no legal requirement to do so. In fact, requiring someone to communicate his or her own genetic risk to family members who are therefore also at risk is considered by many to be ethically dubious.&quot;\n&lt;/P&gt;\n&lt;P&gt;\nNothing is absolute right or wrong. If certain disease genetic test is v&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>보시다 시피 <code class="docutils literal notranslate"><span class="pre">conll</span></code>변수 내에 저장된 문자열에 다양한 태그(tag)들이 존재하는 것을 확인할 수 있습니다. <code class="docutils literal notranslate"><span class="pre">&lt;DOC&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;TEXT&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;TITLE&gt;</span></code> 등 의 태그들이 존재합니다. 이것은 Markup Language를 표현하는 방식과 같습니다. 파일 확장자 명에 있는 <code class="docutils literal notranslate"><span class="pre">sgml</span></code>는 Standard Generalized Markup Language의 약자입니다. SGML은 HTML등의 Markup Language가 따라야 하는 기준을 제시하는 메타 언어입니다.</p>
+<p>그러므로 <code class="docutils literal notranslate"><span class="pre">conll</span></code>변수를 HTML 데이터를 파싱할 때 사용하는 <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code> 함수를 활용해 처리해보겠습니다. 아래 코드처럼 Markup Language 형태의 정보가 저장된 <code class="docutils literal notranslate"><span class="pre">conll</span></code>변수를 첫번째 파라미터로 넘기고, 두번째 파라미터에는 데이터 처리시 사용할 <code class="docutils literal notranslate"><span class="pre">parser</span></code>를 명시합니다. 일반적으로 <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code>에서 제공하는 <code class="docutils literal notranslate"><span class="pre">html.parser</span></code>를 사용하기도 하지만, <a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/#installing-a-parser">공식 문서</a>에서는 속도를 위해 <code class="docutils literal notranslate"><span class="pre">lxml</span></code>사용하는 것을 추천하므로, 본 튜토리얼에서도 <code class="docutils literal notranslate"><span class="pre">lxml</span></code>을 활용해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 파싱하고</span>
+<span class="n">conllsoup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">conll</span><span class="p">,</span> <span class="s1">&#39;lxml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">conllsoup</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>bs4.BeautifulSoup
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code>객체로 변환된것을 확인할 수 있습니다. 가장 먼저 CoNLL 데이터셋 내에 어떤 태그들이 존재하는지 확인해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tag_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">tag</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">conllsoup</span><span class="o">.</span><span class="n">find_all</span><span class="p">()])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>List Comprehension을 활용해 <code class="docutils literal notranslate"><span class="pre">conllsoup</span></code>내에 있는 모든 태그들을 <code class="docutils literal notranslate"><span class="pre">list</span></code> 내부에 저장합니다. 그 중에는 중복되는 태그명들도 있을 수 있으므로, 고유의 태그명만 확인하기 위해 <code class="docutils literal notranslate"><span class="pre">set()</span></code>함수를 사용해 <code class="docutils literal notranslate"><span class="pre">list</span></code>를 <code class="docutils literal notranslate"><span class="pre">set</span></code> 형태로 변환시켜 줍니다. 파이썬에서 <code class="docutils literal notranslate"><span class="pre">set</span></code>은 중복되는 원소를 가질 수 없기 때문에, 중복 원소가 있는 경우 하나의 원소만 남겨두고 나머지는 제거하게 됩니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">tag_names</span></code>의 있는 고유 태그들을 확인해보면 아래와 같습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tag_names</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;annotation&#39;,
+ &#39;body&#39;,
+ &#39;comment&#39;,
+ &#39;correction&#39;,
+ &#39;doc&#39;,
+ &#39;html&#39;,
+ &#39;mistake&#39;,
+ &#39;p&#39;,
+ &#39;text&#39;,
+ &#39;title&#39;,
+ &#39;type&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conllsoup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;doc&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;doc nid=&quot;1&quot;&gt;
+&lt;text&gt;
+&lt;title&gt;
+Keeping the Secret of Genetic Testing
+&lt;/title&gt;
+&lt;p&gt;
+What is genetic risk? Genetic risk refers more to your chance of inheriting a disorder or disease. People get certain disease because of genetic changes. How much a genetic change tells us about your chance of developing a disorder is not always clear. If your genetic results indicate that you have gene changes associated with an increased risk of heart disease, it does not mean that you definitely will develop heart disease. The opposite is also true. If your genetic results show that you do not have changes associated with an increased risk of heart disease, it is still possible that you develop heart disease. However for some rare diseases, people who have certain gene changes are guaranteed to develop the disease. When we are diagonosed out with certain genetic disease, are we suppose to disclose this result to our relatives? My answer is no.
+&lt;/p&gt;
+&lt;p&gt;
+On one hand, we do not want this potential danger causing firghtenning affects in our families&#39; later lives. When people around us know that we got certain disease, their altitudes will be easily changed, whether caring us too much or keeping away from us. And both are not what we want since most of us just want to live as normal people. Surrounded by such concerns, it is very likely that we are distracted to worry about these problems. It is a concern that will be with us during our whole life, because we will never know when the &#39;&#39;potential bomb&#39;&#39; will explode.
+&lt;/p&gt;
+&lt;p&gt;
+On the other hand, if there are ways can help us to control or cure the disease, we can going through thses process from the scope of the whole family. For an example, if exercising is helpful for family potential disease, we can always look for more chances for the family to go exercise. And we keep track of all family members health conditions. At the same time, we are prepared to know when there are other members got this disease.
+&lt;/p&gt;
+&lt;p&gt;
+Here I want to share Forest&#39;view on this issue. Although some people feel that an individual who is found to carry a dominant gene for Huntington&#39;s disease has an ethical obligation to disclose that fact to his or her siblings, there currently is no legal requirement to do so. In fact, requiring someone to communicate his or her own genetic risk to family members who are therefore also at risk is considered by many to be ethically dubious.&quot;
+&lt;/p&gt;
+&lt;p&gt;
+Nothing is absolute right or wrong. If certain disease genetic test is very accurate and it is unavoidable and necessary to get treatment and known by others, it is OK to disclose the result. Above all, life is more important than secret.
+&lt;/p&gt;
+&lt;/text&gt;
+&lt;annotation teacher_id=&quot;8&quot;&gt;
+&lt;mistake end_off=&quot;46&quot; end_par=&quot;1&quot; start_off=&quot;42&quot; start_par=&quot;1&quot;&gt;
+&lt;type&gt;ArtOrDet&lt;/type&gt;
+&lt;correction&gt;&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;125&quot; end_par=&quot;1&quot; start_off=&quot;118&quot; start_par=&quot;1&quot;&gt;
+&lt;type&gt;Nn&lt;/type&gt;
+&lt;correction&gt;diseases&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;627&quot; end_par=&quot;1&quot; start_off=&quot;620&quot; start_par=&quot;1&quot;&gt;
+&lt;type&gt;Trans&lt;/type&gt;
+&lt;correction&gt;However,&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;751&quot; end_par=&quot;1&quot; start_off=&quot;740&quot; start_par=&quot;1&quot;&gt;
+&lt;type&gt;Mec&lt;/type&gt;
+&lt;correction&gt;diagnosed&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;754&quot; end_par=&quot;1&quot; start_off=&quot;751&quot; start_par=&quot;1&quot;&gt;
+&lt;type&gt;Prep&lt;/type&gt;
+&lt;correction&gt;&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;783&quot; end_par=&quot;1&quot; start_off=&quot;776&quot; start_par=&quot;1&quot;&gt;
+&lt;type&gt;Nn&lt;/type&gt;
+&lt;correction&gt;diseases&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;58&quot; end_par=&quot;2&quot; start_off=&quot;50&quot; start_par=&quot;2&quot;&gt;
+&lt;type&gt;Wci&lt;/type&gt;
+&lt;correction&gt;having&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;70&quot; end_par=&quot;2&quot; start_off=&quot;58&quot; start_par=&quot;2&quot;&gt;
+&lt;type&gt;Mec&lt;/type&gt;
+&lt;correction&gt;frightening&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;78&quot; end_par=&quot;2&quot; start_off=&quot;71&quot; start_par=&quot;2&quot;&gt;
+&lt;type&gt;Wform&lt;/type&gt;
+&lt;correction&gt;effects&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;147&quot; end_par=&quot;2&quot; start_off=&quot;144&quot; start_par=&quot;2&quot;&gt;
+&lt;type&gt;Wci&lt;/type&gt;
+&lt;correction&gt;have&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;163&quot; end_par=&quot;2&quot; start_off=&quot;156&quot; start_par=&quot;2&quot;&gt;
+&lt;type&gt;Nn&lt;/type&gt;
+&lt;correction&gt;diseases&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;180&quot; end_par=&quot;2&quot; start_off=&quot;171&quot; start_par=&quot;2&quot;&gt;
+&lt;type&gt;Mec&lt;/type&gt;
+&lt;correction&gt;attitude&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;203&quot; end_par=&quot;2&quot; start_off=&quot;186&quot; start_par=&quot;2&quot;&gt;
+&lt;type&gt;Vform&lt;/type&gt;
+&lt;correction&gt;easily change&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;219&quot; end_par=&quot;2&quot; start_off=&quot;213&quot; start_par=&quot;2&quot;&gt;
+&lt;type&gt;Prep&lt;/type&gt;
+&lt;correction&gt;caring for&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;412&quot; end_par=&quot;2&quot; start_off=&quot;410&quot; start_par=&quot;2&quot;&gt;
+&lt;type&gt;Trans&lt;/type&gt;
+&lt;correction&gt;and&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;516&quot; end_par=&quot;2&quot; start_off=&quot;512&quot; start_par=&quot;2&quot;&gt;
+&lt;type&gt;Vt&lt;/type&gt;
+&lt;correction&gt;&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;36&quot; end_par=&quot;3&quot; start_off=&quot;32&quot; start_par=&quot;3&quot;&gt;
+&lt;type&gt;Ssub&lt;/type&gt;
+&lt;correction&gt;ways that&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;93&quot; end_par=&quot;3&quot; start_off=&quot;88&quot; start_par=&quot;3&quot;&gt;
+&lt;type&gt;Vform&lt;/type&gt;
+&lt;correction&gt;go&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;107&quot; end_par=&quot;3&quot; start_off=&quot;102&quot; start_par=&quot;3&quot;&gt;
+&lt;type&gt;Mec&lt;/type&gt;
+&lt;correction&gt;these&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;115&quot; end_par=&quot;3&quot; start_off=&quot;108&quot; start_par=&quot;3&quot;&gt;
+&lt;type&gt;Nn&lt;/type&gt;
+&lt;correction&gt;processes&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;158&quot; end_par=&quot;3&quot; start_off=&quot;156&quot; start_par=&quot;3&quot;&gt;
+&lt;type&gt;Rloc-&lt;/type&gt;
+&lt;correction&gt;&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;196&quot; end_par=&quot;3&quot; start_off=&quot;193&quot; start_par=&quot;3&quot;&gt;
+&lt;type&gt;V0&lt;/type&gt;
+&lt;correction&gt;reducing&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;279&quot; end_par=&quot;3&quot; start_off=&quot;277&quot; start_par=&quot;3&quot;&gt;
+&lt;type&gt;Wci&lt;/type&gt;
+&lt;correction&gt;do&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;290&quot; end_par=&quot;3&quot; start_off=&quot;288&quot; start_par=&quot;3&quot;&gt;
+&lt;type&gt;Rloc-&lt;/type&gt;
+&lt;correction&gt;&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;293&quot; end_par=&quot;3&quot; start_off=&quot;290&quot; start_par=&quot;3&quot;&gt;
+&lt;type&gt;Trans&lt;/type&gt;
+&lt;correction&gt;so&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;423&quot; end_par=&quot;3&quot; start_off=&quot;420&quot; start_par=&quot;3&quot;&gt;
+&lt;type&gt;Ssub&lt;/type&gt;
+&lt;correction&gt;who have got&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;28&quot; end_par=&quot;4&quot; start_off=&quot;21&quot; start_par=&quot;4&quot;&gt;
+&lt;type&gt;Npos&lt;/type&gt;
+&lt;correction&gt;Forests&#39;s&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;19&quot; end_par=&quot;5&quot; start_off=&quot;11&quot; start_par=&quot;5&quot;&gt;
+&lt;type&gt;Wform&lt;/type&gt;
+&lt;correction&gt;absolutely&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;46&quot; end_par=&quot;5&quot; start_off=&quot;39&quot; start_par=&quot;5&quot;&gt;
+&lt;type&gt;ArtOrDet&lt;/type&gt;
+&lt;correction&gt;a certain&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;54&quot; end_par=&quot;5&quot; start_off=&quot;47&quot; start_par=&quot;5&quot;&gt;
+&lt;type&gt;Rloc-&lt;/type&gt;
+&lt;correction&gt;&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;147&quot; end_par=&quot;5&quot; start_off=&quot;142&quot; start_par=&quot;5&quot;&gt;
+&lt;type&gt;Wci&lt;/type&gt;
+&lt;correction&gt;tell&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;150&quot; end_par=&quot;5&quot; start_off=&quot;148&quot; start_par=&quot;5&quot;&gt;
+&lt;type&gt;Prep&lt;/type&gt;
+&lt;correction&gt;&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;mistake end_off=&quot;237&quot; end_par=&quot;5&quot; start_off=&quot;231&quot; start_par=&quot;5&quot;&gt;
+&lt;type&gt;Nn&lt;/type&gt;
+&lt;correction&gt;secrets&lt;/correction&gt;
+&lt;/mistake&gt;
+&lt;/annotation&gt;
+&lt;/doc&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>각각의 태그와 태그 내의 속성이 의미하는 바는 다음과 같습니다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">annotation</span></code>: <code class="docutils literal notranslate"><span class="pre">text</span></code>의 모든 문법 오류를 저장한 태그, <code class="docutils literal notranslate"><span class="pre">mistake</span></code>의 부모 태그</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">teacher_id</span></code>: 문법 교정한 선생님 고유 번호</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">body</span></code>: 모든 태그 정보가 저장된 부모 태그</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">comment</span></code>:</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">correction</span></code>:</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">doc</span></code>: <code class="docutils literal notranslate"><span class="pre">text</span></code>, <code class="docutils literal notranslate"><span class="pre">title</span></code>, <code class="docutils literal notranslate"><span class="pre">annotation</span></code>정보가 저장된 부모 태그</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">nid</span></code>: 문서 고유 번호</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">html</span></code>: <code class="docutils literal notranslate"><span class="pre">body</span></code>의 부모 태그</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mistake</span></code>: <code class="docutils literal notranslate"><span class="pre">type</span></code>, <code class="docutils literal notranslate"><span class="pre">comment</span></code>, <code class="docutils literal notranslate"><span class="pre">correction</span></code> 정보가 저장된 부모 태그</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">end_off</span></code>: 오류가 끝나는 문자열 위치</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">end_par</span></code>: 오류가 끝나는 문단 위치</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start_off</span></code>: 오류가 시작하는 문자열 위치</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">start_par</span></code>: 오류가 끝나는 문단 위치</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span></code>: 에세이의 각 문단이 저장된 태그</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">text</span></code>: 학생이 쓴 에세이가 저장된 태그, <code class="docutils literal notranslate"><span class="pre">title</span></code>과 <code class="docutils literal notranslate"><span class="pre">p</span></code>의 부모 태그</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">title</span></code>: 에세이의 제목이 저장된 태그</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>: 문법 오류 유형이 저장된 태그</p></li>
+</ul>
+<p>해당 에세이를 독해 문제 지문으로 활용하기 위해선 탐지된 문법 오류를 모두 교정할 필요가 있습니다. 문법 오류가 발생한 위치와 해당 단어를 대체하기 위한 올바른 문법 단어를 알고 있으므로, 적절한 알고리즘을 활용해 에세이내의 모든 문법 오류를 대체할 수 있습니다. 해당 과정을 2.1.2절에서 확인해보겠습니다.</p>
+</div>
+<div class="section" id="id2">
+<h3>2.1.2 CoNLL 데이터 전처리<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>먼저 <code class="docutils literal notranslate"><span class="pre">mistake</span></code> 태그에 담긴 정보들을 확인해보겠습니다. <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code>객체의 <code class="docutils literal notranslate"><span class="pre">find('태그')</span></code> 함수를 사용하면 가장 첫번째로 나오는 <code class="docutils literal notranslate"><span class="pre">태그</span></code>를 반환해줍니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conllsoup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;mistake&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;mistake end_off=&quot;46&quot; end_par=&quot;1&quot; start_off=&quot;42&quot; start_par=&quot;1&quot;&gt;
+&lt;type&gt;ArtOrDet&lt;/type&gt;
+&lt;correction&gt;&lt;/correction&gt;
+&lt;/mistake&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">start_par</span></code>와 <code class="docutils literal notranslate"><span class="pre">end_par</span></code>는 각각 <code class="docutils literal notranslate"><span class="pre">text</span></code>내에서 몇번째 문단에 문법 오류가 존재하는지 나타내고, <code class="docutils literal notranslate"><span class="pre">start_off</span></code>와 <code class="docutils literal notranslate"><span class="pre">end_off</span></code>는 해당 문단에서 몇번째 문자열에 문법 오류가 존재하는지 나타냅니다. 가령 위 예시에서는 첫번째 문단의 [42:46]위치에 있는 문자열이 문법 오류를 지니는 것입니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">type</span></code>은 문법 오류의 종류를 나타내는데, GEC문제라면 관심있게 봐야하는 태그이지만, 본 튜토리얼에서는 문법 오류를 올바른 단어로 대체해서 사용하는 것이 목적이므로 어떤 문법 오류 종류가 존재하는지 세부적으로 확인하지 않겠습니다. 궁금하신 분께서는 참고문헌 [1]을 참고하시기 바랍니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">correction</span></code>은 문법 오류를 고치기 위해서 사용해야 하는 단어를 뜻합니다. 위 예시에서는 값이 없으므로, 이 뜻은 단어를 삭제해야 문법 오류가 교정된다는 뜻입니다.</p>
+<p>아래 코드를 확인해 어떤 단어인지 확인해보겠습니다. <code class="docutils literal notranslate"><span class="pre">text</span></code>태그에 존재하는 요소를 확인해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conllsoup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;text&gt;
+&lt;title&gt;
+Keeping the Secret of Genetic Testing
+&lt;/title&gt;
+&lt;p&gt;
+What is genetic risk? Genetic risk refers more to your chance of inheriting a disorder or disease. People get certain disease because of genetic changes. How much a genetic change tells us about your chance of developing a disorder is not always clear. If your genetic results indicate that you have gene changes associated with an increased risk of heart disease, it does not mean that you definitely will develop heart disease. The opposite is also true. If your genetic results show that you do not have changes associated with an increased risk of heart disease, it is still possible that you develop heart disease. However for some rare diseases, people who have certain gene changes are guaranteed to develop the disease. When we are diagonosed out with certain genetic disease, are we suppose to disclose this result to our relatives? My answer is no.
+&lt;/p&gt;
+&lt;p&gt;
+On one hand, we do not want this potential danger causing firghtenning affects in our families&#39; later lives. When people around us know that we got certain disease, their altitudes will be easily changed, whether caring us too much or keeping away from us. And both are not what we want since most of us just want to live as normal people. Surrounded by such concerns, it is very likely that we are distracted to worry about these problems. It is a concern that will be with us during our whole life, because we will never know when the &#39;&#39;potential bomb&#39;&#39; will explode.
+&lt;/p&gt;
+&lt;p&gt;
+On the other hand, if there are ways can help us to control or cure the disease, we can going through thses process from the scope of the whole family. For an example, if exercising is helpful for family potential disease, we can always look for more chances for the family to go exercise. And we keep track of all family members health conditions. At the same time, we are prepared to know when there are other members got this disease.
+&lt;/p&gt;
+&lt;p&gt;
+Here I want to share Forest&#39;view on this issue. Although some people feel that an individual who is found to carry a dominant gene for Huntington&#39;s disease has an ethical obligation to disclose that fact to his or her siblings, there currently is no legal requirement to do so. In fact, requiring someone to communicate his or her own genetic risk to family members who are therefore also at risk is considered by many to be ethically dubious.&quot;
+&lt;/p&gt;
+&lt;p&gt;
+Nothing is absolute right or wrong. If certain disease genetic test is very accurate and it is unavoidable and necessary to get treatment and known by others, it is OK to disclose the result. Above all, life is more important than secret.
+&lt;/p&gt;
+&lt;/text&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">text</span></code>태그 내에는 <code class="docutils literal notranslate"><span class="pre">title</span></code>과 <code class="docutils literal notranslate"><span class="pre">p</span></code>태그가 존재합니다. <code class="docutils literal notranslate"><span class="pre">title</span></code>은 해당 에세이의 제목, <code class="docutils literal notranslate"><span class="pre">p</span></code>는 문단을 나타냅니다. 앞서 살펴본 <code class="docutils literal notranslate"><span class="pre">start_par</span></code>과 <code class="docutils literal notranslate"><span class="pre">end_par</span></code>의 번호는 <code class="docutils literal notranslate"><span class="pre">text</span></code>내에 존재하는 요소들에 하나씩 대응 되며, <code class="docutils literal notranslate"><span class="pre">title</span></code>을 포함해서 번호를 매깁니다. 즉, 위 예시에서 <code class="docutils literal notranslate"><span class="pre">start_par</span></code>가 <code class="docutils literal notranslate"><span class="pre">end_par</span></code>이 모두 0이면 <code class="docutils literal notranslate"><span class="pre">Keeping</span> <span class="pre">the</span> <span class="pre">Secret</span> <span class="pre">of</span> <span class="pre">Genetic</span> <span class="pre">Testing</span></code>에 문법 오류가 존재한다는 뜻이며, 1이면은 첫번재 <code class="docutils literal notranslate"><span class="pre">p</span></code>태그에서 문법 오류가 존재한다는 뜻입니다. <code class="docutils literal notranslate"><span class="pre">text</span></code>내에 <code class="docutils literal notranslate"><span class="pre">title</span></code>태그가 없고 <code class="docutils literal notranslate"><span class="pre">p</span></code>태그만 있다면 <code class="docutils literal notranslate"><span class="pre">start_par</span></code>/<code class="docutils literal notranslate"><span class="pre">end_par</span></code>가 0일 때 첫번째 <code class="docutils literal notranslate"><span class="pre">p</span></code>태그를 가르키게 됩니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">text</span></code>내의 내용을 태그 단위로 접근할 수 있게 전처리를 해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conllsoup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;\n\nKeeping the Secret of Genetic Testing\n\n\nWhat is genetic risk? Genetic risk refers more to your chance of inheriting a disorder or disease. People get certain disease because of genetic changes. How much a genetic change tells us about your chance of developing a disorder is not always clear. If your genetic results indicate that you have gene changes associated with an increased risk of heart disease, it does not mean that you definitely will develop heart disease. The opposite is also true. If your genetic results show that you do not have changes associated with an increased risk of heart disease, it is still possible that you develop heart disease. However for some rare diseases, people who have certain gene changes are guaranteed to develop the disease. When we are diagonosed out with certain genetic disease, are we suppose to disclose this result to our relatives? My answer is no.\n\n\nOn one hand, we do not want this potential danger causing firghtenning affects in our families\&#39; later lives. When people around us know that we got certain disease, their altitudes will be easily changed, whether caring us too much or keeping away from us. And both are not what we want since most of us just want to live as normal people. Surrounded by such concerns, it is very likely that we are distracted to worry about these problems. It is a concern that will be with us during our whole life, because we will never know when the \&#39;\&#39;potential bomb\&#39;\&#39; will explode.\n\n\nOn the other hand, if there are ways can help us to control or cure the disease, we can going through thses process from the scope of the whole family. For an example, if exercising is helpful for family potential disease, we can always look for more chances for the family to go exercise. And we keep track of all family members health conditions. At the same time, we are prepared to know when there are other members got this disease.\n\n\nHere I want to share Forest\&#39;view on this issue. Although some people feel that an individual who is found to carry a dominant gene for Huntington\&#39;s disease has an ethical obligation to disclose that fact to his or her siblings, there currently is no legal requirement to do so. In fact, requiring someone to communicate his or her own genetic risk to family members who are therefore also at risk is considered by many to be ethically dubious.&quot;\n\n\nNothing is absolute right or wrong. If certain disease genetic test is very accurate and it is unavoidable and necessary to get treatment and known by others, it is OK to disclose the result. Above all, life is more important than secret.\n\n&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">text</span></code>태그 내의 text정보만 추출하면 new line (\n) 문자가 여러 존재합니다. 문자열 기준 가장 앞과 뒤에 있는 <code class="docutils literal notranslate"><span class="pre">\n</span></code>은 <code class="docutils literal notranslate"><span class="pre">strip()</span></code>함수를 통해 제거 가능합니다. 또한 중간에 있는 <code class="docutils literal notranslate"><span class="pre">\n\n\n</span></code>은 각 문단을 구분해주는 역할을 하므로, 해당 문자열을 기준으로 <code class="docutils literal notranslate"><span class="pre">split()</span></code>을 적용해 문단을 나누겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">paragraph_list</span> <span class="o">=</span> <span class="n">conllsoup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">paragraph_list</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;Keeping the Secret of Genetic Testing&#39;,
+ &#39;What is genetic risk? Genetic risk refers more to your chance of inheriting a disorder or disease. People get certain disease because of genetic changes. How much a genetic change tells us about your chance of developing a disorder is not always clear. If your genetic results indicate that you have gene changes associated with an increased risk of heart disease, it does not mean that you definitely will develop heart disease. The opposite is also true. If your genetic results show that you do not have changes associated with an increased risk of heart disease, it is still possible that you develop heart disease. However for some rare diseases, people who have certain gene changes are guaranteed to develop the disease. When we are diagonosed out with certain genetic disease, are we suppose to disclose this result to our relatives? My answer is no.&#39;,
+ &quot;On one hand, we do not want this potential danger causing firghtenning affects in our families&#39; later lives. When people around us know that we got certain disease, their altitudes will be easily changed, whether caring us too much or keeping away from us. And both are not what we want since most of us just want to live as normal people. Surrounded by such concerns, it is very likely that we are distracted to worry about these problems. It is a concern that will be with us during our whole life, because we will never know when the &#39;&#39;potential bomb&#39;&#39; will explode.&quot;,
+ &#39;On the other hand, if there are ways can help us to control or cure the disease, we can going through thses process from the scope of the whole family. For an example, if exercising is helpful for family potential disease, we can always look for more chances for the family to go exercise. And we keep track of all family members health conditions. At the same time, we are prepared to know when there are other members got this disease.&#39;,
+ &#39;Here I want to share Forest\&#39;view on this issue. Although some people feel that an individual who is found to carry a dominant gene for Huntington\&#39;s disease has an ethical obligation to disclose that fact to his or her siblings, there currently is no legal requirement to do so. In fact, requiring someone to communicate his or her own genetic risk to family members who are therefore also at risk is considered by many to be ethically dubious.&quot;&#39;,
+ &#39;Nothing is absolute right or wrong. If certain disease genetic test is very accurate and it is unavoidable and necessary to get treatment and known by others, it is OK to disclose the result. Above all, life is more important than secret.&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<p>위와 같이 리스트 안에 각각의 문단을 요소로 입력하면, 인덱싱을 통해 원하는 문단에 쉽게 접근 가능합니다. 이제 <code class="docutils literal notranslate"><span class="pre">mistake</span></code>의 속성 정보를 활용해 문법 오류 위치를 확인해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">conllsoup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;mistake&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;mistake:&#39;</span><span class="p">,</span> <span class="n">paragraph_list</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">42</span><span class="p">:</span><span class="mi">46</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">paragraph_list</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">98</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;mistake end_off=&quot;46&quot; end_par=&quot;1&quot; start_off=&quot;42&quot; start_par=&quot;1&quot;&gt;
+&lt;type&gt;ArtOrDet&lt;/type&gt;
+&lt;correction&gt;&lt;/correction&gt;
+&lt;/mistake&gt;
+
+
+mistake: more
+
+
+What is genetic risk? Genetic risk refers more to your chance of inheriting a disorder or disease.
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">start_par</span></code>과 <code class="docutils literal notranslate"><span class="pre">end_par</span></code>이 1이므로, <code class="docutils literal notranslate"><span class="pre">paragraph_list</span></code>에서 1번째 위치하는 문단을 가지고 와서 <code class="docutils literal notranslate"><span class="pre">start_off</span></code>와 <code class="docutils literal notranslate"><span class="pre">end_off</span></code>에 나와있는 42과 46번째 사이의 단어를 추출합니다. <code class="docutils literal notranslate"><span class="pre">more</span></code>이 문법 오류가 있는 단어이고, 해당 단어를 제거해야 한다고 나와 있습니다. 전체 문장을 확인해보니 <code class="docutils literal notranslate"><span class="pre">more</span></code>이 없어야 올바른 문장이 되는 것을 확인할 수 있습니다.</p>
+<p>파이썬에서 string은 immutable합니다. 즉, 내용물을 수정할 수 없는 데이터 타입입니다. string을 수정하기 위해선 <code class="docutils literal notranslate"><span class="pre">slicing</span></code>방법을 사용해야 합니다. 문법 오류 단어가 존재하는 앞, 뒤 문장을 자른 후, 추후 올바른 단어와 병합을 하는 방식입니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">paragraph_list</span><span class="p">[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">42</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;[CORRECTION]&#39;</span> <span class="o">+</span> <span class="n">paragraph_list</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">46</span><span class="p">:</span><span class="mi">98</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;What is genetic risk? Genetic risk refers [CORRECTION] to your chance of inheriting a disorder or disease.&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>위와 같이 전체 문단의 처음부터 <code class="docutils literal notranslate"><span class="pre">start_off</span></code>까지의 문자열과 <code class="docutils literal notranslate"><span class="pre">end_off</span></code>부터 마지막까지의 문자열 사이에 올바른 단어인 [CORRECTION]을 넣어주는 방법입니다. 실제 대체할 때는 [CORRECTION] 토큰 대신 올바른 단어를 입력해주면 됩니다. 98까지만 인덱싱한 이유는 문단 길이가 너무 길어서 출력 창 소비를 줄이기 위함입니다.</p>
+<p>위와 같은 기능을 하는 <code class="docutils literal notranslate"><span class="pre">edit_paragraph</span></code> 사용자 정의 함수를 정의하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">edit_paragraph</span><span class="p">(</span><span class="n">paragraph</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">correction</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">paragraph</span><span class="p">[:</span><span class="n">start</span><span class="p">]</span> <span class="o">+</span> <span class="n">correction</span> <span class="o">+</span> <span class="n">paragraph</span><span class="p">[</span><span class="n">end</span><span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>그 다음으로 필요한 기능은 인덱스를 업데이트 해주는 기능입니다. 모든 <code class="docutils literal notranslate"><span class="pre">mistake</span></code>들은 원본 데이터를 기준으로 문자열의 좌표 위치가 기록돼 있으므로, 단어를 하나씩 대체할 때마다 그 이후에 오는 단어의 좌표를 업데이트 해줄 필요 있습니다. 예를 들어 <code class="docutils literal notranslate"><span class="pre">I</span> <span class="pre">can</span> <span class="pre">do</span> <span class="pre">this</span> <span class="pre">all</span> <span class="pre">day</span></code>라는 예시 문장이 있을 때 아래와 같이 수정사항이 표시돼있다고 가정하겠습니다.</p>
+<ul class="simple">
+<li><p>[2, 5, ‘will’]</p></li>
+<li><p>[18, 21, ‘night’]</p></li>
+</ul>
+<p>즉 [2:5] 위치에 있는 단어를 ‘will’로 수정하고, [18:21] 위치에 있는 단어를 ‘day’로 수정한다는 뜻입니다. 앞서 정의한 <code class="docutils literal notranslate"><span class="pre">edit_paragraph()</span></code>함수를 활용한다면 아래와 같은 결과물이 나옵니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="s1">&#39;i can do this all day&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;mistake #1:&#39;</span><span class="p">,</span> <span class="n">sample</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+
+<span class="n">edit1</span> <span class="o">=</span> <span class="n">edit_paragraph</span><span class="p">(</span><span class="n">sample</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;will&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">edit1</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;mistake #2:&#39;</span><span class="p">,</span> <span class="n">sample</span><span class="p">[</span><span class="mi">18</span><span class="p">:</span><span class="mi">21</span><span class="p">])</span>
+
+<span class="n">edit2</span> <span class="o">=</span> <span class="n">edit_paragraph</span><span class="p">(</span><span class="n">edit1</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="s1">&#39;night&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">edit2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>i can do this all day 
+
+mistake #1: can
+i will do this all day 
+
+mistake #2: day
+i will do this allnighty
+</pre></div>
+</div>
+</div>
+</div>
+<p>첫번째 오류 단어인 <code class="docutils literal notranslate"><span class="pre">can</span></code>은 올바르게 <code class="docutils literal notranslate"><span class="pre">will</span></code>로 대체가 됐습니다. 하지만 두번째 오류 단어인 <code class="docutils literal notranslate"><span class="pre">day</span></code>는 <code class="docutils literal notranslate"><span class="pre">night</span></code>으로 올바르게 대체가 되지 않았습니다. <code class="docutils literal notranslate"><span class="pre">can</span></code>이 <code class="docutils literal notranslate"><span class="pre">will</span></code>로 바뀌면서 <code class="docutils literal notranslate"><span class="pre">day</span></code>의 인덱스가 [18:21]에서 [19:22]로 변경 됐기 때문입니다. 이처럼 단어를 하나씩 바꿀 때마다 그 이후에 오는 단어들의 인덱스가 변경되기 때문에, 인덱스를 업데이트 해줄 필요가 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;mistake #2:&#39;</span><span class="p">,</span> <span class="n">sample</span><span class="p">[</span><span class="mi">18</span><span class="p">:</span><span class="mi">21</span><span class="p">])</span>
+
+<span class="n">edit2</span> <span class="o">=</span> <span class="n">edit_paragraph</span><span class="p">(</span><span class="n">edit1</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="s1">&#39;night&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">edit2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mistake #2: day
+i will do this all night
+</pre></div>
+</div>
+</div>
+</div>
+<p>지금껏 확인한 내용을 모두 정리하면 아래와 같은 사용자 정의 함수를 만들 수 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">edit_paragraph</span><span class="p">(</span><span class="n">paragraph</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">correction</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">paragraph</span><span class="p">[:</span><span class="n">start</span><span class="p">]</span> <span class="o">+</span> <span class="n">correction</span> <span class="o">+</span> <span class="n">paragraph</span><span class="p">[</span><span class="n">end</span><span class="p">:]</span>
+
+<span class="k">def</span> <span class="nf">update_index</span><span class="p">(</span><span class="n">paragraph</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">corrections</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    paragraph: 원문</span>
+<span class="sd">    offset: 원본 위치정보</span>
+<span class="sd">    corrections: 수정해야 하는 단어</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">raw_words</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># 1. detect all the words at offset values in the paragraph / O(offset)</span>
+    <span class="k">for</span> <span class="n">of</span> <span class="ow">in</span> <span class="n">offset</span><span class="p">:</span>
+        <span class="n">raw_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">paragraph</span><span class="p">[</span><span class="n">of</span><span class="p">[</span><span class="s1">&#39;start_off&#39;</span><span class="p">]:</span><span class="n">of</span><span class="p">[</span><span class="s1">&#39;end_off&#39;</span><span class="p">]])</span>
+
+    <span class="c1"># 2. compare length change between the detected words and corrections (map is faster than list comprehension when it doesn&#39;t use lambda) / O(offset)</span>
+    <span class="n">adjusted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">corrections</span><span class="p">)))</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">raw_words</span><span class="p">)))</span>
+
+    <span class="c1"># cumulate adjusted values / O(offset)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">adjusted</span><span class="p">)):</span>
+        <span class="n">adjusted</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">adjusted</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="c1"># 3. adjust the index sequentially / O(offset)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">offset</span><span class="p">)):</span>
+        <span class="n">offset</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;start_off&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">adjusted</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">offset</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;end_off&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">adjusted</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>그리고 아래 알고리즘을 활용해 오류 단어들을 올바른 단어로 모두 수정해서 문법 오류가 없는 에세이를 생성하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">all_docs</span> <span class="o">=</span> <span class="n">conllsoup</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;doc&#39;</span><span class="p">)</span>
+<span class="n">corrected_essays</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">all_docs</span><span class="p">:</span>
+    
+    <span class="c1"># extract paragraphs</span>
+    <span class="n">paragraph_lists</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># paragraph 별로 수정 진행</span>
+    <span class="c1"># make list that contains offset values</span>
+
+    <span class="n">all_mistakes</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;mistake&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">para_idx</span><span class="p">,</span> <span class="n">para</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">paragraph_lists</span><span class="p">):</span>
+        <span class="n">edits</span> <span class="o">=</span> <span class="p">[</span><span class="n">mistake</span><span class="o">.</span><span class="n">attrs</span> <span class="k">for</span> <span class="n">mistake</span> <span class="ow">in</span> <span class="n">all_mistakes</span> <span class="k">if</span> <span class="n">mistake</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;start_par&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">para_idx</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">edits</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+        
+        <span class="n">edits</span> <span class="o">=</span> <span class="p">[{</span><span class="n">key</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">edit</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span> <span class="k">for</span> <span class="n">edit</span> <span class="ow">in</span> <span class="n">edits</span><span class="p">]</span>
+
+        <span class="c1"># make list that contains correction information </span>
+        <span class="n">corrections</span> <span class="o">=</span> <span class="p">[</span><span class="n">mistake</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;correction&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">mistake</span> <span class="ow">in</span> <span class="n">all_mistakes</span> <span class="k">if</span> <span class="n">mistake</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;start_par&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">para_idx</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="c1">#start par과 end par은 항상 같은가?</span>
+        
+        <span class="c1"># reindexing</span>
+        <span class="n">update_index</span><span class="p">(</span><span class="n">para</span><span class="p">,</span> <span class="n">edits</span><span class="p">,</span> <span class="n">corrections</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">edit_idx</span><span class="p">,</span> <span class="n">edit</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">edits</span><span class="p">):</span>
+            <span class="n">para</span> <span class="o">=</span> <span class="n">edit_paragraph</span><span class="p">(</span><span class="n">para</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">edit</span><span class="p">[</span><span class="s1">&#39;start_off&#39;</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">edit</span><span class="p">[</span><span class="s1">&#39;end_off&#39;</span><span class="p">]),</span> <span class="n">corrections</span><span class="p">[</span><span class="n">edit_idx</span><span class="p">])</span>
+
+        <span class="n">paragraph_lists</span><span class="p">[</span><span class="n">para_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">para</span>
+
+    <span class="n">corrected_essays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">paragraph_lists</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">corrected_essays</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>50
+</pre></div>
+</div>
+</div>
+</div>
+<p>총 50개의 에세이에 대해 전처리가 완료됐습니다. 첫번째 에세이 대해 수정 전/후를 비교하면 아래와 같습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conllsoup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;doc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">find_all</span><span class="p">(</span><span class="s1">&#39;mistake&#39;</span><span class="p">)[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;mistake end_off=&quot;46&quot; end_par=&quot;1&quot; start_off=&quot;42&quot; start_par=&quot;1&quot;&gt;
+ &lt;type&gt;ArtOrDet&lt;/type&gt;
+ &lt;correction&gt;&lt;/correction&gt;
+ &lt;/mistake&gt;, &lt;mistake end_off=&quot;125&quot; end_par=&quot;1&quot; start_off=&quot;118&quot; start_par=&quot;1&quot;&gt;
+ &lt;type&gt;Nn&lt;/type&gt;
+ &lt;correction&gt;diseases&lt;/correction&gt;
+ &lt;/mistake&gt;, &lt;mistake end_off=&quot;627&quot; end_par=&quot;1&quot; start_off=&quot;620&quot; start_par=&quot;1&quot;&gt;
+ &lt;type&gt;Trans&lt;/type&gt;
+ &lt;correction&gt;However,&lt;/correction&gt;
+ &lt;/mistake&gt;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conllsoup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="mi">750</span><span class="p">]</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;\n\nKeeping the Secret of Genetic Testing\n\n\nWhat is genetic risk? Genetic risk refers more to your chance of inheriting a disorder or disease. People get certain disease because of genetic changes. How much a genetic change tells us about your chance of developing a disorder is not always clear. If your genetic results indicate that you have gene changes associated with an increased risk of heart disease, it does not mean that you definitely will develop heart disease. The opposite is also true. If your genetic results show that you do not have changes associated with an increased risk of heart disease, it is still possible that you develop heart disease. However for some rare diseases, people who have certain gene changes are guaranteed to d&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">corrected_essays</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">750</span><span class="p">]</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Keeping the Secret of Genetic Testing What is genetic risk? Genetic risk refers  to your chance of inheriting a disorder or disease. People get certain diseases because of genetic changes. How much a genetic change tells us about your chance of developing a disorder is not always clear. If your genetic results indicate that you have gene changes associated with an increased risk of heart disease, it does not mean that you definitely will develop heart disease. The opposite is also true. If your genetic results show that you do not have changes associated with an increased risk of heart disease, it is still possible that you develop heart disease. However, for some rare diseases, people who have certain gene changes are guaranteed to develop&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>출력 창 소비를 줄이기 위해 각 에세이 별 750번째 글자까지만 확인해보겠습니다. <code class="docutils literal notranslate"><span class="pre">mistake</span></code>태그에 있는 처음 3개의 라벨이 반영됬는지 살펴보겠습니다. 42번째와 46번째 글자 사이에 있는 <code class="docutils literal notranslate"><span class="pre">more</span></code>이 삭제가 되고, <code class="docutils literal notranslate"><span class="pre">disease</span></code>가 <code class="docutils literal notranslate"><span class="pre">diseases</span></code>로 수정되고, <code class="docutils literal notranslate"><span class="pre">However</span></code>가 <code class="docutils literal notranslate"><span class="pre">However,</span></code>로 반점이 추가된 것을 확인할 수 있습니다. 이처럼 <code class="docutils literal notranslate"><span class="pre">edit_paragraph()</span></code>와 <code class="docutils literal notranslate"><span class="pre">update_index()</span></code>를 통해 에세이에 있는 문법 오류를 교정할 수 있습니다.</p>
+<p><code class="docutils literal notranslate"><span class="pre">edit_paragraph()</span></code>함수에는 2개의 한계점이 있습니다. 단어를 삭제해야 하는 경우 단어 간 띄어쓰기 간격이 고르지 않게 수정되며, 대체 대상이 되는 단어의 위치 좌표가 띄어쓰기 까지 포함한 경우에도 수정 후 띄어쓰기 간격이 고르지 않습니다. 예를 들어 위치 좌표가 가르키는 대상이 ‘disease’가 아닌 ‘disease ‘로 되어 있다면 수정 후 띄어쓰기 간격이 고르지 않습니다.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>현재까지 수정된 에세이를 pickle 파일로 저장하는 방법은 다음과 같습니다.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;CoNLL14_corrected_essays.pkl&quot;</span>
+
+<span class="n">open_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+<span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">corrected_essays</span><span class="p">,</span> <span class="n">open_file</span><span class="p">)</span>
+<span class="n">open_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>저장한 pickle파일은 아래 코드로 불러올 수 있습니다.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;CoNLL14_corrected_essays.pkl&quot;</span>
+<span class="n">open_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span>
+<span class="n">loaded_list</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">open_file</span><span class="p">)</span>
+<span class="n">open_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="bea-2019-shared-task-dataset">
+<h2>2.2 BEA-2019 Shared Task Dataset<a class="headerlink" href="#bea-2019-shared-task-dataset" title="Permalink to this headline">¶</a></h2>
+<p>BEA Workshop은 Association for Computational Linguistics Special Interest Group for Building Educational Applications (SIGEDU)에서 매년 운영하는 워크숍입니다. BEA Workshop은 Workshop on Innovative Use of NLP for Building Educational Applications의 약자이며, NLP를 교육 도메인에 적용하는 활용 사례들을 다루는 워크숍입니다.</p>
+<p>2019년에 개최된 BEA-2019 워크숍에서 Shared Task로 GEC 문제를 다뤘습니다. 해당 대회에서 새롭게 제공한 데이터셋은 Cambridge English Write &amp; Improve (W&amp;I) 데이터와 LOCNESS corpus 입니다.</p>
+<p>Write &amp; Improve는 비영어권 학생들이 글쓰기 자료를 올려서 글의 품질을 향상할 수 있는 방법을 피드백 받는 온라인 플랫폼입니다. 2014년도 부터 W&amp;I 데이터 어노테이터 (Annotator)들이 제출물들의 문법 오류를 수기로 기록했습니다. 본 대회에서는 해당 데이터를 훈련용, 검증용, 시험용 데이터로 공개했습니다.</p>
+<p>그 외에도 LOCNESS corpus를 공개했습니다. LOCNESS는 영국과 미국의 원어민 학부생들이 작성한 약 400개의 에세이가 담긴 말뭉치입니다. 필터링 과정을 거친 총 100개의 에세이를 W&amp;I 데이터 어노테이터들이 라벨링 해서 검증용, 시험용 데이터로 공개했습니다. 샘플 개수가 100개 밖에 되지 않아 별도로 훈련용 데이터로는 제공하지 않았습니다. 필터링 과정 및 추가적인 내용은 참고문헌 [2]에서 확인 가능합니다.</p>
+<div class="section" id="w-i-locness">
+<h3>2.2.1 W&amp;I + LOCNESS 데이터 탐색<a class="headerlink" href="#w-i-locness" title="Permalink to this headline">¶</a></h3>
+<p>먼저 <code class="docutils literal notranslate"><span class="pre">wget</span></code>명령어를 활용해 <a class="reference external" href="https://www.cl.cam.ac.uk/research/nl/bea2019st/">BEA 2019 Shared Task 홈페이지</a>로 부터 압축 파일을 다운로드해 와서 <code class="docutils literal notranslate"><span class="pre">bea19.tar.gz</span></code>로 저장합니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!wget -O &#39;bea19.tar.gz&#39; https://www.cl.cam.ac.uk/research/nl/bea2019st/data/wi+locness_v2.1.bea19.tar.gz
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--2021-04-18 12:37:58--  https://www.cl.cam.ac.uk/research/nl/bea2019st/data/wi+locness_v2.1.bea19.tar.gz
+Resolving www.cl.cam.ac.uk (www.cl.cam.ac.uk)... 128.232.0.20, 2a05:b400:110::80:14
+Connecting to www.cl.cam.ac.uk (www.cl.cam.ac.uk)|128.232.0.20|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 6120469 (5.8M) [application/x-gzip]
+Saving to: ‘bea19.tar.gz’
+
+bea19.tar.gz        100%[===================&gt;]   5.84M  6.90MB/s    in 0.8s    
+
+2021-04-18 12:37:59 (6.90 MB/s) - ‘bea19.tar.gz’ saved [6120469/6120469]
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/NLP-ch2img03.JPG?raw=true" /></p>
+<ul class="simple">
+<li><p>그림 2-3 bea19.tar.gz 불러온 후 파일 경로</p></li>
+</ul>
+<p>정상적으로 파일이 불러왔다면 그림 2-3와 같이 <code class="docutils literal notranslate"><span class="pre">bea19.tar.gz</span></code>파일이 생성돼 있을 것입니다. 다음으로는 <code class="docutils literal notranslate"><span class="pre">tar</span></code>명령어를 활용해 압축을 해제하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>!tar -xvf bea19.tar.gz
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>wi+locness/
+wi+locness/json_to_m2.py
+wi+locness/licence.wi.txt
+wi+locness/readme.txt
+wi+locness/license.locness.txt
+wi+locness/json/
+wi+locness/json/A.dev.json
+wi+locness/json/A.train.json
+wi+locness/json/B.dev.json
+wi+locness/json/B.train.json
+wi+locness/json/C.dev.json
+wi+locness/json/C.train.json
+wi+locness/json/N.dev.json
+wi+locness/m2/
+wi+locness/m2/ABCN.dev.gold.bea19.m2
+wi+locness/m2/A.train.gold.bea19.m2
+wi+locness/m2/A.dev.gold.bea19.m2
+wi+locness/m2/B.train.gold.bea19.m2
+wi+locness/m2/B.dev.gold.bea19.m2
+wi+locness/m2/C.train.gold.bea19.m2
+wi+locness/m2/C.dev.gold.bea19.m2
+wi+locness/m2/N.dev.gold.bea19.m2
+wi+locness/m2/ABC.train.gold.bea19.m2
+wi+locness/test/
+wi+locness/test/ABCN.test.bea19.orig
+wi+locness/test/readme.txt
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/NLP-ch2img04.JPG?raw=true" /></p>
+<ul class="simple">
+<li><p>그림 2-4 bea19.tar.gz 압축 해제 후 폴더 경로</p></li>
+</ul>
+<p>압축을 해제하면 그림 2-4와같이 폴더가 구성돼있습니다. 각 폴더가 의미하는 바는 다음과 같습니다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">json</span></code>: json 형태의 W&amp;I 와 LOCNESS 파일</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">m2</span></code>: m2 형태의 W&amp;I 와 LOCNESS 파일</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test</span></code>: 테스트 데이터</p></li>
+</ul>
+<p>W&amp;I 파일은 CEFR (Common European Framework of Reference for Languages) 레벨에 따라 A, B, C등급으로 나눠져있습니다. A에서 C로 갈수록 높은 수준의 영어를 구사한다는 의미입니다. LOCNESS파일은 N으로 표시돼있습니다.</p>
+<p>문제 생성시 활용할 지문으로는 C등급 파일과 원어민이 작성한 LOCNESS 파일의 에세이를 사용하도록 하겠습니다. 우선 C등급 파일의 경로를 <code class="docutils literal notranslate"><span class="pre">path</span></code>변수에 저장합니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;wi+locness/json/C.dev.json&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>그 후 <code class="docutils literal notranslate"><span class="pre">open()</span></code>함수로 파일을 열고나서 내용물을 <code class="docutils literal notranslate"><span class="pre">readlines()</span></code>를 통해 읽어서 <code class="docutils literal notranslate"><span class="pre">data</span></code>변수에 저장합니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+  <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>먼저 데이터 타입을 확인합니다. 데이터 타입이 <code class="docutils literal notranslate"><span class="pre">list</span></code>이므로 인덱싱이 가능합니다. 첫번째 요소에 접근해서 확인해보면 다음과 같은 문자열이 들어가 있는 것을 확인할 수 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;list&#39;&gt;
+&lt;class &#39;str&#39;&gt;
+{&quot;edits&quot;: [[0, [[89, 98, &quot;saw&quot;], [316, 316, &quot; for&quot;], [343, 343, &quot; for&quot;], [365, 365, &quot; a&quot;], [375, 375, &quot; the&quot;], [406, 406, &quot; a&quot;], [469, 471, &quot;of&quot;], [523, 527, &quot;know&quot;], [589, 594, &quot;chips&quot;]]]], &quot;userid&quot;: &quot;24796&quot;, &quot;text&quot;: &quot;Dear Mrs. Ashby, \n\nYesterday I was in Green Pepper Cafe for a meal with colleagues and I have seen the advertisement for a job at weekends in your cafe. \n\nI am very interested in this work and believe that my employment background is appropriate for it. \n\nI am a Tourism student and I need to work at weekends to pay my studies. \nI have worked one year in London as waiter in Hard Rock Cafe and 6 months as waiter also in Barcomi\u2019s Cafe in Berlin. So I have experience in service, costumer care and working long hours. \n\nI Know how to prepare different kinds of food: sandwiches, fish and fries, hamburgers, Italian pasta, etc \n\nI am also very good at dealing with people, I have never had a complaint sheet!\n\nI have total availability at weekends and also in summer. \n\nI speak Spanish, English and German. \n\nPlease, find attached a copy of my CV, which expands on my experience and achievements. \n\nI am looking forward to talking with you about the possibility of working in this position. I am available to do an interview when it is convenient for you.\n\nThank you for your time and consideration. \n\n\n\nYours Sincerely, \n\n\n\nMar\u00eda Luisa Castaneda del Acuna\n&quot;, &quot;cefr&quot;: &quot;C2.ii&quot;, &quot;id&quot;: &quot;1-169309&quot;}
+</pre></div>
+</div>
+</div>
+</div>
+<p>문자열을 살펴보면 key값과 value값으로 나눠 저장돼있는 딕셔너리 형태인것을 확인할 수 있습니다. 해당 데이터를 용이하게 처리하기 위해 문자열을 딕셔너리로 변환하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;dict&#39;&gt;
+{&#39;edits&#39;: [[0, [[89, 98, &#39;saw&#39;], [316, 316, &#39; for&#39;], [343, 343, &#39; for&#39;], [365, 365, &#39; a&#39;], [375, 375, &#39; the&#39;], [406, 406, &#39; a&#39;], [469, 471, &#39;of&#39;], [523, 527, &#39;know&#39;], [589, 594, &#39;chips&#39;]]]], &#39;userid&#39;: &#39;24796&#39;, &#39;text&#39;: &#39;Dear Mrs. Ashby, \n\nYesterday I was in Green Pepper Cafe for a meal with colleagues and I have seen the advertisement for a job at weekends in your cafe. \n\nI am very interested in this work and believe that my employment background is appropriate for it. \n\nI am a Tourism student and I need to work at weekends to pay my studies. \nI have worked one year in London as waiter in Hard Rock Cafe and 6 months as waiter also in Barcomi’s Cafe in Berlin. So I have experience in service, costumer care and working long hours. \n\nI Know how to prepare different kinds of food: sandwiches, fish and fries, hamburgers, Italian pasta, etc \n\nI am also very good at dealing with people, I have never had a complaint sheet!\n\nI have total availability at weekends and also in summer. \n\nI speak Spanish, English and German. \n\nPlease, find attached a copy of my CV, which expands on my experience and achievements. \n\nI am looking forward to talking with you about the possibility of working in this position. I am available to do an interview when it is convenient for you.\n\nThank you for your time and consideration. \n\n\n\nYours Sincerely, \n\n\n\nMaría Luisa Castaneda del Acuna\n&#39;, &#39;cefr&#39;: &#39;C2.ii&#39;, &#39;id&#39;: &#39;1-169309&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<p>문자열이 모두 딕셔너리로 변환됐습니다. 다음으로는 딕셔너리의 키를 확인해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dict_keys([&#39;edits&#39;, &#39;userid&#39;, &#39;text&#39;, &#39;cefr&#39;, &#39;id&#39;])
+</pre></div>
+</div>
+</div>
+</div>
+<p>각 키의 의미는 다음과 같습니다.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cefr</span></code>: text의 CEFR 레벨</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">edits</span></code>: 문법 오류 위치와 올바른 단어</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span></code>: 에세이 고유번호</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">text</span></code>: 에세이 원본</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">userid</span></code>: 사용자 고유번호</p></li>
+</ul>
+<p>BEA 2019 데이터도 2014 CoNLL 데이터 처럼 문법 오류의 위치가 인덱스로 기록돼있고, 어떤 단어로 고쳐야하는지 라벨링이 돼있습니다. <code class="docutils literal notranslate"><span class="pre">edits</span></code> 키를 확인해 어떻게 기록 돼있는지 확인해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;edits&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0,
+  [[89, 98, &#39;saw&#39;],
+   [316, 316, &#39; for&#39;],
+   [343, 343, &#39; for&#39;],
+   [365, 365, &#39; a&#39;],
+   [375, 375, &#39; the&#39;],
+   [406, 406, &#39; a&#39;],
+   [469, 471, &#39;of&#39;],
+   [523, 527, &#39;know&#39;],
+   [589, 594, &#39;chips&#39;]]]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>가장 첫번째 나오는 숫자 0은 어노테이터의 고유번호를 뜻합니다. 그 다음으로 나오는 정보들이 오류의 시작위치, 오류가 끝나는 위치, 그리고 올바른 단어를 의미합니다. 즉, 2014 CoNLL 전처리 시 활용한 함수들을 조금 수정하여 전처리에 활용가능합니다.</p>
+</div>
+<div class="section" id="id3">
+<h3>2.2.2 W&amp;I + LOCNESS 데이터 전처리<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>전처리에 활용할 <code class="docutils literal notranslate"><span class="pre">edit_paragraph()</span></code>함수와 <code class="docutils literal notranslate"><span class="pre">update_index_BEA()</span></code>함수를 아래와 같이 정의합니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">edit_paragraph</span><span class="p">(</span><span class="n">paragraph</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">correction</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">paragraph</span><span class="p">[:</span><span class="n">start</span><span class="p">]</span> <span class="o">+</span> <span class="n">correction</span> <span class="o">+</span> <span class="n">paragraph</span><span class="p">[</span><span class="n">end</span><span class="p">:]</span>
+
+<span class="k">def</span> <span class="nf">update_index_BEA</span><span class="p">(</span><span class="n">paragraph</span><span class="p">,</span> <span class="n">edits</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    paragraph: 원문</span>
+<span class="sd">    edits: edits from BEA_2019</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">raw_words</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">corrections</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># 1. detect all the words at offset values in the paragraph / O(offset)</span>
+    <span class="k">for</span> <span class="n">edit</span> <span class="ow">in</span> <span class="n">edits</span><span class="p">:</span>
+        <span class="n">raw_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">paragraph</span><span class="p">[</span><span class="n">edit</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">edit</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="c1"># make corrections</span>
+        <span class="n">corrections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edit</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+    <span class="c1"># 2. compare length change between the detected words and corrections (map is faster than list comprehension when it doesn&#39;t use lambda) / O(offset)</span>
+    <span class="n">adjusted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">corrections</span><span class="p">)))</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">raw_words</span><span class="p">)))</span>
+
+    <span class="c1"># cumulate adjusted values / O(offset)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">adjusted</span><span class="p">)):</span>
+        <span class="n">adjusted</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">adjusted</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="c1"># 3. adjust the index sequentially / O(offset)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">edits</span><span class="p">)):</span>
+        <span class="n">edits</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">adjusted</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">edits</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">adjusted</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">corrections</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>BEA 2019에는 None Type이 존재하기도 하므로, 해당 샘플은 예외 처리 하는 로직이 필요합니다. 예를 들어 8번재 문서를 확인해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">edits</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">8</span><span class="p">][</span><span class="s1">&#39;edits&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">corrections</span> <span class="o">=</span> <span class="n">update_index_BEA</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">8</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">],</span> <span class="n">edits</span><span class="p">)</span>
+
+<span class="n">edits</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">&lt;ipython-input-40-65b5b20092fd&gt;</span> in <span class="ni">&lt;module&gt;</span><span class="nt">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">edits</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">8</span><span class="p">][</span><span class="s1">&#39;edits&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> 
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">corrections</span> <span class="o">=</span> <span class="n">update_index_BEA</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">8</span><span class="p">][</span><span class="s1">&#39;text&#39;</span><span class="p">],</span> <span class="n">edits</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> 
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">edits</span>
+
+<span class="nn">&lt;ipython-input-39-f8f89874637d&gt;</span> in <span class="ni">update_index_BEA</span><span class="nt">(paragraph, edits)</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> 
+<span class="g g-Whitespace">     </span><span class="mi">20</span>     <span class="c1"># 2. compare length change between the detected words and corrections (map is faster than list comprehension when it doesn&#39;t use lambda) / O(offset)</span>
+<span class="ne">---&gt; </span><span class="mi">21</span>     <span class="n">adjusted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">corrections</span><span class="p">)))</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">raw_words</span><span class="p">)))</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span> 
+<span class="g g-Whitespace">     </span><span class="mi">23</span>     <span class="c1"># cumulate adjusted values / O(offset)</span>
+
+<span class="ne">TypeError</span>: object of type &#39;NoneType&#39; has no len()
+</pre></div>
+</div>
+</div>
+</div>
+<p>단어간 길이를 비교할 때 None Type이 있으면 에러가 나므로, 아래 코드 샘플을 활용해 None Type은 모두 제거하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">edit</span> <span class="k">for</span> <span class="n">edit</span> <span class="ow">in</span> <span class="n">edits</span> <span class="k">if</span> <span class="n">edit</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>반복문을 통해 모든 에세이들에 대한 문법 교정을 실시하고, <code class="docutils literal notranslate"><span class="pre">corrected_essays</span></code>에 저장하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">corrected_essays_WI</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    
+    <span class="c1"># extract paragraphs</span>
+    <span class="n">essay</span> <span class="o">=</span> <span class="n">doc</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span>
+
+    <span class="c1"># paragraph 별로 수정 진행</span>
+    <span class="c1"># make list that contains offset values</span>
+
+    <span class="n">edits</span> <span class="o">=</span> <span class="n">doc</span><span class="p">[</span><span class="s1">&#39;edits&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">edits</span> <span class="o">=</span> <span class="p">[</span><span class="n">edit</span> <span class="k">for</span> <span class="n">edit</span> <span class="ow">in</span> <span class="n">edits</span> <span class="k">if</span> <span class="n">edit</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">]</span> <span class="c1"># NoneType 제거</span>
+    <span class="n">corrections</span> <span class="o">=</span> <span class="n">update_index_BEA</span><span class="p">(</span><span class="n">essay</span><span class="p">,</span> <span class="n">edits</span><span class="p">)</span>    
+
+    <span class="k">for</span> <span class="n">edit_idx</span><span class="p">,</span> <span class="n">edit</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">edits</span><span class="p">):</span>
+        <span class="n">essay</span> <span class="o">=</span> <span class="n">edit_paragraph</span><span class="p">(</span><span class="n">essay</span><span class="p">,</span> <span class="n">edit</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">edit</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">corrections</span><span class="p">[</span><span class="n">edit_idx</span><span class="p">])</span>
+
+    <span class="n">corrected_essays_WI</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">essay</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n\t</span><span class="s1">&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">corrected_essays_WI</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>70
+</pre></div>
+</div>
+</div>
+</div>
+<p>위와 같은 과정을 LOCNESS 데이터에도 적용하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;wi+locness/json/N.dev.json&#39;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+
+<span class="n">corrected_essays_LOCNESS</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    
+    <span class="c1"># extract paragraphs</span>
+    <span class="n">essay</span> <span class="o">=</span> <span class="n">doc</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span>
+
+    <span class="c1"># paragraph 별로 수정 진행</span>
+    <span class="c1"># make list that contains offset values</span>
+
+    <span class="n">edits</span> <span class="o">=</span> <span class="n">doc</span><span class="p">[</span><span class="s1">&#39;edits&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">edits</span> <span class="o">=</span> <span class="p">[</span><span class="n">edit</span> <span class="k">for</span> <span class="n">edit</span> <span class="ow">in</span> <span class="n">edits</span> <span class="k">if</span> <span class="n">edit</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">]</span> <span class="c1"># NoneType 제거</span>
+    <span class="n">corrections</span> <span class="o">=</span> <span class="n">update_index_BEA</span><span class="p">(</span><span class="n">essay</span><span class="p">,</span> <span class="n">edits</span><span class="p">)</span>    
+
+    <span class="k">for</span> <span class="n">edit_idx</span><span class="p">,</span> <span class="n">edit</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">edits</span><span class="p">):</span>
+        <span class="n">essay</span> <span class="o">=</span> <span class="n">edit_paragraph</span><span class="p">(</span><span class="n">essay</span><span class="p">,</span> <span class="n">edit</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">edit</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">corrections</span><span class="p">[</span><span class="n">edit_idx</span><span class="p">])</span>
+
+    <span class="n">corrected_essays_LOCNESS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">essay</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n\t</span><span class="s1">&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">corrected_essays_LOCNESS</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>50
+</pre></div>
+</div>
+</div>
+</div>
+<p>CoNLL 데이터셋에서 문법 교정한 50개의 에세이, W&amp;I 데이터셋에서 문법 교정한 70개의 에세이, 그리고 LOCNESS 데이터셋에서 문법 교정한 50개의 에세이를 모두 합쳐 하나의 리스트로 만든 후, pickle 파일로 저장하겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">total_essays</span> <span class="o">=</span> <span class="n">corrected_essays</span> <span class="o">+</span> <span class="n">corrected_essays_WI</span> <span class="o">+</span> <span class="n">corrected_essays_LOCNESS</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">total_essays</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>170
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;CoNLL+BEA_corrected_essays.pkl&quot;</span>
+<span class="n">open_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span>
+<span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">total_essays</span><span class="p">,</span> <span class="n">open_file</span><span class="p">)</span>
+<span class="n">open_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>지금까지 에세이 데이터인 CoNLL 14 데이터와 W&amp;I + LOCNESS 데이터를 탐색해보고 전처리를 진행해봤습니다. 전처리한 데이터를 활용해 3장과 4장에서 에세이에 걸맞는 질문을 자동으로 생성해보겠습니다.</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>참고문헌<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>[1] Ng, H. T., Wu, S. M., Briscoe, T., Hadiwinoto, C., Susanto, R. H., &amp; Bryant, C. (2014). The CoNLL-2014 Shared Task on Grammatical Error Correction. <em>Proceedings of the Eighteenth Conference on Computational Natural Language Learning: Shared Task</em>, 1–14. <a class="reference external" href="https://doi.org/10.3115/v1/W14-1701">https://doi.org/10.3115/v1/W14-1701</a></p>
+<p>[2] Bryant, C., Felice, M., Andersen, I. E., &amp; Briscoe, T. (2019). The BEA-2019 Shared Task on Grammatical Error Correction. <em>Proceedings of the Fourteenth Workshop on Innovative Use of NLP for Building Educational Applications</em>, 52–75. <a class="reference external" href="https://doi.org/10.18653/v1/w19-4406">https://doi.org/10.18653/v1/w19-4406</a></p>
+<p>[3] L. (2018, March 21). <em>Difference Between HTML and SGML</em>. Compare the Difference Between Similar Terms. <a class="reference external" href="https://www.differencebetween.com/difference-between-html-and-vs-sgml/">https://www.differencebetween.com/difference-between-html-and-vs-sgml/</a></p>
+<p>[4] Saive, R. (2020, July 3). <em>18 Tar Command Examples in Linux</em>. TecMint. <a class="reference external" href="https://www.tecmint.com/18-tar-command-examples-in-linux/">https://www.tecmint.com/18-tar-command-examples-in-linux/</a></p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapters\NLP"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Ch1-Introduction.html" title="previous page">1. 자연어 처리 모델 소개 (Introduction to NLP Model)</a>
+    <a class='right-next' id="next-link" href="Ch4-Wh-Question.html" title="next page">4. Wh- Question</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By PseudoLab Tutorial Team<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-185350287-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>

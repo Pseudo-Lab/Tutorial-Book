@@ -1,0 +1,1084 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4. Wh- Question &#8212; PseudoLab Tutorial Book</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "Pseudo-Lab/Tutorial-Book");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../../_static/PseudoLab_logo.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="2. 데이터 탐색과 전처리" href="Ch2-EDA.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/PseudoLab_logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">PseudoLab Tutorial Book</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../index.html">
+   PyTorch를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch)
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  객체 탐지(Object Detection)
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/intro.html">
+   의료용 마스크 탐지 모델 구축
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch1-Object-Detection.html">
+   1. 객체 탐지 소개
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch2-EDA.html">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch3-preprocessing.html">
+   3. 데이터 전처리
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch4-RetinaNet.html">
+   4. RetinaNet
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch5-Faster-R-CNN.html">
+   5. Faster R-CNN
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/References.html">
+   6. 참고 문헌
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  시계열 분석(Time Series)
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/intro.html">
+   코로나 확진자 수 예측 모델 구축
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch1-Time-Series.html">
+   1. Time Series 소개
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch2-EDA.html">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch3-preprocessing.html">
+   3. 데이터 전처리
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch4-LSTM.html">
+   4. LSTM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch5-CNN-LSTM.html">
+   5. CNN-LSTM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/References.html">
+   6. 참고 문헌
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  생성 모델링(Generative Modeling)
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/intro.html">
+   컬러 이미지 생성 모델 구축
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch1-Introduction.html">
+   1. GAN 소개
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch2-EDA.html">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch3-GAN.html">
+   3. GAN
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch4-pix2pix.html">
+   4. pix2pix
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/References.html">
+   5. 참고 문헌
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  문제 생성(Question Generation)
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   TF 및 Wh 문제 생성
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch1-Introduction.html">
+   1. 자연어 처리 모델 소개 (Introduction to NLP Model)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch2-EDA.html">
+   2. 데이터 탐색과 전처리
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   4. Wh- Question
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/chapters/NLP/Ch4-Wh-Question.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Pseudo-Lab/Tutorial-Book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/NLP/Ch4-Wh-Question.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/chapters/NLP/Ch4-Wh-Question.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   4.1 데이터셋 다운로드
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   4.2 정답 단어 추출
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   4.3 문제 생성 클래스 정의
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   4.4 문제 평가 클래스 정의
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   4.5 오답 생성 클래스 정의
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#wh">
+   4.6 Wh- 문제 생성
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   4.7 참고문헌
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="wh-question">
+<h1>4. Wh- Question<a class="headerlink" href="#wh-question" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/Pseudo-Lab/Tutorial-Book/blob/master/book/chapters/NLP/Ch4-Wh-Question.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>3장에서는 각 지문에 대한 True/False 문제를 생성해보았습니다. 이번 4장에서는 T5모델과 BERT모델로 Wh- 문제를 생성해보겠습니다. Cambridge Dictionary에 의하면 <a class="reference external" href="https://dictionary.cambridge.org/ko/%EC%82%AC%EC%A0%84/%EC%98%81%EC%96%B4/wh-question">Wh- 문제</a>는 what, when, where, who, whom, which, whose, why, how로 시작하는 문제라고 정의되어 있습니다. 이번장에서는 이러한 Wh- 문제를 다지선다(Multi-Choice)로 생성해 볼 것입니다.</p>
+<p>4.1절에서는 모델의 입력값으로 사용할 에세이 데이터를 불러오고 4.2절에서는 정답 단어를 추출하는 함수를 만들어 보겠습니다. 4.3절에서는 Wh- 문제를 생성하는 클래스, 4.4절에서는 문제를 평가하는 클래스, 그리고 4.5절에서는 오답을 생성하는 클래스를 정의하도록 하겠습니다. 마지막으로 4.6절에서는 정의한 클래스들을 사용하여 실제 에세이 지문에서 Wh- 문제를 생성해보도록 하겠습니다.</p>
+<div class="section" id="id1">
+<h2>4.1 데이터셋 다운로드<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>문제 생성에 앞서 2장에서 저장한 데이터셋을 불러오도록 하겠습니다. 이 데이터셋은 전처리를 통해 올바른 표현으로 수정하여 저장해둔 데이터셋입니다. 2장에서 직접 저장한 파일을 불러오거나, 혹은 가짜연구소 깃허브에 저장된 파일을 불러와 사용할 수 있습니다. <code class="docutils literal notranslate"><span class="pre">CoNLL+BEA_corrected_essays.pkl</span></code> 파일 안에는 총 170개의 지문이 존재하며, 이 데이터는 Wh- 문제를 만들 지문으로 사용됩니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
+!python Tutorial-Book-Utils/PL_data_loader.py --data NLP-QG
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cloning into &#39;Tutorial-Book-Utils&#39;...
+remote: Enumerating objects: 30, done.
+remote: Counting objects: 100% (30/30), done.
+remote: Compressing objects: 100% (24/24), done.
+remote: Total 30 (delta 9), reused 18 (delta 5), pack-reused 0
+Unpacking objects: 100% (30/30), done.
+CoNLL+BEA_corrected_essays.pkl is done!
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+<span class="n">file_name</span> <span class="o">=</span> <span class="s2">&quot;CoNLL+BEA_corrected_essays.pkl&quot;</span>
+<span class="n">open_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">open_file</span><span class="p">)</span>
+<span class="n">open_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>170
+</pre></div>
+</div>
+</div>
+</div>
+<p>첫 번째 지문을 예시로 출력해보겠습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Keeping the Secret of Genetic Testing What is genetic risk? Genetic risk refers  to your chance of inheriting a disorder or disease. People get certain diseases because of genetic changes. How much a genetic change tells us about your chance of developing a disorder is not always clear. If your genetic results indicate that you have gene changes associated with an increased risk of heart disease, it does not mean that you definitely will develop heart disease. The opposite is also true. If your genetic results show that you do not have changes associated with an increased risk of heart disease, it is still possible that you develop heart disease. However, for some rare diseases, people who have certain gene changes are guaranteed to develop the disease. When we are diagnosed with certain genetic diseases, are we suppose to disclose this result to our relatives? My answer is no. On one hand, we do not want this potential danger havingfrightening effects in our families&#39; later lives. When people around us know that we have certain diseases, their attitude will easily change, whether caring for us too much or keeping away from us. And both are not what we want since most of us just want to live as normal people. Surrounded by such concerns, it is very likely that we are distracted and worry about these problems. It is a concern that will be with us during our whole life, because we  never know when the &#39;&#39;potential bomb&#39;&#39; will explode. On the other hand, if there are ways that can help us to control or cure the disease, we can go through these processes from the scope of the whole family. For  example, if exercising is helpful reducing family potential disease, we can always look for more chances for the family to do exerciseso we keep track of all family members health conditions. At the same time, we are prepared to know when there are other members who have got this disease. Here I want to share Forests&#39;sview on this issue. Although some people feel that an individual who is found to carry a dominant gene for Huntington&#39;s disease has an ethical obligation to disclose that fact to his or her siblings, there currently is no legal requirement to do so. In fact, requiring someone to communicate his or her own genetic risk to family members who are therefore also at risk is considered by many to be ethically dubious.&quot; Nothing is absolutely right or wrong. If a certain  genetic test is very accurate and it is unavoidable and necessary to get treatment and tell  others, it is OK to disclose the result. Above all, life is more important than secrets.
+</pre></div>
+</div>
+</div>
+</div>
+<p>함수를 정의하기 전에 4장에서 사용할 패키지들을 import 해보겠습니다. 각 환경에 따라 패키지가 없을 수 있으니 확인하시고 설치하시기 바랍니다. (Colab 환경에서는 <code class="docutils literal notranslate"><span class="pre">benepar</span></code> 패키지가 없어 아래 코드를 통해 설치해줍니다.)</p>
+<p><code class="docutils literal notranslate"><span class="pre">benepar</span></code>와 <code class="docutils literal notranslate"><span class="pre">nltk</span></code>는 텍스트 파싱과 토크나이징에 사용할 수 있는 패키지입니다. 또한 <code class="docutils literal notranslate"><span class="pre">pandas</span></code>는 기본적인 데이터 프레임을 위한 패키지이고, <code class="docutils literal notranslate"><span class="pre">numpy</span></code>는 수치연산에 사용하는 패키지입니다. 그리고 <code class="docutils literal notranslate"><span class="pre">torch</span></code>는 모델 구축 프레임워크이고, 다양한 토큰화 기법과 모델들이 내장되어 있는 <code class="docutils literal notranslate"><span class="pre">transformers</span></code> 패키지도 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!pip install -q benepar
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">benepar</span>
+<span class="n">benepar</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;benepar_en3&#39;</span><span class="p">)</span>
+<span class="n">benepar_parser</span> <span class="o">=</span> <span class="n">benepar</span><span class="o">.</span><span class="n">Parser</span><span class="p">(</span><span class="s2">&quot;benepar_en3&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">nltk</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;punkt&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">sent_tokenize</span><span class="p">,</span> <span class="n">word_tokenize</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AutoTokenizer</span><span class="p">,</span>
+    <span class="n">AutoModelForSeq2SeqLM</span><span class="p">,</span>
+    <span class="n">AutoModelForSequenceClassification</span><span class="p">,</span>
+    <span class="n">pipeline</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[nltk_data] Downloading package benepar_en3 to /root/nltk_data...
+[nltk_data]   Unzipping models/benepar_en3.zip.
+[nltk_data] Downloading package punkt to /root/nltk_data...
+[nltk_data]   Unzipping tokenizers/punkt.zip.
+</pre></div>
+</div>
+</div>
+</div>
+<p>본격적인 모델링에 앞서 실험 환경에서 GPU가 사용 가능한지 확인할 수 있습니다. <code class="docutils literal notranslate"><span class="pre">cuda</span></code>가 출력되면 GPU를 사용할 수 있는 것입니다. 단, GPU가 없다면 CPU를 사용해도 가능합니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>cuda
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>4.2 정답 단어 추출<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>Wh- 문제를 생성하기 위한 첫 번째 단계는 지문에서 정답으로 사용할 단어를 추출하는 것입니다. 각 지문에서 <code class="docutils literal notranslate"><span class="pre">benepar_parser</span> <span class="pre">tree</span></code>를 통해 개체명을 인식하고 명사구에 해당하는 단어들만 추출하여 리스트로 저장합니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_flattened</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="n">sent_str_final</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">sent_str</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">leaves</span><span class="p">())</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span>
+        <span class="n">sent_str_final</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sent_str</span><span class="p">)]</span>
+        <span class="n">sent_str_final</span> <span class="o">=</span> <span class="n">sent_str_final</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">sent_str_final</span>
+
+<span class="k">def</span> <span class="nf">get_NP</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+    <span class="n">answers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">trees</span> <span class="o">=</span> <span class="n">benepar_parser</span><span class="o">.</span><span class="n">parse_sents</span><span class="p">(</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">doc</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">sent_idx</span><span class="p">,</span> <span class="n">tree</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">trees</span><span class="p">):</span>
+        <span class="n">subtrees</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">subtrees</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">subtree</span> <span class="ow">in</span> <span class="n">subtrees</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">subtree</span><span class="o">.</span><span class="n">label</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;NP&quot;</span><span class="p">:</span>
+                <span class="n">answers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_flattened</span><span class="p">(</span><span class="n">subtree</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">answers</span>    
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>4.3 문제 생성 클래스 정의<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>이번에는 Wh- 문제를 생성하는 클래스를 정의해보겠습니다. 위에서 추출한 정답 단어들과 지문을 T5기반의 Seq2SeqLM모델에 넣어 문제를 생성하게 됩니다. 여기서 사용된 토크나이저와 모델은 <a class="reference external" href="https://huggingface.co/models">huggingface</a>가 제공하는 사전학습모델(API)을 가져와 사용하였습니다. 이 때, AutoModel API는 학습 가중치에 넣고자 하는 모델을 자동으로 찾아서 생성해주는 API입니다. 예를 들어 T5모델을 경로에 넣어주면 자동으로 T5구조를 생성해 그 안에 학습 가중치를 넣어주고, BERT모델을 경로에 넣어주면 BERT구조를 생성해 학습 가중치를 넣어주게 됩니다. 이번 QuestionGenerator 클래스에서는 <a class="reference external" href="https://huggingface.co/iarfmoose/t5-base-question-generator">iarfmoose/t5-base-question-generator</a>를 불러왔습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">QuestionGenerator</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">QG_PRETRAINED</span> <span class="o">=</span> <span class="s2">&quot;iarfmoose/t5-base-question-generator&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ANSWER_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;&lt;answer&gt;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CONTEXT_TOKEN</span> <span class="o">=</span> <span class="s2">&quot;&lt;context&gt;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SEQ_LENGTH</span> <span class="o">=</span> <span class="mi">512</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">qg_tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">QG_PRETRAINED</span><span class="p">,</span> <span class="n">use_fast</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qg_model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">QG_PRETRAINED</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qg_model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qg_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">generate_question</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">answers</span><span class="p">):</span>
+        <span class="n">questions</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">ans</span> <span class="ow">in</span> <span class="n">answers</span><span class="p">:</span> 
+            <span class="n">qg_input</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ANSWER_TOKEN</span><span class="p">,</span> <span class="n">ans</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">CONTEXT_TOKEN</span><span class="p">,</span> <span class="n">passage</span><span class="p">)</span>
+            
+            <span class="n">encoded_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qg_tokenizer</span><span class="p">(</span><span class="n">qg_input</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;max_length&#39;</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">SEQ_LENGTH</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qg_model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">input_ids</span><span class="o">=</span><span class="n">encoded_input</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">])</span>
+            <span class="n">question</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qg_tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">questions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">questions</span>        
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">q_generator</span> <span class="o">=</span> <span class="n">QuestionGenerator</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>4.4 문제 평가 클래스 정의<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>다음으로 생성된 문제와 정답쌍을 평가하는 클래스를 생성해보겠습니다. 문제와 정답간의 의미적 관련성을 Sequence Classification모델을 통해 점수매기게 됩니다. QAEvaluator 클래스에서는 <a class="reference external" href="https://huggingface.co/iarfmoose/bert-base-cased-qa-evaluator">iarfmoose/bert-base-cased-qa-evaluator</a>를 사용하였습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">QAEvaluator</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">QAE_PRETRAINED</span> <span class="o">=</span> <span class="s2">&quot;iarfmoose/bert-base-cased-qa-evaluator&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">SEQ_LENGTH</span> <span class="o">=</span> <span class="mi">512</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">qae_tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">QAE_PRETRAINED</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qae_model</span> <span class="o">=</span> <span class="n">AutoModelForSequenceClassification</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="n">QAE_PRETRAINED</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qae_model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">encode_qa_pairs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">questions</span><span class="p">,</span> <span class="n">answers</span><span class="p">):</span>
+        <span class="n">encoded_pairs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">questions</span><span class="p">)):</span>
+            <span class="n">encoded_qa</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qae_tokenizer</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">questions</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">text_pair</span><span class="o">=</span><span class="n">answers</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">padding</span><span class="o">=</span><span class="s2">&quot;max_length&quot;</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">SEQ_LENGTH</span><span class="p">,</span> <span class="n">truncation</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span>
+            <span class="n">encoded_pairs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">encoded_qa</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">encoded_pairs</span>
+
+    <span class="k">def</span> <span class="nf">get_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">encoded_qa_pairs</span><span class="p">):</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">qae_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">encoded_qa_pairs</span><span class="p">)):</span>
+                <span class="n">scores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">qae_model</span><span class="p">(</span><span class="o">**</span><span class="n">encoded_qa_pairs</span><span class="p">[</span><span class="n">i</span><span class="p">])[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">scores</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>  
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">qa_evaluator</span> <span class="o">=</span> <span class="n">QAEvaluator</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>4.5 오답 생성 클래스 정의<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>마지막으로 오답을 생성하는 클래스를 정의해보겠습니다. 4.3절에서 추출한 정답 단어를 제외하고 4개의 보기 중 3개의 오답이 필요합니다. 이는 정답 단어에서 명사에 해당하는 첫 단어를 추출해 마스킹하고, BERT모델을 통해 그 부분을 다른 단어로 생성하게 됩니다. DistractorGenerator 클래스에서는 <a class="reference external" href="https://huggingface.co/bert-base-cased">bert-base-cased</a>를 사용하였습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DistractorGenerator</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unmasker</span> <span class="o">=</span> <span class="n">pipeline</span><span class="p">(</span><span class="s1">&#39;fill-mask&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;bert-base-cased&#39;</span><span class="p">)</span>  
+
+    <span class="k">def</span> <span class="nf">generate_distractor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">answers</span><span class="p">,</span> <span class="n">NNs</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">distractor</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">divided</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+        <span class="n">substitute_word</span> <span class="o">=</span> <span class="n">NNs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">mask_index</span> <span class="o">=</span> <span class="n">divided</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">substitute_word</span><span class="p">)</span>
+        <span class="n">divided</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">mask_index</span><span class="p">)</span>
+
+        <span class="n">divided</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">mask_index</span><span class="p">,</span> <span class="s1">&#39;[MASK]&#39;</span><span class="p">)</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">divided</span><span class="p">)</span>
+        <span class="n">unmasked_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unmasker</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">10</span><span class="p">)[</span><span class="n">candidate</span><span class="p">]</span>
+
+        <span class="n">text</span> <span class="o">=</span> <span class="n">unmasked_result</span><span class="p">[</span><span class="s2">&quot;sequence&quot;</span><span class="p">]</span>
+
+        <span class="n">answers</span> <span class="o">=</span> <span class="n">answers</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">answer_index</span> <span class="o">=</span> <span class="n">answers</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">substitute_word</span><span class="p">)</span>
+        <span class="n">answers</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">answer_index</span><span class="p">)</span>
+        <span class="n">answers</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">answer_index</span><span class="p">,</span> <span class="n">unmasked_result</span><span class="p">[</span><span class="s2">&quot;token_str&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">answers</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_NN</span><span class="p">(</span><span class="n">distractor</span><span class="p">):</span>
+      <span class="n">NNs</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="n">tree</span> <span class="o">=</span> <span class="n">benepar_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">distractor</span><span class="p">)</span>
+      <span class="n">subtrees</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">subtrees</span><span class="p">()</span>
+      <span class="k">for</span> <span class="n">subtree</span> <span class="ow">in</span> <span class="n">subtrees</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">subtree</span><span class="o">.</span><span class="n">label</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;NN&quot;</span><span class="p">,</span> <span class="s2">&quot;NNP&quot;</span><span class="p">,</span> <span class="s2">&quot;NNS&quot;</span><span class="p">,</span> <span class="s2">&quot;VB&quot;</span><span class="p">]:</span> <span class="c1">#VB for edge case</span>
+              <span class="n">NNs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">subtree</span><span class="o">.</span><span class="n">leaves</span><span class="p">())</span>       
+      <span class="k">return</span> <span class="n">NNs</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d_generator</span> <span class="o">=</span> <span class="n">DistractorGenerator</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="wh">
+<h2>4.6 Wh- 문제 생성<a class="headerlink" href="#wh" title="Permalink to this headline">¶</a></h2>
+<p>지금까지 정의한 클래스를 사용하여 지문에 대한 Wh- 문제를 생성해보겠습니다. 먼저 생성한 문제와 보기들을 저장할 데이터 프레임을 생성하고, 사용할 지문 20개를 선정합니다.(20개의 번호는 임의로 선정하였습니다.)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df_WHQuestions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+                               <span class="s1">&#39;passage&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+                               <span class="s1">&#39;question&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+                               <span class="s1">&#39;distractor_1&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+                               <span class="s1">&#39;distractor_2&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+                               <span class="s1">&#39;distractor_3&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+                               <span class="s1">&#39;distractor_4&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)})</span>
+
+<span class="n">passage_id_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">163</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">151</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">129</span><span class="p">,</span> <span class="mi">167</span><span class="p">,</span> <span class="mi">143</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">161</span><span class="p">,</span> <span class="mi">107</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">71</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>정의한 클래스들을 순서대로 진행합니다. 중간에 정답이 4단어를 넘지 않도록 제한하는 과정과 오답을 생성하기 전에 정답이 있는 문장을 찾아주는 과정이 포함되어 있습니다. 그리고 최종 생성한 문제, 정답, 오답은 데이터 프레임에 저장합니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df_idx</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">passage_id</span> <span class="ow">in</span> <span class="n">passage_id_list</span><span class="p">:</span>
+
+    <span class="n">passage</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">passage_id</span><span class="p">]</span>
+
+    <span class="n">answers</span> <span class="o">=</span> <span class="n">get_NP</span><span class="p">(</span><span class="n">passage</span><span class="p">)</span>
+
+    <span class="n">questions</span> <span class="o">=</span> <span class="n">q_generator</span><span class="o">.</span><span class="n">generate_question</span><span class="p">(</span><span class="n">answers</span><span class="p">)</span>
+
+    <span class="n">encoded_qa_pairs</span> <span class="o">=</span> <span class="n">qa_evaluator</span><span class="o">.</span><span class="n">encode_qa_pairs</span><span class="p">(</span><span class="n">questions</span><span class="p">,</span> <span class="n">answers</span><span class="p">)</span>
+    <span class="n">scores</span> <span class="o">=</span> <span class="n">qa_evaluator</span><span class="o">.</span><span class="n">get_scores</span><span class="p">(</span><span class="n">encoded_qa_pairs</span><span class="p">)</span>
+    
+    <span class="c1">## 정답의 단어 개수 len() &lt;= 4 사용한다. </span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scores</span><span class="p">)):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">scores</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">answers</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">break</span>
+    
+    <span class="n">sentences</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">passage</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">answers</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="ow">in</span> <span class="n">sentence</span><span class="p">:</span>
+            <span class="n">target_sentence</span> <span class="o">=</span> <span class="n">sentence</span>
+
+    <span class="n">NNs</span> <span class="o">=</span> <span class="n">get_NN</span><span class="p">(</span><span class="n">answers</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+
+    <span class="n">distractors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">distractors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_generator</span><span class="o">.</span><span class="n">generate_distractor</span><span class="p">(</span><span class="n">target_sentence</span><span class="p">,</span> <span class="mi">9</span><span class="o">-</span><span class="n">i</span><span class="p">,</span> <span class="n">answers</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">NNs</span><span class="p">))</span>
+    
+    <span class="n">df_WHQuestions</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_idx</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">passage_id</span><span class="p">,</span> <span class="n">passage</span><span class="p">,</span> <span class="n">questions</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;?&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;?&quot;</span><span class="p">,</span> <span class="n">answers</span><span class="p">[</span><span class="n">index</span><span class="p">]]</span> <span class="o">+</span> <span class="n">distractors</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;finished </span><span class="si">{</span><span class="n">passage_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">df_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>최종 생성된 결과는 다음과 같습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df_WHQuestions</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>passage</th>
+      <th>question</th>
+      <th>distractor_1</th>
+      <th>distractor_2</th>
+      <th>distractor_3</th>
+      <th>distractor_4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>163.0</td>
+      <td>The waters of the culinary seas had been calm ...</td>
+      <td>What is the best definition of a mother who ca...</td>
+      <td>A mother who works</td>
+      <td>A cook who works</td>
+      <td>A kid who works</td>
+      <td>A waitress who works</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>28.0</td>
+      <td>The world is increasingly becoming flat with a...</td>
+      <td>What are the disadvantages of social network s...</td>
+      <td>The cyber communication</td>
+      <td>The cyber network</td>
+      <td>The cyber environment</td>
+      <td>The cyber community</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>62.0</td>
+      <td>The best places for y...</td>
+      <td>What country is the best place to visit for yo...</td>
+      <td>a different country</td>
+      <td>a different village</td>
+      <td>a different generation</td>
+      <td>a different town</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>57.0</td>
+      <td>Puerquitour: A great experience for your mouth...</td>
+      <td>Where did we go to watch the movie Renoir?</td>
+      <td>a movie theatre</td>
+      <td>a new theatre</td>
+      <td>a big theatre</td>
+      <td>a pizza theatre</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>35.0</td>
+      <td>Nowadays, social media sites are commonly used...</td>
+      <td>What are the advantages of using social media ...</td>
+      <td>Substantial costs</td>
+      <td>Substantial parts</td>
+      <td>Substantial events</td>
+      <td>Substantial frames</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>26.0</td>
+      <td>Interpersonal skills, like any other skills re...</td>
+      <td>What are the two most popular social media app...</td>
+      <td>Skype and Facetime</td>
+      <td>Word and Facetime</td>
+      <td>Flash and Facetime</td>
+      <td>email and Facetime</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>22.0</td>
+      <td>Nowadays, with the advancement of technology, ...</td>
+      <td>What is the reason why a person may not have a...</td>
+      <td>anymore contact</td>
+      <td>anymore interactions</td>
+      <td>anymore dealings</td>
+      <td>anymore sex</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>151.0</td>
+      <td>In this century there have been many technolog...</td>
+      <td>What is the most important aspect of television?</td>
+      <td>The entertainment aspect</td>
+      <td>The technical aspect</td>
+      <td>The broadcasting aspect</td>
+      <td>The political aspect</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>108.0</td>
+      <td>I met a friend about one week ago, and he aske...</td>
+      <td>What is the feeling that you have now?</td>
+      <td>an awful feeling</td>
+      <td>an awful question</td>
+      <td>an awful think</td>
+      <td>an awful thinking</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>55.0</td>
+      <td>Dear Sir or Madam,\nI am writing to apply for ...</td>
+      <td>What do you hope to get from this job?</td>
+      <td>valuable experience</td>
+      <td>valuable ##s</td>
+      <td>valuable tips</td>
+      <td>valuable time</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>59.0</td>
+      <td>Anna knew that it was going to be a very speci...</td>
+      <td>What was the day she was going to meet her mot...</td>
+      <td>a very special day</td>
+      <td>a very special experience</td>
+      <td>a very special week</td>
+      <td>a very special one</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>129.0</td>
+      <td>On Britain's roads there is an ever-increasing...</td>
+      <td>What would be the easiest solution to this may...</td>
+      <td>an easy solution</td>
+      <td>an easy exit</td>
+      <td>an easy path</td>
+      <td>an easy reaction</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>167.0</td>
+      <td>According the Lunde, 35% of homicide victims a...</td>
+      <td>How many statistics are greater than Lundes' t...</td>
+      <td>Statistics from 56</td>
+      <td>Appeals from 56</td>
+      <td>quotes from 56</td>
+      <td>gains from 56</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>143.0</td>
+      <td>"In Vitro fertilisation" is the fertilisation ...</td>
+      <td>What is the definition of a woman who is given...</td>
+      <td>a post-menopausal woman</td>
+      <td>a post-menopausal man</td>
+      <td>a post-menopausal mother</td>
+      <td>a post-menopausal survivor</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>50.0</td>
+      <td>Dear Mrs. Ashby, \n\nYesterday I was in Green ...</td>
+      <td>What kind of food do you like to serve?</td>
+      <td>Italian pasta</td>
+      <td>Italian sandwiches</td>
+      <td>Italian sauce</td>
+      <td>Italian restaurants</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>161.0</td>
+      <td>Computers have definitely affected peoples liv...</td>
+      <td>What program does he use to make the calculati...</td>
+      <td>the Communications program</td>
+      <td>the Communications software</td>
+      <td>the Communications Unit</td>
+      <td>the Communications System</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>107.0</td>
+      <td>Cricket is my passion. I love playing, watchin...</td>
+      <td>What is the best way to learn more about cricket?</td>
+      <td>more about bowling</td>
+      <td>more about India</td>
+      <td>more about themselves</td>
+      <td>more about life</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>56.0</td>
+      <td>Well, I would like to talk about my school lif...</td>
+      <td>What is the best place to study in the UK?</td>
+      <td>university</td>
+      <td>UCLA</td>
+      <td>USC</td>
+      <td>Purdue</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>114.0</td>
+      <td>I have been learning English as a second langu...</td>
+      <td>How long ago did I decide to take the Cambridg...</td>
+      <td>One year</td>
+      <td>One hour</td>
+      <td>One decade</td>
+      <td>One weekend</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>71.0</td>
+      <td>Glad to hear that you've been invited to att...</td>
+      <td>How long will you wait for a candidate who's l...</td>
+      <td>one more minute</td>
+      <td>one more person</td>
+      <td>one more night</td>
+      <td>one more opportunity</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>생성된 문제와 보기를 보면 문법적으로는 어느 정도 잘 생성해내는 것 같습니다. 하지만 단순하게 명사를 추출하여 보기를 만들었기 때문에 지문에서 크게 중요하지 않은 질문들도 있고 엉뚱한 보기도 있어보입니다. 정답과 오답을 잘 고른다면 좀 더 유의미한 문제를 생성할 것이라고 기대되어집니다.</p>
+<p>지금까지 Huggingface에서 제공하는 사전학습모델들로 Wh- 문제를 생성해보았습니다. 만약 SQuAD와 같은 QA 데이터셋이 있다면, 각자 생성하고 싶은 도메인으로 학습시켜 특화된 질문을 만드는데 활용해보시기 바랍니다.</p>
+</div>
+<div class="section" id="id6">
+<h2>4.7 참고문헌<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/AMontgomerie/question_generator">Question_Generator</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/models">huggingface</a></p></li>
+</ul>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapters\NLP"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Ch2-EDA.html" title="previous page">2. 데이터 탐색과 전처리</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By PseudoLab Tutorial Team<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-185350287-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>
