@@ -1,0 +1,1147 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3. MC 문제 &#8212; PseudoLab Tutorial Book</title>
+    
+  <link rel="stylesheet" href="../../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "Pseudo-Lab/Tutorial-Book");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <link rel="shortcut icon" href="../../_static/PseudoLab_logo.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4. Wh- Question" href="Ch4-Wh-Question.html" />
+    <link rel="prev" title="2. 데이터 탐색과 전처리" href="Ch2-EDA.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../../index.html">
+  
+  <img src="../../_static/PseudoLab_logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">PseudoLab Tutorial Book</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../index.html">
+   PyTorch를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch)
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  객체 탐지(Object Detection)
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/intro.html">
+   의료용 마스크 탐지 모델 구축
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch1-Object-Detection.html">
+   1. 객체 탐지 소개
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch2-EDA.html">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch3-preprocessing.html">
+   3. 데이터 전처리
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch4-RetinaNet.html">
+   4. RetinaNet
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/Ch5-Faster-R-CNN.html">
+   5. Faster R-CNN
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../object-detection/References.html">
+   6. 참고 문헌
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  시계열 분석(Time Series)
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/intro.html">
+   코로나 확진자 수 예측 모델 구축
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch1-Time-Series.html">
+   1. Time Series 소개
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch2-EDA.html">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch3-preprocessing.html">
+   3. 데이터 전처리
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch4-LSTM.html">
+   4. LSTM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/Ch5-CNN-LSTM.html">
+   5. CNN-LSTM
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../time-series/References.html">
+   6. 참고 문헌
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  생성 모델링(Generative Modeling)
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/intro.html">
+   컬러 이미지 생성 모델 구축
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch1-Introduction.html">
+   1. GAN 소개
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch2-EDA.html">
+   2. 데이터 탐색
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch3-GAN.html">
+   3. GAN
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/Ch4-pix2pix.html">
+   4. pix2pix
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../GAN/References.html">
+   5. 참고 문헌
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  문제 생성(Question Generation)
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   MC 및 Wh 문제 생성
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch1-Introduction.html">
+   1. 자연어 처리 모델 소개 (Introduction to NLP Model)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch2-EDA.html">
+   2. 데이터 탐색과 전처리
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   3. MC Question
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Ch4-Wh-Question.html">
+   4. Wh- Question
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../../_sources/chapters/NLP/Ch3-MC-Question.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/Pseudo-Lab/Tutorial-Book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/Pseudo-Lab/Tutorial-Book/issues/new?title=Issue%20on%20page%20%2Fchapters/NLP/Ch3-MC-Question.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/Pseudo-Lab/Tutorial-Book/master?urlpath=tree/mini_book/chapters/NLP/Ch3-MC-Question.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gpt2-bert">
+   3.1 GPT2 &amp; BERT
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#gpt2">
+     3.1.1 GPT2
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bert">
+     3.1.2 BERT
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   3.2 데이터셋 다운로드
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   3.3 참고문헌
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="mc">
+<h1>3. MC 문제<a class="headerlink" href="#mc" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://colab.research.google.com/github/Pseudo-Lab/Tutorial-Book/blob/master/book/chapters/NLP/Ch3-MC-Question.ipynb"><img alt="Open In Colab" src="https://colab.research.google.com/assets/colab-badge.svg" /></a></p>
+<p>이전 장에서는 실습에 사용할 데이터셋을 다운로드하고 시각화하며 전처리를 진행해보았습니다. 이번 장에서는 해당 데이터셋을 이용하여 MC 문제를 생성하는 모델을 실습해보도록 하겠습니다.</p>
+<p>3.1절에서는 문제를 생성하는 데에 사용되는 GPT-2와 BERT 모델을 소개하고, 3.2절에서는 데이터를 불러와서 다시 한 번 살펴봅니다. 이어 3.3절에서는 T5 모델을 이용하여 Text 데이터를 요약하는 작업을 진행하며, 마지막으로 3.4절에서는 텍스트 속의 문장들을 필터링하고 GPT-2와 BERT를 이용하여 MC 문제를 생성해보도록 하겠습니다.</p>
+<p>MC 문제를 생성하는 과정은 크게 5단계로 설명될 수 있습니다. 가장 먼저 MC 문제를 생성하기 위한 지문이 되는 텍스트로부터 주요 문장들을 추출하여 요약합니다. 두번째, 추출된 주요 문장들을 유사 어휘와 어구를 활용하여 변환하며(pharaphrasing) 세번째, 이 변환된 문장들을 파싱합니다. 네번째로 이 파싱된 문장들과 GPT-2 모델을 이용해 거짓 문장을 생성하고, 마지막으로 유사도를 평가해서 정답 문장과 가장 유사하지 않은 문장들을 오답 선택지로 활용합니다. 이 과정은 3.2절부터 순서대로 확인할 수 있습니다.</p>
+<div class="section" id="gpt2-bert">
+<h2>3.1 GPT2 &amp; BERT<a class="headerlink" href="#gpt2-bert" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="gpt2">
+<h3>3.1.1 GPT2<a class="headerlink" href="#gpt2" title="Permalink to this headline">¶</a></h3>
+<p>GPT-2는 OpenAI에서 개발한 GPT-N 시리즈의 2번째 자연어처리 모델입니다. GPT-2는 8백만 개의 웹페이지 데이터셋과 15억 개의 파라미터로부터 학습된 트랜스포머 기반 자연어처리 모델이며 이전의 단어들을 포함하는 텍스트 다음에 올 단어를 예측하는 것을 목적으로 짜여진 모델입니다. 우리는 MC 문제 생성 태스크에서 거짓 문장을 생성하는 데에 GPT-2를 활용하게 됩니다.</p>
+</div>
+<div class="section" id="bert">
+<h3>3.1.2 BERT<a class="headerlink" href="#bert" title="Permalink to this headline">¶</a></h3>
+<p>BERT는 Bidirectional Encoder Representations from Transformers 의 약어로 구글에서 2018년 개발한 자연어처리 모델입니다. BERT는 Transformer를 기반으로 Sentence Embedding 혹은 Contextual Word Embedding을 구하는 네트워크로, 문장을 토큰 단위로 쪼개서 네트워크에 넣으면 전체 문장에 대한 vector와 문장 안의 단어 각각에 대응되는 vector를 출력합니다. 이를 기반으로 Text Classification 등의 Task를 학습하여 수행할 수 있습니다.</p>
+<p><img alt="" src="https://github.com/Pseudo-Lab/Tutorial-Book/blob/master/book/pics/NLP-ch1img02.png?raw=true" /></p>
+<ul class="simple">
+<li><p>그림 3.1 전반적인 BERT의 pre-training 과정과 fine-tuning 과정 (출처: BERT: Pre-training of Deep Bidirectional Transformers for
+Language Understanding)</p></li>
+</ul>
+<p>NLP Task 성능 평가와 관련하여 다양한 NLP Task들의 성능을 바탕으로 모델들의 순위를 매기는 GLUE Benchmark(General Language Understatnding Evaluation Benchmark)라는 collection이 있는데, BERT는 여기에서 OpenAI GPT 등의 다른 모델들을 큰 차이로 앞서며 그 당시 최고의 성능을 보여 주었습니다.</p>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>3.2 데이터셋 다운로드<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>2장에서 나온 코드를 활용하여 데이터셋을 불러오도록 하겠습니다. 데이터셋은 올바른 문법으로 수정이 된 에세이 텍스트 데이터입니다. 이 데이터는 MC 문제를 만들 지문으로 사용됩니다. 데이터를 읽어 오기 위해서 pickle 패키지를 이용합니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>import pickle
+
+!git clone https://github.com/Pseudo-Lab/Tutorial-Book-Utils
+!python Tutorial-Book-Utils/PL_data_loader.py --data NLP-QG
+file_name = &quot;CoNLL+BEA_corrected_essays.pkl&quot;
+open_file = open(file_name, &quot;rb&quot;)
+data = pickle.load(open_file)
+open_file.close()
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cloning into &#39;Tutorial-Book-Utils&#39;...
+remote: Enumerating objects: 30, done.
+remote: Counting objects: 100% (30/30), done.
+remote: Compressing objects: 100% (24/24), done.
+remote: Total 30 (delta 9), reused 18 (delta 5), pack-reused 0
+Unpacking objects: 100% (30/30), done.
+CoNLL+BEA_corrected_essays.pkl is done!
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!pip install -q benepar
+!pip install -q sentence_transformers
+
+import requests
+import json
+import benepar
+import string
+import nltk
+from nltk import tokenize
+from nltk.tokenize import sent_tokenize
+from string import punctuation
+import re
+from random import shuffle
+import spacy
+import warnings
+import torch
+import pandas as pd
+import numpy as np
+import scipy
+torch.manual_seed(42)
+
+warnings.filterwarnings(action=&#39;ignore&#39;)
+nlp = spacy.load(&#39;en&#39;)
+
+nltk.download(&#39;punkt&#39;)
+
+benepar.download(&#39;benepar_en3&#39;)
+benepar_parser = benepar.Parser(&quot;benepar_en3&quot;)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     |████████████████████████████████| 3.3 MB 23.1 MB/s 
+     |████████████████████████████████| 2.5 MB 45.7 MB/s 
+     |████████████████████████████████| 1.2 MB 44.4 MB/s 
+     |████████████████████████████████| 895 kB 43.9 MB/s 
+?25h  Building wheel for benepar (setup.py) ... ?25l?25hdone
+     |████████████████████████████████| 85 kB 3.6 MB/s 
+?25h  Building wheel for sentence-transformers (setup.py) ... ?25l?25hdone
+[nltk_data] Downloading package punkt to /root/nltk_data...
+[nltk_data]   Unzipping tokenizers/punkt.zip.
+[nltk_data] Downloading package benepar_en3 to /root/nltk_data...
+[nltk_data]   Unzipping models/benepar_en3.zip.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="n">sentences</span><span class="p">):</span>
+    
+    <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">sent</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+        <span class="n">single_quotes_present</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[&#39;][\w\s.:;,!?</span><span class="se">\\</span><span class="s2">-]+[&#39;]&quot;</span><span class="p">,</span><span class="n">sent</span><span class="p">))</span><span class="o">&gt;</span><span class="mi">0</span>
+        <span class="n">double_quotes_present</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[&quot;][\w\s.:;,!?</span><span class="se">\\</span><span class="s1">-]+[&quot;]&#39;</span><span class="p">,</span><span class="n">sent</span><span class="p">))</span><span class="o">&gt;</span><span class="mi">0</span>
+        <span class="n">question_present</span> <span class="o">=</span> <span class="s2">&quot;?&quot;</span> <span class="ow">in</span> <span class="n">sent</span>
+        <span class="k">if</span> <span class="n">single_quotes_present</span> <span class="ow">or</span> <span class="n">double_quotes_present</span> <span class="ow">or</span> <span class="n">question_present</span> <span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sent</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">punctuation</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">output</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_flattened</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="n">sent_str_final</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">sent_str</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">leaves</span><span class="p">())</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span>
+        <span class="n">sent_str_final</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sent_str</span><span class="p">)]</span>
+        <span class="n">sent_str_final</span> <span class="o">=</span> <span class="n">sent_str_final</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">sent_str_final</span>
+    
+<span class="k">def</span> <span class="nf">get_termination_portion</span><span class="p">(</span><span class="n">main_string</span><span class="p">,</span><span class="n">sub_string</span><span class="p">):</span>
+    <span class="n">combined_sub_string</span> <span class="o">=</span> <span class="n">sub_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">main_string_list</span> <span class="o">=</span> <span class="n">main_string</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">last_index</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">main_string_list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">last_index</span><span class="p">):</span>
+        <span class="n">check_string_list</span> <span class="o">=</span> <span class="n">main_string_list</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span>
+        <span class="n">check_string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">check_string_list</span><span class="p">)</span>
+        <span class="n">check_string</span> <span class="o">=</span> <span class="n">check_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">check_string</span> <span class="o">==</span> <span class="n">combined_sub_string</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">main_string_list</span><span class="p">[:</span><span class="n">i</span><span class="p">])</span>
+                     
+    <span class="k">return</span> <span class="kc">None</span>
+    
+<span class="k">def</span> <span class="nf">get_right_most_VP_or_NP</span><span class="p">(</span><span class="n">parse_tree</span><span class="p">,</span><span class="n">last_NP</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span><span class="n">last_VP</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parse_tree</span><span class="o">.</span><span class="n">leaves</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">get_flattened</span><span class="p">(</span><span class="n">last_NP</span><span class="p">),</span><span class="n">get_flattened</span><span class="p">(</span><span class="n">last_VP</span><span class="p">)</span>
+    <span class="n">last_subtree</span> <span class="o">=</span> <span class="n">parse_tree</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">last_subtree</span><span class="o">.</span><span class="n">label</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;NP&quot;</span><span class="p">:</span>
+        <span class="n">last_NP</span> <span class="o">=</span> <span class="n">last_subtree</span>
+    <span class="k">elif</span> <span class="n">last_subtree</span><span class="o">.</span><span class="n">label</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;VP&quot;</span><span class="p">:</span>
+        <span class="n">last_VP</span> <span class="o">=</span> <span class="n">last_subtree</span>
+    
+    <span class="k">return</span> <span class="n">get_right_most_VP_or_NP</span><span class="p">(</span><span class="n">last_subtree</span><span class="p">,</span><span class="n">last_NP</span><span class="p">,</span><span class="n">last_VP</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_sentence_completions</span><span class="p">(</span><span class="n">key_sentences</span><span class="p">):</span>
+    <span class="n">sentence_completion_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">individual_sentence</span> <span class="ow">in</span> <span class="n">key_sentences</span><span class="p">:</span>
+        <span class="n">sentence</span> <span class="o">=</span> <span class="n">individual_sentence</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;?:!.,;&#39;</span><span class="p">)</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">benepar_parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">sentence</span><span class="p">)</span>
+        <span class="n">last_nounphrase</span><span class="p">,</span> <span class="n">last_verbphrase</span> <span class="o">=</span>  <span class="n">get_right_most_VP_or_NP</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+        <span class="n">phrases</span><span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">last_verbphrase</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">verbphrase_string</span> <span class="o">=</span> <span class="n">get_termination_portion</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span><span class="n">last_verbphrase</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">verbphrase_string</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">phrases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">verbphrase_string</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">last_nounphrase</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">nounphrase_string</span> <span class="o">=</span> <span class="n">get_termination_portion</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span><span class="n">last_nounphrase</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">nounphrase_string</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">phrases</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nounphrase_string</span><span class="p">)</span>
+    
+        <span class="n">longest_phrase</span> <span class="o">=</span>  <span class="nb">sorted</span><span class="p">(</span><span class="n">phrases</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">longest_phrase</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">first_sent_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">longest_phrase</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+            <span class="n">second_sentence_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">longest_phrase</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">first_sent_len</span> <span class="o">-</span> <span class="n">second_sentence_len</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="k">del</span> <span class="n">longest_phrase</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">longest_phrase</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">sentence_completion_dict</span><span class="p">[</span><span class="n">sentence</span><span class="p">]</span><span class="o">=</span><span class="n">longest_phrase</span>
+
+    <span class="k">return</span> <span class="n">sentence_completion_dict</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sort_by_similarity</span><span class="p">(</span><span class="n">original_sentence</span><span class="p">,</span> <span class="n">generated_sentences_list</span><span class="p">):</span>
+
+    <span class="n">sentence_embeddings</span> <span class="o">=</span> <span class="n">bert_model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">generated_sentences_list</span><span class="p">)</span>
+
+    <span class="n">queries</span> <span class="o">=</span> <span class="p">[</span><span class="n">original_sentence</span><span class="p">]</span>
+
+    <span class="n">query_embeddings</span> <span class="o">=</span> <span class="n">bert_model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">queries</span><span class="p">)</span>
+
+    <span class="n">number_top_matches</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">generated_sentences_list</span><span class="p">)</span>
+
+    <span class="n">dissimilar_sentences</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+    <span class="k">for</span> <span class="n">query</span><span class="p">,</span> <span class="n">query_embedding</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">queries</span><span class="p">,</span> <span class="n">query_embeddings</span><span class="p">):</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">spatial</span><span class="o">.</span><span class="n">distance</span><span class="o">.</span><span class="n">cdist</span><span class="p">([</span><span class="n">query_embedding</span><span class="p">],</span> <span class="n">sentence_embeddings</span><span class="p">,</span> <span class="s2">&quot;cosine&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">distances</span><span class="p">)),</span> <span class="n">distances</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">distance</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">number_top_matches</span><span class="p">]):</span>
+            <span class="n">score</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="n">distance</span>
+            <span class="c1"># print(score)</span>
+            <span class="k">if</span> <span class="n">score</span> <span class="o">&lt;</span> <span class="mf">0.99</span><span class="p">:</span>
+                <span class="n">dissimilar_sentences</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">generated_sentences_list</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+           
+    <span class="n">sorted_dissimilar_sentences</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dissimilar_sentences</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">sorted_dissimilar_sentences</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+    
+
+<span class="k">def</span> <span class="nf">generate_sentences</span><span class="p">(</span><span class="n">partial_sentence</span><span class="p">,</span><span class="n">full_sentence</span><span class="p">):</span>
+    <span class="n">input_ids</span> <span class="o">=</span> <span class="n">gpt2_tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">partial_sentence</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s1">&#39;pt&#39;</span><span class="p">)</span> <span class="c1"># use tokenizer to encode</span>
+    <span class="n">input_ids</span> <span class="o">=</span> <span class="n">input_ids</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">maximum_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">partial_sentence</span><span class="o">.</span><span class="n">split</span><span class="p">())</span><span class="o">+</span><span class="mi">80</span> 
+
+    <span class="n">sample_outputs</span> <span class="o">=</span> <span class="n">gpt2_model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span> 
+        <span class="n">input_ids</span><span class="p">,</span> 
+        <span class="n">do_sample</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+        <span class="n">max_length</span><span class="o">=</span><span class="n">maximum_length</span><span class="p">,</span> 
+        <span class="n">top_p</span><span class="o">=</span><span class="mf">0.90</span><span class="p">,</span> 
+        <span class="n">top_k</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>   
+        <span class="n">repetition_penalty</span>  <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="n">num_return_sequences</span><span class="o">=</span><span class="mi">5</span>
+    <span class="p">)</span>
+    <span class="n">generated_sentences</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sample_output</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sample_outputs</span><span class="p">):</span>
+        <span class="n">decoded_sentences</span> <span class="o">=</span> <span class="n">gpt2_tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">sample_output</span><span class="p">,</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">decoded_sentences_list</span> <span class="o">=</span> <span class="n">tokenize</span><span class="o">.</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">decoded_sentences</span><span class="p">)</span>
+        <span class="n">generated_sentences</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">decoded_sentences_list</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># takes the first sentence </span>
+        
+    <span class="n">top_3_sentences</span> <span class="o">=</span> <span class="n">sort_by_similarity</span><span class="p">(</span><span class="n">full_sentence</span><span class="p">,</span> <span class="n">generated_sentences</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">top_3_sentences</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## load models</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModelWithLMHead</span><span class="p">,</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">AutoModelForSeq2SeqLM</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="n">summarize_tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;t5-small&quot;</span><span class="p">)</span>
+<span class="n">paraphrase_tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;Vamsi/T5_Paraphrase_Paws&quot;</span><span class="p">)</span> 
+<span class="n">gpt2_tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;gpt2&quot;</span><span class="p">)</span>
+
+<span class="n">summarize_model</span> <span class="o">=</span> <span class="n">AutoModelWithLMHead</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;t5-small&quot;</span><span class="p">)</span>
+<span class="n">paraphrase_model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;Vamsi/T5_Paraphrase_Paws&quot;</span><span class="p">)</span>
+<span class="c1"># add the EOS token as PAD token to avoid warnings</span>
+<span class="n">gpt2_model</span> <span class="o">=</span> <span class="n">AutoModelWithLMHead</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;gpt2&quot;</span><span class="p">,</span> <span class="n">pad_token_id</span><span class="o">=</span><span class="n">gpt2_tokenizer</span><span class="o">.</span><span class="n">eos_token_id</span><span class="p">)</span> 
+
+<span class="n">summarize_model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">paraphrase_model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">gpt2_model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+
+<span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+<span class="n">bert_model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s1">&#39;bert-base-nli-mean-tokens&#39;</span><span class="p">)</span>
+
+<span class="n">bert_model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df_TFQuestions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+                               <span class="s1">&#39;passage&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+                               <span class="s1">&#39;distractor_1&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+                               <span class="s1">&#39;distractor_2&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+                               <span class="s1">&#39;distractor_3&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+                               <span class="s1">&#39;distractor_4&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">20</span><span class="p">)})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>A: raw<br />
+A’: paraphrased<br />
+A_False: false</p>
+<ul class="simple">
+<li><p>distractor_1: A’</p></li>
+<li><p>distractor_2: A’_False</p></li>
+<li><p>distractor_3: B’_False</p></li>
+<li><p>distractor_4: C’_False</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">## main.py</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">passage_id_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">163</span><span class="p">,</span>
+ <span class="mi">28</span><span class="p">,</span>
+ <span class="mi">62</span><span class="p">,</span>
+ <span class="mi">57</span><span class="p">,</span>
+ <span class="mi">35</span><span class="p">,</span>
+ <span class="mi">26</span><span class="p">,</span>
+ <span class="mi">22</span><span class="p">,</span>
+ <span class="mi">151</span><span class="p">,</span>
+ <span class="mi">108</span><span class="p">,</span>
+ <span class="mi">55</span><span class="p">,</span>
+ <span class="mi">59</span><span class="p">,</span>
+ <span class="mi">129</span><span class="p">,</span>
+ <span class="mi">167</span><span class="p">,</span>
+ <span class="mi">143</span><span class="p">,</span>
+ <span class="mi">50</span><span class="p">,</span>
+ <span class="mi">161</span><span class="p">,</span>
+ <span class="mi">107</span><span class="p">,</span>
+ <span class="mi">56</span><span class="p">,</span>
+ <span class="mi">114</span><span class="p">,</span>
+ <span class="mi">71</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">id_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+
+    <span class="c1"># select passage for question generation </span>
+    <span class="n">passage_id</span> <span class="o">=</span> <span class="n">passage_id_list</span><span class="p">[</span><span class="n">id_idx</span><span class="p">]</span>
+
+    <span class="n">passage</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">passage_id</span><span class="p">]</span>
+
+    <span class="c1"># summarize</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">summarize_tokenizer</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;summarize: &quot;</span> <span class="o">+</span> <span class="n">passage</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">512</span><span class="p">)</span>
+
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">summarize_model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">min_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">length_penalty</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">num_beams</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">early_stopping</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">extractedSentences</span> <span class="o">=</span> <span class="n">summarize_tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">clean_up_tokenization_spaces</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">tokenized_sentences</span> <span class="o">=</span> <span class="n">nltk</span><span class="o">.</span><span class="n">tokenize</span><span class="o">.</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">extractedSentences</span><span class="p">)</span>
+
+    <span class="n">filter_quotes_and_questions</span> <span class="o">=</span> <span class="n">preprocess</span><span class="p">(</span><span class="n">tokenized_sentences</span><span class="p">)</span>
+
+    <span class="c1"># paraphrase</span>
+
+    <span class="n">paraphrased_sentences</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">summary_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">filter_quotes_and_questions</span><span class="p">)):</span>
+
+        <span class="n">sentence</span> <span class="o">=</span> <span class="n">filter_quotes_and_questions</span><span class="p">[</span><span class="n">summary_idx</span><span class="p">]</span>
+
+        <span class="n">inputs</span> <span class="o">=</span> <span class="s2">&quot;paraphrase: &quot;</span> <span class="o">+</span> <span class="n">sentence</span> <span class="o">+</span> <span class="s2">&quot; &lt;/s&gt;&quot;</span>
+
+        <span class="n">encoding</span> <span class="o">=</span> <span class="n">paraphrase_tokenizer</span><span class="o">.</span><span class="n">encode_plus</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">pad_to_max_length</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span>
+        <span class="n">input_ids</span><span class="p">,</span> <span class="n">attention_masks</span> <span class="o">=</span> <span class="n">encoding</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">encoding</span><span class="p">[</span><span class="s2">&quot;attention_mask&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">paraphrase_model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+            <span class="n">input_ids</span><span class="o">=</span><span class="n">input_ids</span><span class="p">,</span> <span class="n">attention_mask</span><span class="o">=</span><span class="n">attention_masks</span><span class="p">,</span>
+            <span class="n">max_length</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span>
+            <span class="n">do_sample</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">top_k</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+            <span class="n">top_p</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+            <span class="n">early_stopping</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">num_return_sequences</span><span class="o">=</span><span class="mi">3</span>
+            <span class="p">)</span>
+
+        <span class="n">paraphrased_sentences</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">paraphrase_tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">clean_up_tokenization_spaces</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">paraphrased_sentences</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;3 filled&#39;</span><span class="p">)</span>
+            <span class="k">break</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">summary_idx</span> <span class="o">==</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">filter_quotes_and_questions</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">paraphrased_sentences</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">):</span> <span class="c1"># 마지막인데 채워지지 않았을 경우 존재하는 paraphrased sentence 반복해서 false 문장 생성</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">summary_idx</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;hit&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">paraphrase_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">):</span>
+                <span class="n">paraphrased_sentences</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">paraphrase_tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="n">paraphrase_idx</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">clean_up_tokenization_spaces</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+
+    <span class="n">sent_completion_dict</span> <span class="o">=</span> <span class="n">get_sentence_completions</span><span class="p">(</span><span class="n">paraphrased_sentences</span><span class="p">)</span>
+
+    <span class="n">df_TFQuestions</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">id_idx</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">passage_id</span>
+    <span class="n">df_TFQuestions</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">id_idx</span><span class="p">,</span> <span class="s1">&#39;passage&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">passage</span>
+    <span class="n">df_TFQuestions</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">id_idx</span><span class="p">,</span> <span class="s1">&#39;distractor_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sent_completion_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">distractor_cnt</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="k">for</span> <span class="n">key_sentence</span> <span class="ow">in</span> <span class="n">sent_completion_dict</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">distractor_cnt</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">break</span>
+
+        <span class="n">partial_sentences</span> <span class="o">=</span> <span class="n">sent_completion_dict</span><span class="p">[</span><span class="n">key_sentence</span><span class="p">]</span>
+        <span class="n">false_sentences</span> <span class="o">=</span><span class="p">[]</span>
+        <span class="c1"># df_TFQuestions.loc[0, &#39;id&#39;] = </span>
+        <span class="c1"># print_string = &quot;**%s) True Sentence (from the story) :**&quot;%(str(index))</span>
+        <span class="c1"># printmd(print_string)</span>
+        <span class="c1"># print (&quot;  &quot;,key_sentence)</span>
+        
+        <span class="n">false_sents</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">partial_sent</span> <span class="ow">in</span> <span class="n">partial_sentences</span><span class="p">:</span>
+            
+            <span class="k">for</span> <span class="n">repeat</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+                <span class="n">false_sents</span> <span class="o">=</span> <span class="n">generate_sentences</span><span class="p">(</span><span class="n">partial_sent</span><span class="p">,</span> <span class="n">key_sentence</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">false_sents</span> <span class="o">!=</span> <span class="p">[]:</span>
+                    <span class="k">break</span>
+                    
+            <span class="n">false_sentences</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">false_sents</span><span class="p">)</span>
+        
+        <span class="n">df_TFQuestions</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">id_idx</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;distractor_</span><span class="si">{</span><span class="n">distractor_cnt</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">false_sentences</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="n">distractor_cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="n">id_idx</span><span class="p">,</span> <span class="s1">&#39;complete&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df_TFQuestions</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>passage</th>
+      <th>distractor_1</th>
+      <th>distractor_2</th>
+      <th>distractor_3</th>
+      <th>distractor_4</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>163.0</td>
+      <td>The waters of the culinary seas had been calm ...</td>
+      <td>The microwave is the source of life that most ...</td>
+      <td>The microwave is the source of life that most ...</td>
+      <td>It uses radiation to excite water particles in...</td>
+      <td>The microwave cut cooking time in half, making...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>28.0</td>
+      <td>The world is increasingly becoming flat with a...</td>
+      <td>Social network sites provide us with many conv...</td>
+      <td>Social network sites provide us with the tools...</td>
+      <td>We can know her recent news without hanging ou...</td>
+      <td>a piece of research shows that people will unc...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>62.0</td>
+      <td>The best places for y...</td>
+      <td>The report looks at the best places to visit f...</td>
+      <td>The report looks at the best places to visit f...</td>
+      <td>It is based on a survey of young people from t...</td>
+      <td>It is based on my own opinion as a permanent r...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>57.0</td>
+      <td>Puerquitour: A great experience for your mouth...</td>
+      <td>The place is Tacos La Chule and there are gour...</td>
+      <td>The place is Tacos La Chule and there are two ...</td>
+      <td>The name of the place is Tacos La Chule, and t...</td>
+      <td>The place is sooooo nice and the decoration an...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>35.0</td>
+      <td>Nowadays, social media sites are commonly used...</td>
+      <td>80% of people use social media sites to connec...</td>
+      <td>80% of people use social media sites to connec...</td>
+      <td>They consist of the function of a particular n...</td>
+      <td>but there are also disadvantages that occur du...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>26.0</td>
+      <td>Interpersonal skills, like any other skills re...</td>
+      <td>The growing use of social media has its benefi...</td>
+      <td>The growing use of social media has its benefi...</td>
+      <td>It is a good practice not to constantly add ne...</td>
+      <td>It is a good practice not to use social media."</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>22.0</td>
+      <td>Nowadays, with the advancement of technology, ...</td>
+      <td>A known genetic risk should not be obligated t...</td>
+      <td>A known genetic risk should not be obligated t...</td>
+      <td>The government should set the law to protect t...</td>
+      <td>However, a carrier of a known genetic risk can...</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>151.0</td>
+      <td>In this century there have been many technolog...</td>
+      <td>Television has brought other worlds into the l...</td>
+      <td>Television has brought other worlds into the l...</td>
+      <td>Television has the power to bring war into the...</td>
+      <td>In the minds of most Americans, television is ...</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>108.0</td>
+      <td>I met a friend about one week ago, and he aske...</td>
+      <td>It's about a teen couple who are dying of canc...</td>
+      <td>It's about a teen couple who are dying of canc...</td>
+      <td>It's about a teen couple who are dying of canc...</td>
+      <td>Now, I have an awful feeling about what I am d...</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>55.0</td>
+      <td>Dear Sir or Madam,\nI am writing to apply for ...</td>
+      <td>Camp counselor is currently advertised on your...</td>
+      <td>Camp counselor is currently advertised on the ...</td>
+      <td>At this moment, I have finished the second yea...</td>
+      <td>I am looking forward to hearing from you XYZ, ...</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>59.0</td>
+      <td>Anna knew that it was going to be a very speci...</td>
+      <td>She knew that it was going to be a very specia...</td>
+      <td>She knew that it was going to be a very specia...</td>
+      <td>She had known that she had been adopted since ...</td>
+      <td>After her 18th birthday, she felt a sudden nee...</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>129.0</td>
+      <td>On Britain's roads there is an ever-increasing...</td>
+      <td>The government has started adding a fourth lan...</td>
+      <td>The government has started adding a fourth lan...</td>
+      <td>There appears to be an endless series of roadw...</td>
+      <td>The inability to cope with the volume of traff...</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>167.0</td>
+      <td>According the Lunde, 35% of homicide victims a...</td>
+      <td>35% of the homicide victims are killed by some...</td>
+      <td>35% of the homicide victims are killed by some...</td>
+      <td>Today racial prejudice still exists, but less ...</td>
+      <td>It still exists racial prejudice, but has been...</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>143.0</td>
+      <td>"In Vitro fertilisation" is the fertilisation ...</td>
+      <td>In a test tube</td>
+      <td>In</td>
+      <td>The egg is taken from the mother and placed in...</td>
+      <td>There are people who are against this, saying ...</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>50.0</td>
+      <td>Dear Mrs. Ashby, \n\nYesterday I was in Green ...</td>
+      <td>I am very interested in this work and believe ...</td>
+      <td>I am very interested in this work and believe ...</td>
+      <td>I worked a year in London as a waiter at Hard ...</td>
+      <td>I am also very good at dealing with people, I ...</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>161.0</td>
+      <td>Computers have definitely affected peoples liv...</td>
+      <td>Computers have had a significant impact on peo...</td>
+      <td>Computers have had a significant impact on the...</td>
+      <td>Without the use of a computer, I have to balan...</td>
+      <td>I had to balance my checkbook once a month wit...</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>107.0</td>
+      <td>Cricket is my passion. I love playing, watchin...</td>
+      <td>Cricket is a team sport, which teaches us team...</td>
+      <td>Cricket is a team sport, which teaches us team...</td>
+      <td>It also teaches us how to overcome individual ...</td>
+      <td>Cricket is going through a rough phase due to ...</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>56.0</td>
+      <td>Well, I would like to talk about my school lif...</td>
+      <td>I'm a electronics student from Italy, North</td>
+      <td>I'm a electronics student from Michigan.</td>
+      <td>A chance to be a great engineer one day, so I ...</td>
+      <td>I am good at school, my marks prove it ; I hav...</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>114.0</td>
+      <td>I have been learning English as a second langu...</td>
+      <td>My teachers thought it was better to learn in ...</td>
+      <td>My teachers thought it was better to learn in ...</td>
+      <td>I had decided to take the Cambridge Advanced E...</td>
+      <td>One year ago, I decided to take the Cambridge ...</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>71.0</td>
+      <td>Glad to hear that you've been invited to att...</td>
+      <td>You've been invited to the last round of inter...</td>
+      <td>You've been invited to the last round of inter...</td>
+      <td>Here are some tips on how to make sure that yo...</td>
+      <td>First, the state's top elected officials are i...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df_TFQuestions</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;TFQuestions.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>3.3 참고문헌<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ol class="simple">
+<li><p><a class="reference external" href="https://medium.com/swlh/practical-ai-automatically-generate-true-or-false-questions-from-any-content-with-openai-gpt2-9081ffe4d4c9">Practical AI : Automatically Generate True or False questions from any content with OpenAI GPT2, Sentence BERT and Berkley Constituency parser</a></p></li>
+<li><p><a class="reference external" href="https://openai.com/blog/better-language-models/">https://openai.com/blog/better-language-models/</a></p></li>
+<li><p><a class="reference external" href="https://github.com/openai/gpt-2">https://github.com/openai/gpt-2</a></p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/1810.04805">https://arxiv.org/abs/1810.04805</a></p></li>
+</ol>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapters\NLP"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="Ch2-EDA.html" title="previous page">2. 데이터 탐색과 전처리</a>
+    <a class='right-next' id="next-link" href="Ch4-Wh-Question.html" title="next page">4. Wh- Question</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By PseudoLab Tutorial Team<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+    <!-- Google Analytics -->
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-185350287-1', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <!-- End Google Analytics -->
+    
+  </body>
+</html>
