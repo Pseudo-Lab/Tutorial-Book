@@ -40,7 +40,7 @@
 - part: 문제 생성(Question Generation)
   chapters:
   - file: chapters/NLP/intro
-    title: TF 및 Wh 문제 생성
+    title: MC 및 Wh 문제 생성
   #  sections:
   - file: chapters/NLP/Ch1-Introduction
   - file: chapters/NLP/Ch2-EDA
