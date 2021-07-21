@@ -44,5 +44,6 @@
   #  sections:
   - file: chapters/NLP/Ch1-Introduction
   - file: chapters/NLP/Ch2-EDA
-  #- file: chapters/NLP/Ch3-GAN
+  - file: chapters/NLP/Ch3-MC-Question
+    title: 3. MC Question
   - file: chapters/NLP/Ch4-Wh-Question
