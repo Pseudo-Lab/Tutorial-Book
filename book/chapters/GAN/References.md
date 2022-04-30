@@ -6,10 +6,11 @@
 
 ## Papers
 
+- [Image-to-Image Translation with Conditional Adversarial Networks](https://arxiv.org/abs/1611.07004)
+- [Victorian400: Colorizing Victorian Illustrations](https://www.euppublishing.com/doi/abs/10.3366/ijhac.2021.0269)
 - [Pros and Cons of GAN Evaluation Measures](https://doi.org/10.1016/j.cviu.2018.10.009)
 - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://arxiv.org/abs/1505.04597)
 - [Generative Adversarial Networks](https://arxiv.org/abs/1406.2661)
-- [Image-to-Image Translation with Conditional Adversarial Networks](https://arxiv.org/abs/1611.07004)
 - [Conditional Generative Adversarial Nets](https://arxiv.org/abs/1411.1784)
 - [Generative Adversarial Nets 분석과 적용사례](https://www.koreascience.or.kr/article/CFKO201736257096695.pdf)
 - [Synthesizing Obama: Learning Lip Sync from Audio](https://grail.cs.washington.edu/projects/AudioToObama/siggraph17_obama.pdf)
