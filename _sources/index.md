@@ -1,5 +1,13 @@
 # PyTorch를 활용한 딥러닝 튜토리얼 (Deep Learning Tutorials with PyTorch) 
 
+```{Note}
+2022.05.20 공지
+
+향후 컨텐츠 방향을 정하기 위해 간단한 설문조사를 진행 중입니다. 소중한 의견을 바탕으로 더 좋은 컨텐츠로 곧 찾아뵐 수 있도록 하겠습니다. 감사합니다. 
+
+[설문조사 바로가기](https://docs.google.com/forms/d/e/1FAIpQLScvT-VQRAsmyqJDBocKKaSIUsDiNmGFy6Yn9b2YNiO7i3DEiw/viewform?usp=sf_link)
+```
+
 PyTorch를 활용한 딥러닝 튜토리얼 홈페이지에 오신 것을 환영합니다! <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="License: CC BY-NC-SA 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg" align='right'></a> <a href="https://pseudo-lab.github.io/Tutorial-Book-en/"><img alt="English" src="https://img.shields.io/badge/Translate%20To%20English-blue" align='right' style="padding-right: 5px;"></a>
 
 PyTorch를 활용해 여러 딥러닝 모델을 구축하는 과정을 정리한 저장소입니다. 
